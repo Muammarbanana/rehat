@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Rehat</string>
+    <string name="title">Rehat</string>
+    <string name="medicine_image_desc">Ilustrasi menggambarkan konselor pria dan wanita</string>
+    <string name="welcome_text">Selamat datang di aplikasi <b>Remaja Sehat</b>, disini kamu akan mendapatkan edukasi
+        tentang bahayanya virus <b>HIV &amp; AIDS</b> serta layanan untuk berkonsultasi dengan Konselor.
+    </string>
+    <string name="login">Login</string>
+    <string name="daftar">Daftar</string>
+    <string name="halo">Halo</string>
+    <string name="selamat_datang_kembali">Selamat Datang Kembali</string>
+    <string name="masukkan_nama_pengguna">Masukkan nama pengguna</string>
+    <string name="nama_pengguna">Nama Pengguna</string>
+    <string name="kata_sandi">Kata Sandi</string>
+    <string name="masukkan_kata_sandi">Masukkan kata sandi</string>
+    <string name="lupa_kata_sandi">Lupa Kata Sandi?</string>
+    <string name="ikon_panah_kembali_ke_halaman_sebelumnya">Ikon panah kembali ke halaman sebelumnya</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="masukkan_nama_lengkap">Masukkan nama lengkap</string>
+    <string name="email">Email</string>
+    <string name="masukkan_email">Masukkan email</string>
+    <string name="konfirmasi_kata_sandi">Konfirmasi Kata Sandi</string>
+    <string name="masukkan_ulang_kata_sandi">Masukkan ulang kata sandi</string>
+    <string name="jaminan">Kami menjamin kerahasiaan data diri anda. Data tersebut hanya akan digunakan untuk meningkatkan konten dan layanan kami.</string>
+    <string name="selamat_bergabung">Selamat Bergabung</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edukasi">Edukasi</string>
+    <string name="hai">Hai Calvin,</string>
+    <string name="daftar_topik">Ini daftar topik edukasi yang tersedia</string>
+    <string name="cari_materi">Cari materi berdasarkan judul ....</string>
+</resources>
