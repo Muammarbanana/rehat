@@ -29,7 +29,7 @@ class WelcomeScreen : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            startActivity(Intent(this,Home::class.java))
+            startActivity(Intent(this,Login::class.java))
             finish()
         }
     }

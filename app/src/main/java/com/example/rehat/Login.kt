@@ -29,18 +29,7 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this, "Tolong isi username dan password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this, "Login Sukses", Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                        startActivity(Intent(this,Home::class.java))
-                        finish()
-                    } else {
-                        Toast.makeText(baseContext, "Login Gagal", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            loginUser(email, password)
         }
     }
 
@@ -49,6 +38,22 @@ class Login : AppCompatActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             startActivity(Intent(this,Home::class.java))
+            finish()
         }
+    }
+
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(this, "Login Sukses", Toast.LENGTH_SHORT).show()
+                    val user = auth.currentUser
+                    startActivity(Intent(this,Home::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(baseContext, "Login Gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
