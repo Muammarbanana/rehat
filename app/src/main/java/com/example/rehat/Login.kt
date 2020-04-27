@@ -48,8 +48,10 @@ class Login : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(this, "Login Sukses", Toast.LENGTH_SHORT).show()
-                    val user = auth.currentUser
-                    startActivity(Intent(this,Home::class.java))
+                    val intent = Intent(this, Home::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(baseContext, "Login Gagal", Toast.LENGTH_SHORT).show()
