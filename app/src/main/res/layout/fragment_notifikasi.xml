@@ -43,14 +43,13 @@
             app:layout_constraintGuide_percent="0.5" />
 
     <ImageView
-            android:id="@+id/imgWaiting"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            android:contentDescription="Ilustrasi menggambarkan seorang pria yang sedang menunggu sendirian"
+            android:contentDescription="@string/ilustrasi_sendirian"
             android:src="@drawable/img_waiting"
             app:layout_constraintBottom_toTopOf="@+id/guideline35"
             app:layout_constraintEnd_toStartOf="@+id/guideline34"
@@ -58,13 +57,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline31" />
 
     <TextView
-            android:id="@+id/teksWaiting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:lineSpacingExtra="8sp"
-            android:text="Saat ini belum ada notifikasi apapun, coba kamu cek lagi nanti :)"
+            android:text="@string/belum_ada_notifikasi"
             android:textAlignment="center"
             android:textColor="@color/colorDarkBlue"
             android:textSize="12sp"

@@ -14,7 +14,7 @@
     <string name="kata_sandi">Kata Sandi</string>
     <string name="masukkan_kata_sandi">Masukkan kata sandi</string>
     <string name="lupa_kata_sandi">Lupa Kata Sandi?</string>
-    <string name="ikon_panah_kembali_ke_halaman_sebelumnya">Ikon panah kembali ke halaman sebelumnya</string>
+    <string name="ikon_panah_kembali_ke_halaman_sebelumnya">Kembali ke halaman sebelumnya</string>
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="masukkan_nama_lengkap">Masukkan nama lengkap</string>
     <string name="email">Email</string>
@@ -25,9 +25,35 @@
     <string name="selamat_bergabung">Selamat Bergabung</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edukasi">Edukasi</string>
     <string name="hai">Hai Calvin,</string>
     <string name="daftar_topik">Ini daftar topik edukasi yang tersedia</string>
     <string name="cari_materi">Cari materi berdasarkan judul ....</string>
+    <string name="lengkapi_profile_kamu">Segera lengkapi profile kamu</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="hubungi_kami">Hubungi Kami</string>
+    <string name="syarat_dan_ketentuan">Syarat dan Ketentuan</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="peringatan">Peringatan</string>
+    <string name="nama_konselor">Nama Konselor</string>
+    <string name="profesi">Profesi</string>
+    <string name="lokasi">Lokasi</string>
+    <string name="lihat_profil">Lihat Profil</string>
+    <string name="foto_profil_konselor">foto profil konselor</string>
+    <string name="judul">Judul</string>
+    <string name="subjudul">SubJudul</string>
+    <string name="copyright">2020 © Remaja Sehat App</string>
+    <string name="ilustrasi_kosong">Ilustrasi menggambarkan seseorang sedang memegang kardus kosong</string>
+    <string name="kamu_belum_simpan">Kamu belum menyimpan materi apapun, yuk lihat-lihat dulu siapatau ada yang mau kamu simpan :)</string>
+    <string name="eksplorasi_materi">Eksplorasi Materi</string>
+    <string name="ini_konselor">Ini konselor yang siap membantumu</string>
+    <string name="ilustrasi_sendirian">Ilustrasi menggambarkan seorang pria yang sedang menunggu sendirian</string>
+    <string name="belum_ada_notifikasi">Saat ini belum ada notifikasi apapun, coba kamu cek lagi nanti :)</string>
+    <string name="ilustrasi_bertemu">Ilustrasi menggambarkan seseorang sedang bertemu dengan konselor</string>
+    <string name="belum_ada_janji">Belum ada status persetujuan saat ini. Yuk kenalan dulu dengan Konselor kami untuk membuat janji pertemuan :)</string>
+    <string name="memilih_konselor">Memilih Konselor</string>
+    <string name="halaman_tersimpan">Halaman Tersimpan</string>
+    <string name="konsultasi">Konsultasi</string>
+    <string name="Notifikasi">Notifikasi</string>
+    <string name="Profile">Profile</string>
 </resources>

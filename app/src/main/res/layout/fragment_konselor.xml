@@ -2,7 +2,6 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragmentKonselor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorLight">
@@ -16,7 +15,6 @@
             tools:context=".fragmentkonsultasi.KonselorFragment">
 
         <android.support.constraint.Guideline
-                android:id="@+id/guideline22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -62,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Ini konselor yang siap membantumu"
+                android:text="@string/ini_konselor"
                 android:textColor="@color/colorDarkBlue"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintHorizontal_bias="0.0"

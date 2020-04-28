@@ -17,9 +17,8 @@ class HalamanTersimpanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_halaman_tersimpan, container, false)
 
-        return view
+        return inflater.inflate(R.layout.fragment_halaman_tersimpan, container, false)
     }
 
 }

@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragmentHalamanTersimpan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorLight"
@@ -44,14 +43,13 @@
             app:layout_constraintGuide_percent="0.5" />
 
     <ImageView
-            android:id="@+id/imgEmpty"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            android:contentDescription="Ilustrasi menggambarkan seseorang sedang memegang kardus kosong"
+            android:contentDescription="@string/ilustrasi_kosong"
             android:src="@drawable/img_empty"
             app:layout_constraintBottom_toTopOf="@+id/guideline30"
             app:layout_constraintEnd_toStartOf="@+id/guideline29"
@@ -65,7 +63,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:lineSpacingExtra="8sp"
-            android:text="Kamu belum menyimpan materi apapun, yuk lihat-lihat dulu siapatau ada yang mau kamu simpan :)"
+            android:text="@string/kamu_belum_simpan"
             android:textAlignment="center"
             android:textColor="@color/colorDarkBlue"
             android:textSize="12sp"
@@ -74,14 +72,13 @@
             app:layout_constraintTop_toTopOf="@+id/guideline30" />
 
     <Button
-            android:id="@+id/eksplorButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_button_green_borderless"
-            android:text="Eksplorasi Materi"
+            android:text="@string/eksplorasi_materi"
             android:textColor="@color/colorWhite"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline27"

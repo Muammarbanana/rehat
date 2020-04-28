@@ -1,17 +1,16 @@
 package com.example.rehat.fragmenthome
 
-import com.example.rehat.rvlistmateri.Materi
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.example.rehat.rvlistmateri.Adapter
 import com.example.rehat.R
+import com.example.rehat.rvlistmateri.Adapter
+import com.example.rehat.rvlistmateri.Materi
 import kotlinx.android.synthetic.main.fragment_edukasi.view.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
