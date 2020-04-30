@@ -3,9 +3,14 @@ package com.example.rehat
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.util.Log
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 
 class Home : AppCompatActivity() {
+
+    private lateinit var ref: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +21,22 @@ class Home : AppCompatActivity() {
         tabsMain.setupWithViewPager(viewPager1)
         setupTabIcons()
 
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.limitToFirst(1)
+        ref.addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0!!.exists()){
+                    for(h in p0.children){
+                        Log.d("pengguna", "opendetail: " +h.child("username").getValue(String::class.java))
+                    }
+                }
+            }
+
+        })
 
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
