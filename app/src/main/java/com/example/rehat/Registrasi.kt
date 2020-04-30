@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -42,6 +43,10 @@ class Registrasi : AppCompatActivity() {
                 val user = User(nama, namapengguna, email)
                 ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
                     .setValue(user)
+                auth.signOut()
+                Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, Login::class.java))
+                finish()
             } else {
                 Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show()
             }
