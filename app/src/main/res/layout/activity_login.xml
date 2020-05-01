@@ -17,17 +17,11 @@
             app:layout_constraintGuide_percent="0.0451" />
 
     <android.support.constraint.Guideline
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.98" />
-
-    <android.support.constraint.Guideline
             android:id="@+id/guideline8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.40" />
+            app:layout_constraintGuide_percent="0.3629" />
 
     <android.support.constraint.Guideline
             android:id="@+id/guideline9"
@@ -49,27 +43,27 @@
             android:background="@drawable/rounded_background_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline8">
+            app:layout_constraintTop_toTopOf="@+id/guideline8"
+            app:layout_constraintVertical_bias="1.0">
 
         <EditText
                 android:id="@+id/editTextNamaPengguna"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp"
                 android:autofillHints=""
                 android:backgroundTint="@color/colorPrimary"
-                android:drawableEnd="@drawable/ic_microphone"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_regular"
                 android:hint="@string/masukkan_nama_pengguna"
                 android:inputType="textPersonName"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline64"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/loginNamaPengguna"
                 app:layout_constraintTop_toBottomOf="@+id/loginNamaPengguna"
@@ -79,85 +73,168 @@
                 android:id="@+id/loginNamaPengguna"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/nama_pengguna"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/guideline62"
+                app:layout_constraintTop_toTopOf="@+id/guideline61" />
 
         <TextView
                 android:id="@+id/loginKataSandi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/kata_sandi"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextNamaPengguna"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNamaPengguna" />
+                app:layout_constraintTop_toTopOf="@+id/guideline65" />
 
         <EditText
                 android:id="@+id/editTextKataSandi"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp"
                 android:autofillHints=""
                 android:backgroundTint="@color/colorPrimary"
-                android:drawableEnd="@drawable/ic_microphone"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_regular"
                 android:hint="@string/masukkan_kata_sandi"
                 android:inputType="textPassword"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline66"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintStart_toStartOf="@+id/loginKataSandi"
-                app:layout_constraintTop_toBottomOf="@+id/loginKataSandi" />
+                app:layout_constraintTop_toBottomOf="@+id/loginKataSandi"
+                app:layout_constraintVertical_bias="0.0" />
 
         <TextView
                 android:id="@+id/loginLupaKataSandi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/lupa_kata_sandi"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/editTextKataSandi"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextKataSandi"
-                app:layout_constraintVertical_bias="0.100000024" />
+                app:layout_constraintStart_toStartOf="@+id/guideline62"
+                app:layout_constraintTop_toTopOf="@+id/guideline67"
+                app:layout_constraintVertical_bias="0.0" />
 
         <Button
                 android:id="@+id/loginButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
                 android:background="@drawable/rounded_button_green_borderless"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/login"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginLupaKataSandi"
-                app:layout_constraintVertical_bias="0.9" />
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline69"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
+                app:layout_constraintStart_toStartOf="@+id/guideline62"
+                app:layout_constraintTop_toTopOf="@+id/guideline68" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.0911" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline62"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.06666667" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline63"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.9333" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline64"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2784" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline65"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3189" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline66"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5063" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5265" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline68"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8177" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline69"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.9291" />
+
+        <ImageView
+                android:id="@+id/imgMicrophone1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/masukkan_nama_suara"
+                app:layout_constraintBottom_toTopOf="@+id/guideline64"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@+id/editTextNamaPengguna"
+                app:layout_constraintTop_toBottomOf="@+id/loginNamaPengguna"
+                app:srcCompat="@drawable/ic_microphone" />
+
+        <ImageView
+                android:id="@+id/imgMicrophone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/masukkan_sandi_suara"
+                app:layout_constraintBottom_toTopOf="@+id/guideline66"
+                app:layout_constraintEnd_toEndOf="@+id/editTextKataSandi"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@+id/guideline62"
+                app:layout_constraintTop_toBottomOf="@+id/loginKataSandi"
+                app:srcCompat="@drawable/ic_microphone" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline

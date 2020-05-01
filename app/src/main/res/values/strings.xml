@@ -56,4 +56,6 @@
     <string name="konsultasi">Konsultasi</string>
     <string name="Notifikasi">Notifikasi</string>
     <string name="Profile">Profile</string>
+    <string name="masukkan_nama_suara">Masukkan nama pengguna menggunakan suara</string>
+    <string name="masukkan_sandi_suara">Masukkan kata sandi menggunakan suara</string>
 </resources>
