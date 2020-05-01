@@ -21,23 +21,6 @@ class Home : AppCompatActivity() {
         tabsMain.setupWithViewPager(viewPager1)
         setupTabIcons()
 
-        ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.limitToFirst(1)
-        ref.addValueEventListener(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if(p0!!.exists()){
-                    for(h in p0.children){
-                        Log.d("pengguna", "opendetail: " +h.child("username").getValue(String::class.java))
-                    }
-                }
-            }
-
-        })
-
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(tab: TabLayout.Tab?) {}
