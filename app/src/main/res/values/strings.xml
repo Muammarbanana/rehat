@@ -7,7 +7,7 @@
     </string>
     <string name="login">Login</string>
     <string name="daftar">Daftar</string>
-    <string name="halo">Halo</string>
+    <string name="halo">Halo,</string>
     <string name="selamat_datang_kembali">Selamat Datang Kembali</string>
     <string name="masukkan_nama_pengguna">Masukkan nama pengguna</string>
     <string name="nama_pengguna">Nama Pengguna</string>
@@ -58,4 +58,7 @@
     <string name="Profile">Profile</string>
     <string name="masukkan_nama_suara">Masukkan nama pengguna menggunakan suara</string>
     <string name="masukkan_sandi_suara">Masukkan kata sandi menggunakan suara</string>
+    <string name="masukkan_email_suara">Masukkan email menggunakan suara</string>
+    <string name="masukkan_nama_lengkap_suara">Masukkan nama lengkap menggunakan suara</string>
+    <string name="masukkan_sandi_ulang_suara">Masukkan ulang kata sandi menggunakan suara</string>
 </resources>

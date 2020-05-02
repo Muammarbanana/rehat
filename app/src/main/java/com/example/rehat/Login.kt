@@ -1,17 +1,10 @@
 package com.example.rehat
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.provider.Settings.Global.putString
 import android.speech.RecognizerIntent
 import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -48,9 +41,8 @@ class Login : AppCompatActivity() {
             }, namaPengguna)
         }
 
-        val et: EditText = findViewById(R.id.editTextNamaPengguna)
-
         imgMicrophone1.setOnClickListener {
+            // Identificate which input is handled
             inputIdentificator = 0
             getVoice()
         }
