@@ -62,6 +62,7 @@
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
                 android:textSize="12sp"
+                android:accessibilityTraversalAfter="@id/loginNamaPengguna"
                 app:layout_constraintBottom_toTopOf="@+id/guideline64"
                 app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"

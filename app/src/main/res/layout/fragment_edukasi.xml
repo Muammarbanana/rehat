@@ -13,12 +13,6 @@
             tools:context=".fragmenthome.EdukasiFragment">
 
         <android.support.constraint.Guideline
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.02" />
-
-        <android.support.constraint.Guideline
                 android:id="@+id/guideline23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,29 +24,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.02" />
+                app:layout_constraintGuide_percent="0.0444" />
 
         <android.support.constraint.Guideline
                 android:id="@+id/guideline25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.98" />
+                app:layout_constraintGuide_percent="0.9555" />
 
         <EditText
                 android:id="@+id/editTextSearch"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_height="0dp"
                 android:autofillHints=""
                 android:background="@drawable/rounded_button"
                 android:drawableStart="@drawable/ic_search"
-                android:drawableEnd="@drawable/ic_microphone"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/montserrat_regular"
                 android:hint="@string/cari_materi"
                 android:includeFontPadding="false"
                 android:inputType="textPersonName"
@@ -63,59 +53,111 @@
                 android:textColor="@color/colorBlack"
                 android:textColorHighlight="#00FFFFFF"
                 android:textColorHint="@color/colorGray"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline23"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline95"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline94"
                 app:layout_constraintVertical_bias="0.0" />
 
         <TextView
                 android:id="@+id/edukasiHei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:lineSpacingExtra="6sp"
                 android:text="@string/hai"
                 android:textColor="@color/colorDarkBlue"
-                android:textSize="18sp"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline96"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextSearch"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+                app:layout_constraintVertical_bias="1.0" />
 
         <TextView
                 android:id="@+id/edukasiDaftar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:lineSpacingExtra="9sp"
                 android:text="@string/daftar_topik"
                 android:textColor="@color/colorDarkBlue"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline97"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextSearch"
-                app:layout_constraintTop_toBottomOf="@+id/edukasiHei" />
+                app:layout_constraintTop_toTopOf="@+id/guideline96"
+                app:layout_constraintVertical_bias="1.0" />
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvMateri"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/guideline23"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
-                app:layout_constraintTop_toBottomOf="@+id/edukasiDaftar" />
+                app:layout_constraintTop_toBottomOf="@+id/edukasiDaftar"
+                app:layout_constraintVertical_bias="0.0" />
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/copyright"
                 android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
                 app:layout_constraintTop_toBottomOf="@+id/rvMateri"
                 app:layout_constraintVertical_bias="0.9" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline94"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="24dp" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline95"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="68dp" />
+
+        <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cari_materi_dengan_suara"
+                app:layout_constraintBottom_toTopOf="@+id/guideline95"
+                app:layout_constraintEnd_toStartOf="@+id/guideline25"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="@+id/guideline24"
+                app:layout_constraintTop_toTopOf="@+id/guideline94"
+                app:srcCompat="@drawable/ic_microphone" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline96"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="112dp" />
+
+        <android.support.constraint.Guideline
+                android:id="@+id/guideline97"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="140dp" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

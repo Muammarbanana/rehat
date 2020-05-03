@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Home" android:theme="@style/AppThemeWhite"/>
+        <activity android:name=".Home" android:theme="@style/AppThemeWhite" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Registrasi" />
         <activity android:name=".Login" />
         <activity android:name=".WelcomeScreen" android:theme="@style/AppThemeWhite"/>

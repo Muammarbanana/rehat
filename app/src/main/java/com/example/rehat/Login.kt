@@ -110,7 +110,7 @@ class Login : AppCompatActivity() {
 
     // Get email outside of onDataChange method
     private interface MyCallBack {
-        fun onCallBack(text: String)
+        fun onCallBack(email: String)
     }
 
     private fun getVoice() {
