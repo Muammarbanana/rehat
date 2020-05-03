@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.rehat.R
 import com.example.rehat.rvlistmateri.Adapter
 import com.example.rehat.rvlistmateri.Materi
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_edukasi.view.*
 import java.util.*
 
@@ -16,6 +17,8 @@ import java.util.*
  * A simple [Fragment] subclass.
  */
 class EdukasiFragment : Fragment() {
+
+    private lateinit var ref: DatabaseReference
 
     val list = ArrayList<Materi>()
     val listMateri = arrayOf(
@@ -61,5 +64,27 @@ class EdukasiFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun getDataMateri() {
+        val daftarJudul = mutableListOf<String>()
+        val jumlahSub = mutableListOf<Int>()
+        ref = FirebaseDatabase.getInstance().getReference("Materi")
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()) {
+                    for(h in p0.children) {
+                        val judul = h.child("judul").value.toString()
+                        daftarJudul.add(judul)
+                    }
+
+                }
+            }
+
+        })
     }
 }

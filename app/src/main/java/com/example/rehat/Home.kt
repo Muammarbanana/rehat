@@ -10,8 +10,6 @@ import java.util.*
 
 class Home : AppCompatActivity() {
 
-    private lateinit var ref: DatabaseReference
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
