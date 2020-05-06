@@ -3,6 +3,7 @@ package com.example.rehat.fragmenthome
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import java.util.*
 class EdukasiFragment : Fragment() {
 
     private lateinit var ref: DatabaseReference
+    private lateinit var ref2: DatabaseReference
 
     val list = ArrayList<Materi>()
     val listMateri = arrayOf(
@@ -54,21 +56,13 @@ class EdukasiFragment : Fragment() {
         view.rvMateri.setHasFixedSize(true)
         view.rvMateri.layoutManager =  LinearLayoutManager(activity)
 
-        for (i in listMateri.indices){
-            list.add(Materi(listMateri[i], listSubJudul[i], listWarna[i]))
-            if(listMateri.size - 1 == i){
-                val adapter = Adapter(list)
-                adapter.notifyDataSetChanged()
-                view.rvMateri.adapter = adapter
-            }
-        }
+        getDataMateri(view)
 
         return view
     }
 
-    private fun getDataMateri() {
-        val daftarJudul = mutableListOf<String>()
-        val jumlahSub = mutableListOf<Int>()
+    private fun getDataMateri(view: View) {
+        val daftarMateri = arrayListOf<Materi>()
         ref = FirebaseDatabase.getInstance().getReference("Materi")
         ref.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -76,12 +70,19 @@ class EdukasiFragment : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                ref2 = FirebaseDatabase.getInstance().getReference("submateri")
                 if(p0.exists()) {
+                    var i = 1
                     for(h in p0.children) {
                         val judul = h.child("judul").value.toString()
-                        daftarJudul.add(judul)
+                        val sub = h.child("jumlahsub").value.toString()
+                        val background = h.child("background").value.toString()
+                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", R.color.colorLightGreen))
+                        i += 1
                     }
-
+                    val adapter = Adapter(daftarMateri)
+                    adapter.notifyDataSetChanged()
+                    view.rvMateri.adapter = adapter
                 }
             }
 

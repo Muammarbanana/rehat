@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -10,6 +11,8 @@ import java.util.*
 
 class Home : AppCompatActivity() {
 
+    private lateinit var viewModel: SharedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -18,6 +21,12 @@ class Home : AppCompatActivity() {
             PagerAdapter(supportFragmentManager)
         tabsMain.setupWithViewPager(viewPager1)
         setupTabIcons()
+
+        viewModel = ViewModelProviders.of(this)[SharedViewModel::class.java]
+
+        viewModel.selected.observeForever(android.arch.lifecycle.Observer {
+            tabsMain.getTabAt(0)?.select()
+        })
 
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
