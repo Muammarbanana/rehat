@@ -5,10 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
+
 
 class Login : AppCompatActivity() {
 
@@ -134,5 +142,24 @@ class Login : AppCompatActivity() {
 
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        // Mengatur urutan talkback
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        val dataElemen = listOf(loginNamaPengguna, editTextNamaPengguna, imgMicrophone1, loginKataSandi, editTextKataSandi, imgMicrophone2, loginLupaKataSandi)
+        var task: Runnable
+        var orderTime = longArrayOf(4, 6, 21, 27, 29, 44, 50)
+        var loopCount = 0
+        for (x in dataElemen) {
+            if (loopCount == 0 || loopCount == 3 || loopCount == 6) {
+                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED) }
+            } else {
+                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED) }
+            }
+            worker.schedule(task, orderTime[loopCount], TimeUnit.SECONDS)
+            loopCount += 1
+        }
     }
 }

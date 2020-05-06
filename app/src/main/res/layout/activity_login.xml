@@ -48,6 +48,22 @@
             app:layout_constraintTop_toTopOf="@+id/guideline8"
             app:layout_constraintVertical_bias="1.0">
 
+        <TextView
+                android:id="@+id/loginNamaPengguna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/nama_pengguna"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:labelFor="@id/editTextNamaPengguna"
+                android:accessibilityTraversalAfter="@id/loginKataSandi"
+                app:layout_constraintEnd_toStartOf="@+id/guideline63"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline62"
+                app:layout_constraintTop_toTopOf="@+id/guideline61" tools:targetApi="lollipop_mr1"/>
+
         <EditText
                 android:id="@+id/editTextNamaPengguna"
                 android:layout_width="0dp"
@@ -62,27 +78,12 @@
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
                 android:textSize="12sp"
-                android:accessibilityTraversalAfter="@id/loginNamaPengguna"
                 app:layout_constraintBottom_toTopOf="@+id/guideline64"
                 app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/loginNamaPengguna"
                 app:layout_constraintTop_toBottomOf="@+id/loginNamaPengguna"
                 app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-                android:id="@+id/loginNamaPengguna"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:text="@string/nama_pengguna"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/guideline63"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline62"
-                app:layout_constraintTop_toTopOf="@+id/guideline61" />
 
         <TextView
                 android:id="@+id/loginKataSandi"
@@ -93,6 +94,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:labelFor="@id/editTextKataSandi"
                 app:layout_constraintEnd_toStartOf="@+id/guideline63"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextNamaPengguna"
@@ -219,7 +221,7 @@
                 android:contentDescription="@string/masukkan_nama_suara"
                 app:layout_constraintBottom_toTopOf="@+id/guideline64"
                 app:layout_constraintEnd_toStartOf="@+id/guideline63"
-                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextNamaPengguna"
                 app:layout_constraintTop_toBottomOf="@+id/loginNamaPengguna"
                 app:srcCompat="@drawable/ic_microphone" />
@@ -232,7 +234,7 @@
                 android:contentDescription="@string/masukkan_sandi_suara"
                 app:layout_constraintBottom_toTopOf="@+id/guideline66"
                 app:layout_constraintEnd_toEndOf="@+id/editTextKataSandi"
-                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline62"
                 app:layout_constraintTop_toBottomOf="@+id/loginKataSandi"
                 app:srcCompat="@drawable/ic_microphone" />

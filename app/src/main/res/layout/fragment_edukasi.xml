@@ -140,7 +140,7 @@
                 android:contentDescription="@string/cari_materi_dengan_suara"
                 app:layout_constraintBottom_toTopOf="@+id/guideline95"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
-                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
                 app:layout_constraintTop_toTopOf="@+id/guideline94"
                 app:srcCompat="@drawable/ic_microphone" />

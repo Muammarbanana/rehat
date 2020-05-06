@@ -369,7 +369,7 @@
                     android:contentDescription="@string/masukkan_nama_lengkap_suara"
                     app:layout_constraintBottom_toTopOf="@+id/guideline77"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/guideline74"
                     app:layout_constraintTop_toBottomOf="@+id/regisNamaLengkap"
                     app:srcCompat="@drawable/ic_microphone" />
@@ -381,7 +381,7 @@
                     android:contentDescription="@string/masukkan_nama_suara"
                     app:layout_constraintBottom_toTopOf="@+id/guideline79"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/guideline74"
                     app:layout_constraintTop_toBottomOf="@+id/regisNamaPengguna"
                     app:srcCompat="@drawable/ic_microphone" />
@@ -393,7 +393,7 @@
                     android:contentDescription="@string/masukkan_email_suara"
                     app:layout_constraintBottom_toTopOf="@+id/guideline81"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/guideline74"
                     app:layout_constraintTop_toBottomOf="@+id/regisEmail"
                     app:srcCompat="@drawable/ic_microphone" />
@@ -405,7 +405,7 @@
                     android:contentDescription="@string/masukkan_sandi_suara"
                     app:layout_constraintBottom_toTopOf="@+id/guideline83"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/guideline74"
                     app:layout_constraintTop_toBottomOf="@+id/regisKataSandi"
                     app:srcCompat="@drawable/ic_microphone" />
@@ -417,7 +417,7 @@
                     android:contentDescription="@string/masukkan_sandi_ulang_suara"
                     app:layout_constraintBottom_toTopOf="@+id/guideline85"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/guideline74"
                     app:layout_constraintTop_toBottomOf="@+id/regisKonfirmasiKataSandi"
                     app:srcCompat="@drawable/ic_microphone" />
