@@ -85,7 +85,6 @@ class EdukasiFragment : Fragment() {
                     view.rvMateri.adapter = adapter
                 }
             }
-
         })
     }
 }

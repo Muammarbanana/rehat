@@ -25,7 +25,9 @@ class Home : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this)[SharedViewModel::class.java]
 
         viewModel.selected.observeForever(android.arch.lifecycle.Observer {
-            tabsMain.getTabAt(0)?.select()
+            if (it.equals("go to tab 1")) {
+                tabsMain.getTabAt(0)?.select()
+            }
         })
 
         // ganti title saat tab dipilih

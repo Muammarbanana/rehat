@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.rehat.R
 import com.example.rehat.rvlistkonselor.Adapter
 import com.example.rehat.rvlistkonselor.Konselor
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_konselor.view.*
 import java.util.ArrayList
 
@@ -38,6 +39,8 @@ class KonselorFragment : Fragment() {
         "Klinik Brawijawa"
     )
 
+    private lateinit var ref: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,16 +51,40 @@ class KonselorFragment : Fragment() {
         view.rvKonselor.setHasFixedSize(true)
         view.rvKonselor.layoutManager =  LinearLayoutManager(activity)
 
-        for (i in listNama.indices){
+        /*for (i in listNama.indices){
             list.add(Konselor(listNama[i], listProfesi[i], listLokasi[i]))
             if(listNama.size - 1 == i){
                 val adapter = Adapter(list)
                 adapter.notifyDataSetChanged()
                 view.rvKonselor.adapter = adapter
             }
-        }
+        }*/
+        getDataKonselor(view)
 
         return view
     }
 
+    private fun getDataKonselor(view: View) {
+        val daftarKonselor = arrayListOf<Konselor>()
+        ref = FirebaseDatabase.getInstance().getReference("konselor")
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()) {
+                    for(h in p0.children) {
+                        val nama = h.child("nama_konselor").value.toString()
+                        val tempat = h.child("tempat").value.toString()
+                        val spesialis = h.child("spesialis").value.toString()
+                        daftarKonselor.add(Konselor(nama, spesialis, tempat))
+                    }
+                    val adapter = Adapter(daftarKonselor)
+                    adapter.notifyDataSetChanged()
+                    view.rvKonselor.adapter = adapter
+                }
+            }
+        })
+    }
 }
