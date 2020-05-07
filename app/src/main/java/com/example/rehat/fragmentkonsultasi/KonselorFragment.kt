@@ -18,27 +18,6 @@ import java.util.ArrayList
  */
 class KonselorFragment : Fragment() {
 
-    val list = ArrayList<Konselor>()
-    val listNama = arrayOf(
-        "Dr. Reza Rahmawan, Sp.KK",
-        "Dr. Helena Christine, Sp.KJ",
-        "Dr. Stephanie Putry, Sp.KJ",
-        "Dr. Wander Luiz, Sp.KJ"
-    )
-    val listProfesi = arrayOf(
-        "Spesialis Kulit dan Kelamin",
-        "Spesialis Jiwa dan Psikiatri",
-        "Spesialis Jiwa dan Psikiatri",
-        "Spesialis Jiwa dan Psikiatri"
-    )
-
-    val listLokasi = arrayOf(
-        "Rumah Cemara",
-        "Klinik Medika",
-        "Klinik Anahata",
-        "Klinik Brawijawa"
-    )
-
     private lateinit var ref: DatabaseReference
 
     override fun onCreateView(
@@ -51,14 +30,6 @@ class KonselorFragment : Fragment() {
         view.rvKonselor.setHasFixedSize(true)
         view.rvKonselor.layoutManager =  LinearLayoutManager(activity)
 
-        /*for (i in listNama.indices){
-            list.add(Konselor(listNama[i], listProfesi[i], listLokasi[i]))
-            if(listNama.size - 1 == i){
-                val adapter = Adapter(list)
-                adapter.notifyDataSetChanged()
-                view.rvKonselor.adapter = adapter
-            }
-        }*/
         getDataKonselor(view)
 
         return view

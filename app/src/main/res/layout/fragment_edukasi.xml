@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorLight"
+            android:background="#F3F4FA"
             tools:context=".fragmenthome.EdukasiFragment">
 
         <android.support.constraint.Guideline
