@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.rehat.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_konselor.view.*
 
 class Adapter(private val list:ArrayList<Konselor>) : RecyclerView.Adapter<Adapter.Holder>(){
@@ -25,5 +26,6 @@ class Adapter(private val list:ArrayList<Konselor>) : RecyclerView.Adapter<Adapt
         holder.view.namaKonselor.text = list[position].nama
         holder.view.profesi.text = list[position].profesi
         holder.view.lokasiKonselor.text = list[position].lokasi
+        Picasso.get().load(list[position].urlfoto).resize(300,375).into(holder.view.fotoKonselor)
     }
 }

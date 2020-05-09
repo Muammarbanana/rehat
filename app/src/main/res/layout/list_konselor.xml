@@ -109,6 +109,7 @@
                     app:layout_constraintGuide_percent="0.03" />
 
             <ImageView
+                    android:id="@+id/fotoKonselor"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/foto_profil_konselor"
