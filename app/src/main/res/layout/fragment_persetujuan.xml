@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.0769" />
 
     <android.support.constraint.Guideline
             android:id="@+id/guideline27"
@@ -26,29 +26,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.02" />
+            app:layout_constraintGuide_percent="0.1527" />
 
     <android.support.constraint.Guideline
             android:id="@+id/guideline29"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.98" />
+            app:layout_constraintGuide_percent="0.8472" />
 
     <android.support.constraint.Guideline
             android:id="@+id/guideline30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.4134" />
 
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
             android:contentDescription="@string/ilustrasi_bertemu"
             android:src="@drawable/img_meeting"
             app:layout_constraintBottom_toTopOf="@+id/guideline30"
@@ -59,32 +55,85 @@
     <TextView
             android:id="@+id/teksBelum"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="0dp"
             android:lineSpacingExtra="8sp"
             android:text="@string/belum_ada_janji"
             android:textAlignment="center"
             android:textColor="@color/colorDarkBlue"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline29"
-            app:layout_constraintStart_toStartOf="@+id/guideline28"
-            app:layout_constraintTop_toTopOf="@+id/guideline30" />
+            app:layout_constraintBottom_toTopOf="@+id/guideline109"
+            app:layout_constraintEnd_toStartOf="@+id/guideline105"
+            app:layout_constraintStart_toStartOf="@+id/guideline104"
+            app:layout_constraintTop_toTopOf="@+id/guideline108" />
 
     <Button
+            android:id="@+id/btnPilihKonselor"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="0dp"
             android:background="@drawable/rounded_button_green_borderless"
             android:text="@string/memilih_konselor"
             android:textColor="@color/colorWhite"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline27"
-            app:layout_constraintEnd_toStartOf="@+id/guideline29"
-            app:layout_constraintStart_toStartOf="@+id/guideline28"
-            app:layout_constraintTop_toBottomOf="@+id/teksBelum"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline111"
+            app:layout_constraintEnd_toStartOf="@+id/guideline107"
+            app:layout_constraintStart_toStartOf="@+id/guideline106"
+            app:layout_constraintTop_toTopOf="@+id/guideline110"
             app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline104"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0667" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline105"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9333" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline106"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0444" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline107"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9556" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline108"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4442" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline109"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5634" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline110"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6153" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
 
 </android.support.constraint.ConstraintLayout>

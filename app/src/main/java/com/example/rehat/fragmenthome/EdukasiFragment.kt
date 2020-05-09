@@ -22,30 +22,6 @@ class EdukasiFragment : Fragment() {
     private lateinit var ref: DatabaseReference
     private lateinit var ref2: DatabaseReference
 
-    val list = ArrayList<Materi>()
-    val listMateri = arrayOf(
-        "Chapter 1: Apa itu HIV & AIDS",
-        "Chapter 2: Gejala dan Komplikasi",
-        "Chapter 3: Pencegahan Virus HIV & AIDS",
-        "Chapter 4: Tes HIV",
-        "Chapter 5: Hak dan Kewajiban Pasien"
-    )
-    val listSubJudul = arrayOf(
-        "3 Materi",
-        "2 Materi",
-        "2 Materi",
-        "3 Materi",
-        "3 Materi"
-    )
-
-    val listWarna = arrayOf(
-        R.color.colorBlue,
-        R.color.colorPrimary,
-        R.color.colorPurple,
-        R.color.colorLightGreen,
-        R.color.colorPink
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,7 +53,7 @@ class EdukasiFragment : Fragment() {
                         val judul = h.child("judul").value.toString()
                         val sub = h.child("jumlahsub").value.toString()
                         val background = h.child("background").value.toString()
-                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", R.color.colorLightGreen))
+                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", R.color.colorDarkBlue))
                         i += 1
                     }
                     val adapter = Adapter(daftarMateri)
