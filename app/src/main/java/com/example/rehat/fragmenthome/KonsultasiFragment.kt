@@ -1,8 +1,8 @@
 package com.example.rehat.fragmenthome
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +33,7 @@ class KonsultasiFragment : Fragment() {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        viewModel.selected.observeForever(android.arch.lifecycle.Observer {
+        viewModel.selected.observeForever(androidx.lifecycle.Observer {
             if (it.equals("go to tab pilih konselor")) {
                 view.tabsKonsultasi.getTabAt(0)?.select()
             }

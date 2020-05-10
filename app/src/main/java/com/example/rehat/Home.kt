@@ -1,9 +1,9 @@
 package com.example.rehat
 
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TabLayout
+import com.google.android.material.tabs.TabLayout
 import android.util.Log
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
@@ -24,7 +24,7 @@ class Home : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this)[SharedViewModel::class.java]
 
-        viewModel.selected.observeForever(android.arch.lifecycle.Observer {
+        viewModel.selected.observeForever(androidx.lifecycle.Observer {
             if (it.equals("go to tab 1")) {
                 tabsMain.getTabAt(0)?.select()
             }

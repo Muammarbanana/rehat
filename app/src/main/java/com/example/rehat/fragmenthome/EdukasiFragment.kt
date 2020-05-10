@@ -1,8 +1,8 @@
 package com.example.rehat.fragmenthome
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +30,8 @@ class EdukasiFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_edukasi, container, false)
 
         view.rvMateri.setHasFixedSize(true)
-        view.rvMateri.layoutManager =  LinearLayoutManager(activity)
+        view.rvMateri.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(activity)
 
         getDataMateri(view)
 

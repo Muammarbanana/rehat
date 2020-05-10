@@ -1,7 +1,7 @@
 package com.example.rehat
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 class SharedViewModel: ViewModel() {
     val selected = MutableLiveData<String>()

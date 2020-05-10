@@ -1,22 +1,17 @@
 package com.example.rehat.rvlistmateri
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.rehat.R
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Picasso.LoadedFrom
 import kotlinx.android.synthetic.main.list_materi.view.*
 
 
-class Adapter(private val list:ArrayList<Materi>) : RecyclerView.Adapter<Adapter.Holder>(){
+class Adapter(private val list:ArrayList<Materi>) : androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>(){
 
-    class Holder(val view: View) : RecyclerView.ViewHolder(view)
+    class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(

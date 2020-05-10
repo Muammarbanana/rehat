@@ -62,4 +62,5 @@
     <string name="masukkan_nama_lengkap_suara">Masukkan nama lengkap menggunakan suara</string>
     <string name="masukkan_sandi_ulang_suara">Masukkan ulang kata sandi menggunakan suara</string>
     <string name="cari_materi_dengan_suara">Cari materi berdasarkan judul menggunakan suara</string>
+    <string name="kembali_ke_halaman_memilih_konselor">kembali ke halaman memilih konselor</string>
 </resources>
