@@ -335,7 +335,7 @@
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tempat Konsultasi"
+                    android:text="@string/tempat_konsultasi"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/guideline129"

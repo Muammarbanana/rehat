@@ -12,7 +12,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".KonsultasiOnline"></activity>
+        <activity android:name=".BuatJanji"></activity>
+        <activity android:name=".KonsultasiOnline" />
         <activity android:name=".ProfilKonselor" />
         <activity
                 android:name=".Home"

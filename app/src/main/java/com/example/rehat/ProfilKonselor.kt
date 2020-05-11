@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.squareup.picasso.Picasso
@@ -19,6 +20,13 @@ class ProfilKonselor : AppCompatActivity() {
 
         ikonBackKonselor.setOnClickListener {
             finish()
+        }
+
+        btnJanji.setOnClickListener {
+            val intent = Intent(this, BuatJanji::class.java)
+            intent.putExtra("Nama", namaKonselor.text.toString())
+            intent.putExtra("Lokasi", textLokasi.text.toString())
+            startActivity(intent)
         }
     }
 }
