@@ -51,7 +51,8 @@ class KonselorFragment : Fragment() {
                         val tempat = h.child("tempat").value.toString()
                         val spesialis = h.child("spesialis").value.toString()
                         val urlfoto = h.child("url_foto").value.toString()
-                        daftarKonselor.add(Konselor(nama, spesialis, tempat, urlfoto))
+                        val bio = h.child("bio").value.toString()
+                        daftarKonselor.add(Konselor(nama, spesialis, tempat, urlfoto, bio))
                     }
                     val adapter = Adapter(daftarKonselor)
                     adapter.notifyDataSetChanged()

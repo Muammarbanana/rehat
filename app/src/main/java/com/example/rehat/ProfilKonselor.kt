@@ -15,6 +15,7 @@ class ProfilKonselor : AppCompatActivity() {
         textSpesialisasi.text = intent.getStringExtra("Spesialisasi")
         textLokasi.text = intent.getStringExtra("Lokasi")
         Picasso.get().load(intent.getStringExtra("Foto")).into(fotoKonselor)
+        textBio.text = intent.getStringExtra("Bio")
 
         ikonBackKonselor.setOnClickListener {
             finish()

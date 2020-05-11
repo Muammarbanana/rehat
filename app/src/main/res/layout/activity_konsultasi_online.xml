@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3F4FA"
+        tools:context=".KonsultasiOnline">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintBottom_toTopOf="@+id/guideline145"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+            android:id="@+id/ikonBackChat"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+            app:layout_constraintStart_toStartOf="@+id/toolbar2"
+            app:layout_constraintTop_toTopOf="@+id/toolbar2"
+            app:srcCompat="@drawable/ic_small_arrow" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline145"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.0779" />
+
+    <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/konsultasi_online"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/pesan_konselor"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ikonBackChat"
+            app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline146"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1527" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline147"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8472" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline148"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0667" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline149"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9333" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline150"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0444" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline151"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9556" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline152"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2321" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline153"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5285" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline154"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5616" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline155"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6623" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline156"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7142" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline157"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7857" />
+
+    <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/ilustrasi_menggambarkan_tidak_adanya_percakapan"
+            app:layout_constraintBottom_toTopOf="@+id/guideline153"
+            app:layout_constraintEnd_toStartOf="@+id/guideline147"
+            app:layout_constraintStart_toStartOf="@+id/guideline146"
+            app:layout_constraintTop_toTopOf="@+id/guideline152"
+            app:srcCompat="@drawable/img_chat" />
+
+    <TextView
+            android:id="@+id/textView12"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/teks_chat_kosong"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline155"
+            app:layout_constraintEnd_toStartOf="@+id/guideline149"
+            app:layout_constraintStart_toStartOf="@+id/guideline148"
+            app:layout_constraintTop_toTopOf="@+id/guideline154" />
+
+    <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_button_green_borderless"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/memilih_konselor"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline157"
+            app:layout_constraintEnd_toStartOf="@+id/guideline151"
+            app:layout_constraintStart_toStartOf="@+id/guideline150"
+            app:layout_constraintTop_toTopOf="@+id/guideline156" />
+</androidx.constraintlayout.widget.ConstraintLayout>

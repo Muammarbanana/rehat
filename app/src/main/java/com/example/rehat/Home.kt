@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,6 +30,10 @@ class Home : AppCompatActivity() {
                 tabsMain.getTabAt(0)?.select()
             }
         })
+
+        tombolChat.setOnClickListener {
+            startActivity(Intent(this, KonsultasiOnline::class.java))
+        }
 
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{

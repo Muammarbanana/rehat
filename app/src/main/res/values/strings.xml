@@ -63,4 +63,8 @@
     <string name="masukkan_sandi_ulang_suara">Masukkan ulang kata sandi menggunakan suara</string>
     <string name="cari_materi_dengan_suara">Cari materi berdasarkan judul menggunakan suara</string>
     <string name="kembali_ke_halaman_memilih_konselor">kembali ke halaman memilih konselor</string>
+    <string name="teks_chat_kosong">Kamu tidak sedang melakukan konsultasi online saat ini, yuk kenalan dulu dengan Konselor kami siapatau cocok :)</string>
+    <string name="pesan_konselor">Pesan Konselor</string>
+    <string name="konsultasi_online">Konsultasi Online</string>
+    <string name="ilustrasi_menggambarkan_tidak_adanya_percakapan">ilustrasi menggambarkan tidak adanya percakapan</string>
 </resources>
