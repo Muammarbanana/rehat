@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_konsultasi_online.*
@@ -12,6 +13,12 @@ class KonsultasiOnline : AppCompatActivity() {
 
         ikonBackChat.setOnClickListener {
             finish()
+        }
+
+        btnPilihKonselor.setOnClickListener {
+            val intent = Intent(this, Home::class.java)
+            intent.putExtra("DataTabChat", "2")
+            startActivity(intent)
         }
     }
 }

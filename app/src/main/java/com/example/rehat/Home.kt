@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
@@ -30,6 +31,11 @@ class Home : AppCompatActivity() {
                 tabsMain.getTabAt(0)?.select()
             }
         })
+
+        if (intent.extras != null) {
+            val nomorTab = intent.getStringExtra("DataTabChat")
+            tabsMain.getTabAt(nomorTab.toInt())?.select()
+        }
 
         tombolChat.setOnClickListener {
             startActivity(Intent(this, KonsultasiOnline::class.java))
