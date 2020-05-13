@@ -17,6 +17,7 @@ class ProfilKonselor : AppCompatActivity() {
         textLokasi.text = intent.getStringExtra("Lokasi")
         Picasso.get().load(intent.getStringExtra("Foto")).into(fotoKonselor)
         textBio.text = intent.getStringExtra("Bio")
+        val id = intent.getStringExtra("Id")
 
         ikonBackKonselor.setOnClickListener {
             finish()
@@ -26,6 +27,7 @@ class ProfilKonselor : AppCompatActivity() {
             val intent = Intent(this, BuatJanji::class.java)
             intent.putExtra("Nama", namaKonselor.text.toString())
             intent.putExtra("Lokasi", textLokasi.text.toString())
+            intent.putExtra("Id", id)
             startActivity(intent)
         }
     }

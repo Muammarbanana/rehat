@@ -34,6 +34,7 @@ class Adapter(private val list:ArrayList<Konselor>) : androidx.recyclerview.widg
         Picasso.get().load(list[position].urlfoto).resize(300,375).into(holder.view.fotoKonselor)
         holder.view.btnLihatProfil.setOnClickListener {
             val intent = Intent(holder.view.context, ProfilKonselor::class.java)
+            intent.putExtra("Id", list[position].id)
             intent.putExtra("Nama", list[position].nama)
             intent.putExtra("Spesialisasi", list[position].profesi)
             intent.putExtra("Lokasi", list[position].lokasi)

@@ -19,6 +19,7 @@ class KonsultasiOnline : AppCompatActivity() {
             val intent = Intent(this, Home::class.java)
             intent.putExtra("DataTabChat", "2")
             startActivity(intent)
+            finish()
         }
     }
 }

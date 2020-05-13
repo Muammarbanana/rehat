@@ -108,40 +108,4 @@ class Registrasi : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-    override fun onResume() {
-        super.onResume()
-        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        val dataElemen = listOf(
-            regisNamaLengkap,
-            editTextNamaLengkap,
-            imgMicrophone3,
-            regisNamaPengguna,
-            editTextNamaPengguna,
-            imgMicrophone4,
-            regisEmail,
-            editTextEmail,
-            imgMicrophone5,
-            regisKataSandi,
-            editTextKataSandi1,
-            imgMicrophone6,
-            regisKonfirmasiKataSandi,
-            editTextKonfirmasiKataSandi,
-            imgMicrophone7,
-            regisJaminan
-        )
-        var task: Runnable
-        var orderTime = longArrayOf(5, 7, 22, 28, 30, 45, 51, 53, 69, 75, 77, 93, 99, 101, 117, 123)
-        var loopCount = 0
-        for (x in dataElemen) {
-            if (loopCount == 0 || loopCount == 3 || loopCount == 6 || loopCount == 9 || loopCount == 12 || loopCount == 15) {
-                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED) }
-            } else {
-                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED) }
-                x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SCROLLED)
-            }
-            worker.schedule(task, orderTime[loopCount], TimeUnit.SECONDS)
-            loopCount += 1
-        }
-    }
 }

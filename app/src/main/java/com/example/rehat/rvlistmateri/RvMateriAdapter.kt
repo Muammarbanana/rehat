@@ -1,7 +1,5 @@
 package com.example.rehat.rvlistmateri
 
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +24,12 @@ class Adapter(private val list:ArrayList<Materi>) : androidx.recyclerview.widget
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.view.judulMateri.text = list[position].judul
         holder.view.subJudul.text = list[position].subJudul
-        holder.view.cardMateri.setCardBackgroundColor(ContextCompat.getColor(holder.view.context,list[position].warna))
+        when(list[position].background) {
+            1 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_1)
+            2 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_2)
+            3 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_3)
+            4 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_4)
+            else -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_5)
+        }
     }
 }

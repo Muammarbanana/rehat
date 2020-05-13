@@ -282,8 +282,58 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
+            android:padding="16dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline174"
             app:layout_constraintEnd_toStartOf="@+id/guideline160"
             app:layout_constraintStart_toStartOf="@+id/guideline159"
             app:layout_constraintTop_toTopOf="@+id/guideline173" />
+
+    <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Pilih Hari"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline160"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline159"
+            app:layout_constraintTop_toTopOf="@+id/guideline167" />
+
+    <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Pilih Waktu"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline160"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline159"
+            app:layout_constraintTop_toTopOf="@+id/guideline169" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHari"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/guideline168"
+            app:layout_constraintEnd_toStartOf="@+id/guideline160"
+            app:layout_constraintStart_toStartOf="@+id/guideline159"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvWaktu"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline170"
+            app:layout_constraintEnd_toStartOf="@+id/guideline160"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline159"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
 </androidx.constraintlayout.widget.ConstraintLayout>

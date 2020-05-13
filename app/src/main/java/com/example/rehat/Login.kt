@@ -139,23 +139,4 @@ class Login : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-    override fun onPostResume() {
-        super.onPostResume()
-        // Mengatur urutan talkback
-        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        val dataElemen = listOf(loginNamaPengguna, editTextNamaPengguna, imgMicrophone1, loginKataSandi, editTextKataSandi, imgMicrophone2, loginLupaKataSandi)
-        var task: Runnable
-        var orderTime = longArrayOf(4, 6, 21, 27, 29, 44, 50)
-        var loopCount = 0
-        for (x in dataElemen) {
-            if (loopCount == 0 || loopCount == 3 || loopCount == 6) {
-                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED) }
-            } else {
-                task = Runnable { x.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED) }
-            }
-            worker.schedule(task, orderTime[loopCount], TimeUnit.SECONDS)
-            loopCount += 1
-        }
-    }
 }

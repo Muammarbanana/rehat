@@ -12,9 +12,17 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".BuatJanji"></activity>
-        <activity android:name=".KonsultasiOnline" />
-        <activity android:name=".ProfilKonselor" />
+        <activity
+                android:name=".BuatJanji"
+                android:theme="@style/AppThemeWhite"
+                android:windowSoftInputMode="adjustNothing" />
+        <activity
+                android:name=".KonsultasiOnline"
+                android:theme="@style/AppThemeWhite"
+                android:windowSoftInputMode="adjustNothing" />
+        <activity
+                android:name=".ProfilKonselor"
+                android:theme="@style/AppThemeWhite" />
         <activity
                 android:name=".Home"
                 android:theme="@style/AppThemeWhite"

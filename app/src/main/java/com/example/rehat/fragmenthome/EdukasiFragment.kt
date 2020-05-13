@@ -47,14 +47,13 @@ class EdukasiFragment : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                ref2 = FirebaseDatabase.getInstance().getReference("submateri")
                 if(p0.exists()) {
                     var i = 1
                     for(h in p0.children) {
                         val judul = h.child("judul").value.toString()
                         val sub = h.child("jumlahsub").value.toString()
                         val background = h.child("background").value.toString()
-                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", R.color.colorDarkBlue))
+                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", background.toInt()))
                         i += 1
                     }
                     val adapter = Adapter(daftarMateri)
