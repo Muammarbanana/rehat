@@ -12,6 +12,9 @@ import com.example.rehat.rvlisthari.AdapterWaktu
 import com.example.rehat.rvlisthari.Hari
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BuatJanji : AppCompatActivity() {
 
@@ -47,21 +50,9 @@ class BuatJanji : AppCompatActivity() {
 
         rvHari.setHasFixedSize(true)
         rvHari.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        /*val dataHari = arrayListOf<Hari>()
-
-        for (h in 0..2) {
-            dataHari.add(Hari(hari[h], tanggal[h]))
-        }
-        val adapter = Adapter(dataHari)
-        adapter.notifyDataSetChanged()
-        rvHari.adapter = adapter*/
 
         rvWaktu.setHasFixedSize(true)
         rvWaktu.layoutManager = GridLayoutManager(this, 4)
-
-        /*val adapterwaktu = AdapterWaktu(waktu)
-        adapterwaktu.notifyDataSetChanged()
-        rvWaktu.adapter = adapterwaktu*/
 
         getDataJadwal(id.toDouble())
 
@@ -84,7 +75,7 @@ class BuatJanji : AppCompatActivity() {
                     for (h in p0.children) {
                         val hari = h.child("hari").value.toString()
                         val jam = h.child("jam").value.toString()
-                        daftarHari.add(Hari(hari, "nul"))
+                        daftarHari.add(Hari(hari, getDate(hari.toInt())))
                         daftarJam.add(jam)
                     }
                     val adapter = Adapter(ArrayList(daftarHari.distinct()))
@@ -96,5 +87,23 @@ class BuatJanji : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun getDate(hari: Int): String {
+        var finalDate = String()
+        val sCalendar = Calendar.getInstance()
+        sCalendar.add(Calendar.DATE,7)
+        val c = GregorianCalendar()
+        while (c.time.before(Date(sCalendar.timeInMillis))) {
+            val formatter = SimpleDateFormat("dd/MM/yyyy")
+            c.add(Calendar.DAY_OF_MONTH, 1)
+            val today = formatter.format(c.time)
+            val tanggal = c.get(Calendar.DAY_OF_WEEK)
+            Log.d("Tanggal", "$tanggal")
+            if (tanggal == hari) {
+                finalDate = today
+            }
+        }
+        return finalDate
     }
 }
