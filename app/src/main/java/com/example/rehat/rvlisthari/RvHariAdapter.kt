@@ -1,5 +1,6 @@
 package com.example.rehat.rvlisthari
 
+import android.graphics.Color
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,15 +29,23 @@ class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.Re
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.view.teksHari.text = toDay(list[position].hari.toInt())
         val formatter = SimpleDateFormat("dd/MM/yyyy")
-        var tgl: Date
-        if (list[position].tanggal != "") {
-            tgl = formatter.parse(list[position].tanggal)
-        } else {
-            tgl = formatter.parse("01/01/1997")
-        }
+        var tgl = Date()
         val bulan = DateFormat.format("MM", tgl).toString()
         val hari = DateFormat.format("dd", tgl)
         holder.view.teksTanggal.text = "$hari ${toMonth(bulan.toInt())}"
+        holder.view.constHari.setOnClickListener {
+            if (list[position].value == 0) {
+                list[position].value = 1
+                holder.view.constHari.setBackgroundResource(R.drawable.rounded_button_green_borderless)
+                holder.view.teksHari.setTextColor(Color.parseColor("#FFFFFF"))
+                holder.view.teksTanggal.setTextColor(Color.parseColor("#FFFFFF"))
+            } else {
+                list[position].value = 0
+                holder.view.constHari.setBackgroundColor(Color.parseColor("#F3F4FA"))
+                holder.view.teksHari.setTextColor(Color.parseColor("#172B4D"))
+                holder.view.teksTanggal.setTextColor(Color.parseColor("#172B4D"))
+            }
+        }
     }
 
     private fun toDay(value: Int): String {

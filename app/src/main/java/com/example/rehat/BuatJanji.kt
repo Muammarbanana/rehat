@@ -2,14 +2,13 @@ package com.example.rehat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rehat.rvlisthari.Adapter
-import com.example.rehat.rvlisthari.AdapterWaktu
+import com.example.rehat.rvlistwaktu.AdapterWaktu
 import com.example.rehat.rvlisthari.Hari
+import com.example.rehat.rvlistwaktu.Waktu
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
 import java.text.SimpleDateFormat
@@ -63,7 +62,7 @@ class BuatJanji : AppCompatActivity() {
 
     private fun getDataJadwal(id: Double) {
         val daftarHari = arrayListOf<Hari>()
-        val daftarJam = arrayListOf<String>()
+        val daftarJam = arrayListOf<Waktu>()
         ref = FirebaseDatabase.getInstance().getReference("jadwal")
         ref.orderByChild("id_konselor").equalTo(id).addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -75,11 +74,14 @@ class BuatJanji : AppCompatActivity() {
                     for (h in p0.children) {
                         val hari = h.child("hari").value.toString()
                         val jam = h.child("jam").value.toString()
-                        daftarHari.add(Hari(hari, getDate(hari.toInt())))
-                        daftarJam.add(jam)
+                        daftarHari.add(Hari(hari, getDate(hari.toInt()), 0))
+                        daftarJam.add(Waktu(jam, 0))
                     }
                     val adapter = Adapter(ArrayList(daftarHari.distinct()))
-                    val adapterWaktu = AdapterWaktu(ArrayList(daftarJam.distinct()))
+                    val adapterWaktu =
+                        AdapterWaktu(
+                            ArrayList(daftarJam.distinct())
+                        )
                     adapter.notifyDataSetChanged()
                     adapterWaktu.notifyDataSetChanged()
                     rvHari.adapter = adapter
