@@ -3,12 +3,17 @@ package com.example.rehat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.AsyncListUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rehat.rvlisthari.Adapter
 import com.example.rehat.rvlistwaktu.AdapterWaktu
 import com.example.rehat.rvlisthari.Hari
 import com.example.rehat.rvlistwaktu.Waktu
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
 import java.text.SimpleDateFormat
@@ -17,31 +22,13 @@ import kotlin.collections.ArrayList
 
 class BuatJanji : AppCompatActivity() {
 
-    val hari = listOf(
-        "Senin",
-        "Selasa",
-        "Rabu"
-    )
-
-    val tanggal = listOf(
-        "02 Mei",
-        "03 Mei",
-        "04 Mei"
-    )
-
-    val waktu = arrayListOf(
-        "08.00",
-        "12.00",
-        "14.00",
-        "16.00",
-        "18.00"
-    )
-
     private lateinit var ref : DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buat_janji)
+        auth = FirebaseAuth.getInstance()
 
         janjiNamaKonselor.text = intent.getStringExtra("Nama")
         lokasiJanji.text = intent.getStringExtra("Lokasi")
@@ -58,13 +45,57 @@ class BuatJanji : AppCompatActivity() {
         ikonBackJanji.setOnClickListener {
             finish()
         }
+
+        btnBikinJanji.setOnClickListener {
+
+        }
+
+        btnBikinJanji.setOnClickListener {
+            ref = FirebaseDatabase.getInstance().getReference("janji")
+            val jum = rvHari.adapter?.itemCount
+            val jmljam = rvWaktu.adapter?.itemCount
+            var teks: Int; var tanggal = ""; var jam = ""
+            for (i in 0 until jum!!) {
+                teks = rvHari
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksHari)
+                    ?.currentTextColor!!
+                if (teks == -1) {
+                    tanggal = rvHari
+                        .findViewHolderForAdapterPosition(i)
+                        ?.itemView
+                        ?.findViewById<TextView>(R.id.teksTanggal)
+                        ?.text.toString()
+                    break
+                }
+            }
+            for (i in 0 until jmljam!!) {
+                teks = rvWaktu
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksJam)
+                    ?.currentTextColor!!
+                if (teks == -1) {
+                    jam = rvWaktu
+                        .findViewHolderForAdapterPosition(i)
+                        ?.itemView
+                        ?.findViewById<TextView>(R.id.teksJam)
+                        ?.text.toString()
+                }
+            }
+            val catatan = editTextCatatan.text.toString()
+            ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id))
+            Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun getDataJadwal(id: Double) {
-        val daftarHari = arrayListOf<Hari>()
+        var daftarHari = arrayListOf<Hari>()
         val daftarJam = arrayListOf<Waktu>()
         ref = FirebaseDatabase.getInstance().getReference("jadwal")
-        ref.orderByChild("id_konselor").equalTo(id).addValueEventListener(object: ValueEventListener {
+        ref.orderByChild("id_konselor").equalTo(id).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -77,11 +108,10 @@ class BuatJanji : AppCompatActivity() {
                         daftarHari.add(Hari(hari, getDate(hari.toInt()), 0))
                         daftarJam.add(Waktu(jam, 0))
                     }
-                    val adapter = Adapter(ArrayList(daftarHari.distinct()))
-                    val adapterWaktu =
-                        AdapterWaktu(
-                            ArrayList(daftarJam.distinct())
-                        )
+                    daftarHari = daftarHari.distinct() as ArrayList<Hari>
+                    daftarHari.sortBy { it.tanggal }
+                    val adapter = Adapter(ArrayList(daftarHari))
+                    val adapterWaktu = AdapterWaktu(ArrayList(daftarJam.distinct()))
                     adapter.notifyDataSetChanged()
                     adapterWaktu.notifyDataSetChanged()
                     rvHari.adapter = adapter
@@ -97,14 +127,16 @@ class BuatJanji : AppCompatActivity() {
         sCalendar.add(Calendar.DATE,7)
         val c = GregorianCalendar()
         while (c.time.before(Date(sCalendar.timeInMillis))) {
-            val formatter = SimpleDateFormat("dd/MM/yyyy")
-            c.add(Calendar.DAY_OF_MONTH, 1)
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val today = formatter.format(c.time)
+            Log.d("Now", "${c.time}")
             val tanggal = c.get(Calendar.DAY_OF_WEEK)
-            Log.d("Tanggal", "$tanggal")
+            val namatanggal = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
+            Log.d("Tanggal", "$namatanggal")
             if (tanggal == hari) {
                 finalDate = today
             }
+            c.add(Calendar.DAY_OF_MONTH, 1)
         }
         return finalDate
     }

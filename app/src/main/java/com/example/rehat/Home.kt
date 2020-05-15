@@ -61,10 +61,10 @@ class Home : AppCompatActivity() {
 
     // set ikon pada tab
     fun setupTabIcons() {
-        tabsMain.getTabAt(0)?.setIcon(R.drawable.tab_selector_edukasi)
-        tabsMain.getTabAt(1)?.setIcon(R.drawable.tab_selector_halaman_tersimpan)
-        tabsMain.getTabAt(2)?.setIcon(R.drawable.tab_selector_konsultasi)
-        tabsMain.getTabAt(3)?.setIcon(R.drawable.tab_selector_notifikasi)
-        tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)
+        tabsMain.getTabAt(0)?.setIcon(R.drawable.tab_selector_edukasi)?.contentDescription = "Edukasi"
+        tabsMain.getTabAt(1)?.setIcon(R.drawable.tab_selector_halaman_tersimpan)?.contentDescription = "Materi Tersimpan"
+        tabsMain.getTabAt(2)?.setIcon(R.drawable.tab_selector_konsultasi)?.contentDescription = "Konsultasi"
+        tabsMain.getTabAt(3)?.setIcon(R.drawable.tab_selector_notifikasi)?.contentDescription = "Notifikasi"
+        tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)?.contentDescription = "Profil"
     }
 }

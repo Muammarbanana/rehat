@@ -275,7 +275,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline175" />
 
     <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editTextCatatan"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/rounded_button"
@@ -283,6 +283,7 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:padding="16dp"
+            android:textColor="@color/colorBlack"
             app:layout_constraintBottom_toTopOf="@+id/guideline174"
             app:layout_constraintEnd_toStartOf="@+id/guideline160"
             app:layout_constraintStart_toStartOf="@+id/guideline159"

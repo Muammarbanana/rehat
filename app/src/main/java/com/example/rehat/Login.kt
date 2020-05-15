@@ -62,7 +62,7 @@ class Login : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            startActivity(Intent(this,Home::class.java))
+            startActivity(Intent(this, Home::class.java))
             finish()
         }
     }

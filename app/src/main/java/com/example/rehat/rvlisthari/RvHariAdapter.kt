@@ -29,7 +29,7 @@ class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.Re
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.view.teksHari.text = toDay(list[position].hari.toInt())
         val formatter = SimpleDateFormat("dd/MM/yyyy")
-        var tgl = Date()
+        var tgl = formatter.parse(list[position].tanggal)
         val bulan = DateFormat.format("MM", tgl).toString()
         val hari = DateFormat.format("dd", tgl)
         holder.view.teksTanggal.text = "$hari ${toMonth(bulan.toInt())}"
@@ -48,16 +48,18 @@ class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.Re
         }
     }
 
+    private fun getData() : ArrayList<Hari> = list
+
     private fun toDay(value: Int): String {
         var hari : String
         when (value) {
-            1 -> hari = "Senin"
-            2 -> hari = "Selasa"
-            3 -> hari = "Rabu"
-            4 -> hari = "Kamis"
-            5 -> hari = "Jumat"
-            6 -> hari = "Sabtu"
-            else -> hari = "Minggu"
+            1 -> hari = "Minggu"
+            2 -> hari = "Senin"
+            3 -> hari = "Selasa"
+            4 -> hari = "Rabu"
+            5 -> hari = "Kamis"
+            6 -> hari = "Jumat"
+            else -> hari = "Sabtu"
         }
         return hari
     }
