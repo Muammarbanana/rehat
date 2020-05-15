@@ -15,7 +15,7 @@
         <activity
                 android:name=".BuatJanji"
                 android:theme="@style/AppThemeWhite"
-                android:windowSoftInputMode="adjustNothing" />
+                android:windowSoftInputMode="adjustPan" />
         <activity
                 android:name=".KonsultasiOnline"
                 android:theme="@style/AppThemeWhite"

@@ -475,6 +475,7 @@
                 android:layout_height="0dp"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
+                android:onClick="getBack"
                 app:layout_constraintBottom_toTopOf="@+id/guideline18"
                 app:layout_constraintEnd_toStartOf="@+id/guideline19"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"

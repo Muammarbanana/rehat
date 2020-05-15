@@ -31,6 +31,7 @@
             android:id="@+id/ikonBackJanji"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:onClick="getBack"
             app:layout_constraintBottom_toTopOf="@+id/guideline158"
             app:layout_constraintStart_toStartOf="@+id/toolbar3"
             app:layout_constraintTop_toTopOf="@+id/toolbar3"
@@ -331,7 +332,7 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWaktu"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline170"
             app:layout_constraintEnd_toStartOf="@+id/guideline160"

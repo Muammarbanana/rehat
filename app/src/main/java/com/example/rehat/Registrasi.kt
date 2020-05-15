@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -107,5 +108,10 @@ class Registrasi : AppCompatActivity() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    // Fungsi klik
+    private fun getBack(view: View) {
+        finish()
     }
 }

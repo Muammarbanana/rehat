@@ -43,10 +43,6 @@ class BuatJanji : AppCompatActivity() {
         rvWaktu.layoutManager = GridLayoutManager(this, 4)
 
         getDataJadwal(id.toDouble())
-
-        ikonBackJanji.setOnClickListener {
-            finish()
-        }
     }
 
     private fun getDataJadwal(id: Double) {
@@ -100,7 +96,6 @@ class BuatJanji : AppCompatActivity() {
     }
 
     // Fungsi Klik
-
     private fun buatJanji(view: View) {
         ref = FirebaseDatabase.getInstance().getReference("janji")
         val jum = rvHari.adapter?.itemCount
@@ -140,4 +135,9 @@ class BuatJanji : AppCompatActivity() {
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         finish()
     }
+
+    private fun getBack(view: View) {
+        finish()
+    }
+
 }

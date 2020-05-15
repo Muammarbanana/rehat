@@ -3,6 +3,7 @@ package com.example.rehat
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profil_konselor.*
 
@@ -19,10 +20,6 @@ class ProfilKonselor : AppCompatActivity() {
         textBio.text = intent.getStringExtra("Bio")
         val id = intent.getStringExtra("Id")
 
-        ikonBackKonselor.setOnClickListener {
-            finish()
-        }
-
         btnJanji.setOnClickListener {
             val intent = Intent(this, BuatJanji::class.java)
             intent.putExtra("Nama", namaKonselor.text.toString())
@@ -30,5 +27,11 @@ class ProfilKonselor : AppCompatActivity() {
             intent.putExtra("Id", id)
             startActivity(intent)
         }
+    }
+
+    // Fungsi klik
+
+    private fun getBack(view: View) {
+        finish()
     }
 }
