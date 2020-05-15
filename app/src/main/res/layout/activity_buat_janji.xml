@@ -269,6 +269,7 @@
             android:background="@drawable/rounded_button_green_borderless"
             android:text="Kirim Permohonan Janji"
             android:textAllCaps="false"
+            android:onClick="buatJanji"
             app:layout_constraintBottom_toTopOf="@+id/guideline176"
             app:layout_constraintEnd_toStartOf="@+id/guideline160"
             app:layout_constraintStart_toStartOf="@+id/guideline159"

@@ -3,6 +3,7 @@ package com.example.rehat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +25,7 @@ class BuatJanji : AppCompatActivity() {
 
     private lateinit var ref : DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +34,7 @@ class BuatJanji : AppCompatActivity() {
 
         janjiNamaKonselor.text = intent.getStringExtra("Nama")
         lokasiJanji.text = intent.getStringExtra("Lokasi")
-        val id = intent.getStringExtra("Id")
+        id = intent.getStringExtra("Id")
 
         rvHari.setHasFixedSize(true)
         rvHari.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -43,50 +45,6 @@ class BuatJanji : AppCompatActivity() {
         getDataJadwal(id.toDouble())
 
         ikonBackJanji.setOnClickListener {
-            finish()
-        }
-
-        btnBikinJanji.setOnClickListener {
-
-        }
-
-        btnBikinJanji.setOnClickListener {
-            ref = FirebaseDatabase.getInstance().getReference("janji")
-            val jum = rvHari.adapter?.itemCount
-            val jmljam = rvWaktu.adapter?.itemCount
-            var teks: Int; var tanggal = ""; var jam = ""
-            for (i in 0 until jum!!) {
-                teks = rvHari
-                    .findViewHolderForAdapterPosition(i)
-                    ?.itemView
-                    ?.findViewById<TextView>(R.id.teksHari)
-                    ?.currentTextColor!!
-                if (teks == -1) {
-                    tanggal = rvHari
-                        .findViewHolderForAdapterPosition(i)
-                        ?.itemView
-                        ?.findViewById<TextView>(R.id.teksTanggal)
-                        ?.text.toString()
-                    break
-                }
-            }
-            for (i in 0 until jmljam!!) {
-                teks = rvWaktu
-                    .findViewHolderForAdapterPosition(i)
-                    ?.itemView
-                    ?.findViewById<TextView>(R.id.teksJam)
-                    ?.currentTextColor!!
-                if (teks == -1) {
-                    jam = rvWaktu
-                        .findViewHolderForAdapterPosition(i)
-                        ?.itemView
-                        ?.findViewById<TextView>(R.id.teksJam)
-                        ?.text.toString()
-                }
-            }
-            val catatan = editTextCatatan.text.toString()
-            ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id))
-            Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -139,5 +97,47 @@ class BuatJanji : AppCompatActivity() {
             c.add(Calendar.DAY_OF_MONTH, 1)
         }
         return finalDate
+    }
+
+    // Fungsi Klik
+
+    private fun buatJanji(view: View) {
+        ref = FirebaseDatabase.getInstance().getReference("janji")
+        val jum = rvHari.adapter?.itemCount
+        val jmljam = rvWaktu.adapter?.itemCount
+        var teks: Int; var tanggal = ""; var jam = ""
+        for (i in 0 until jum!!) {
+            teks = rvHari
+                .findViewHolderForAdapterPosition(i)
+                ?.itemView
+                ?.findViewById<TextView>(R.id.teksHari)
+                ?.currentTextColor!!
+            if (teks == -1) {
+                tanggal = rvHari
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksTanggal)
+                    ?.text.toString()
+                break
+            }
+        }
+        for (i in 0 until jmljam!!) {
+            teks = rvWaktu
+                .findViewHolderForAdapterPosition(i)
+                ?.itemView
+                ?.findViewById<TextView>(R.id.teksJam)
+                ?.currentTextColor!!
+            if (teks == -1) {
+                jam = rvWaktu
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksJam)
+                    ?.text.toString()
+            }
+        }
+        val catatan = editTextCatatan.text.toString()
+        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id))
+        Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
+        finish()
     }
 }

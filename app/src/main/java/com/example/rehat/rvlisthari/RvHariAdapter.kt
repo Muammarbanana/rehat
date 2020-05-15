@@ -14,6 +14,8 @@ import kotlin.collections.ArrayList
 
 class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>() {
 
+    private var selectedItemPosition = -1
+
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.Holder {
@@ -32,23 +34,25 @@ class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.Re
         var tgl = formatter.parse(list[position].tanggal)
         val bulan = DateFormat.format("MM", tgl).toString()
         val hari = DateFormat.format("dd", tgl)
+        if (position != selectedItemPosition) {
+            holder.view.constHari.setBackgroundColor(Color.parseColor("#F3F4FA"))
+            holder.view.teksHari.setTextColor(Color.parseColor("#172B4D"))
+            holder.view.teksTanggal.setTextColor(Color.parseColor("#172B4D"))
+        } else {
+            holder.view.constHari.setBackgroundResource(R.drawable.rounded_button_green_borderless)
+            holder.view.teksHari.setTextColor(Color.parseColor("#FFFFFF"))
+            holder.view.teksTanggal.setTextColor(Color.parseColor("#FFFFFF"))
+        }
         holder.view.teksTanggal.text = "$hari ${toMonth(bulan.toInt())}"
         holder.view.constHari.setOnClickListener {
-            if (list[position].value == 0) {
-                list[position].value = 1
-                holder.view.constHari.setBackgroundResource(R.drawable.rounded_button_green_borderless)
-                holder.view.teksHari.setTextColor(Color.parseColor("#FFFFFF"))
-                holder.view.teksTanggal.setTextColor(Color.parseColor("#FFFFFF"))
-            } else {
-                list[position].value = 0
-                holder.view.constHari.setBackgroundColor(Color.parseColor("#F3F4FA"))
-                holder.view.teksHari.setTextColor(Color.parseColor("#172B4D"))
-                holder.view.teksTanggal.setTextColor(Color.parseColor("#172B4D"))
-            }
+            changeValueSelected(holder)
         }
     }
 
-    private fun getData() : ArrayList<Hari> = list
+    private fun changeValueSelected(holder: Holder) {
+        selectedItemPosition = holder.adapterPosition
+        notifyDataSetChanged()
+    }
 
     private fun toDay(value: Int): String {
         var hari : String
