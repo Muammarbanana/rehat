@@ -320,7 +320,7 @@
                     app:layout_constraintTop_toTopOf="@+id/guideline124" />
 
             <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/teksDaftarHari"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Senin - Rabu - Jumat"

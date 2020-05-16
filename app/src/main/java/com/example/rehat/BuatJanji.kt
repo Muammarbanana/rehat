@@ -93,10 +93,7 @@ class BuatJanji : AppCompatActivity() {
         while (c.time.before(Date(sCalendar.timeInMillis))) {
             val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val today = formatter.format(c.time)
-            Log.d("Now", "${c.time}")
             val tanggal = c.get(Calendar.DAY_OF_WEEK)
-            val namatanggal = c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
-            Log.d("Tanggal", "$namatanggal")
             if (tanggal == hari) {
                 finalDate = today
             }
