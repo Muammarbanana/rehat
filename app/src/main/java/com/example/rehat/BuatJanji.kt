@@ -163,6 +163,9 @@ class BuatJanji : AppCompatActivity() {
         val namadokter = janjiNamaKonselor.text.toString()
         ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id, 0, namadokter, address))
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, Home::class.java)
+        intent.putExtra("DataTabChat", "2")
+        startActivity(intent)
         finish()
     }
 
