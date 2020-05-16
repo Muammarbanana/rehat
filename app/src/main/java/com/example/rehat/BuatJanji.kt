@@ -159,7 +159,7 @@ class BuatJanji : AppCompatActivity() {
             }
         }
         val catatan = editTextCatatan.text.toString()
-        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id))
+        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id, 0))
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         finish()
     }
