@@ -267,6 +267,48 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/guideline201" />
 
+            <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline194"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline192"
+                    app:layout_constraintStart_toStartOf="@+id/guideline190"
+                    app:layout_constraintTop_toTopOf="@+id/guideline193"
+                    app:layout_constraintVertical_bias="0.05"
+                    app:srcCompat="@drawable/ic_lokasi" />
+
+            <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline196"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline192"
+                    app:layout_constraintStart_toStartOf="@+id/guideline190"
+                    app:layout_constraintTop_toTopOf="@+id/guideline195"
+                    app:srcCompat="@drawable/ic_calendar" />
+
+            <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline198"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline192"
+                    app:layout_constraintStart_toStartOf="@+id/guideline190"
+                    app:layout_constraintTop_toTopOf="@+id/guideline197"
+                    app:srcCompat="@drawable/ic_clock" />
+
+            <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline200"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline192"
+                    app:layout_constraintStart_toStartOf="@+id/guideline190"
+                    app:layout_constraintTop_toTopOf="@+id/guideline199"
+                    app:layout_constraintVertical_bias="0.04"
+                    app:srcCompat="@drawable/ic_writing" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
