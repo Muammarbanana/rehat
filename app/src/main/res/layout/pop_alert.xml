@@ -40,6 +40,20 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.5" />
 
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline181"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.0444" />
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9566" />
+
             <TextView
                     android:id="@+id/alertTitle"
                     android:layout_width="wrap_content"
@@ -57,20 +71,22 @@
 
             <TextView
                     android:id="@+id/alertText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="contoh teks"
                     android:textColor="@color/colorDarkBlue"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline177"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline180"
+                    app:layout_constraintStart_toStartOf="@+id/guideline181"
                     app:layout_constraintTop_toTopOf="@+id/guideline178" />
 
             <Button
                     android:id="@+id/btnCancel"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/rounded_background_white"
+                    android:background="@drawable/rounded_button_pop"
                     android:text="Batalkan"
                     android:textAllCaps="false"
                     android:textColor="@color/colorDarkBlue"
@@ -84,7 +100,7 @@
                     android:id="@+id/btnAccept"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="@drawable/rounded_background_white"
+                    android:background="@drawable/rounded_button_pop"
                     android:text="Ya, Yakin"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"

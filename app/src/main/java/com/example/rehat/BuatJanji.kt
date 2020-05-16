@@ -1,11 +1,14 @@
 package com.example.rehat
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.AsyncListUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +20,8 @@ import com.example.rehat.rvlistwaktu.Waktu
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
+import kotlinx.android.synthetic.main.pop_alert.*
+import kotlinx.android.synthetic.main.pop_alert.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,12 +40,17 @@ class BuatJanji : AppCompatActivity() {
         janjiNamaKonselor.text = intent.getStringExtra("Nama")
         lokasiJanji.text = intent.getStringExtra("Lokasi")
         id = intent.getStringExtra("Id")
+        val address = intent.getStringExtra("Alamat")
 
         rvHari.setHasFixedSize(true)
         rvHari.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         rvWaktu.setHasFixedSize(true)
         rvWaktu.layoutManager = GridLayoutManager(this, 4)
+
+        btnBikinJanji.setOnClickListener { popAlert() }
+
+        textLihatMaps.setOnClickListener { openMap(address) }
 
         getDataJadwal(id.toDouble())
     }
@@ -62,7 +72,7 @@ class BuatJanji : AppCompatActivity() {
                         daftarHari.add(Hari(hari, getDate(hari.toInt()), 0))
                         daftarJam.add(Waktu(jam, 0))
                     }
-                    daftarHari = daftarHari.distinct() as ArrayList<Hari>
+                    daftarHari = ArrayList(daftarHari.distinct())
                     daftarHari.sortBy { it.tanggal }
                     val adapter = Adapter(ArrayList(daftarHari))
                     val adapterWaktu = AdapterWaktu(ArrayList(daftarJam.distinct()))
@@ -95,8 +105,29 @@ class BuatJanji : AppCompatActivity() {
         return finalDate
     }
 
+    private fun popAlert() {
+        val dialog = AlertDialog.Builder(this).create()
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.pop_alert, null)
+        dialog.setView(dialogView)
+        dialog.setCancelable(true)
+        dialogView.alertText.text = "Apakah kamu yakin ingin mengirim permohonan konsultasi? Pastikan kamu telah mengisi jadwal dengan benar"
+        dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
+        dialogView.btnAccept.setOnClickListener {
+            buatJanji()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun openMap(address: String) {
+        val address = "http://maps.google.co.in/maps?q=$address"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(address))
+        this.startActivity(intent)
+    }
+
     // Fungsi Klik
-    private fun buatJanji(view: View) {
+    private fun buatJanji() {
         ref = FirebaseDatabase.getInstance().getReference("janji")
         val jum = rvHari.adapter?.itemCount
         val jmljam = rvWaktu.adapter?.itemCount
@@ -136,7 +167,7 @@ class BuatJanji : AppCompatActivity() {
         finish()
     }
 
-    private fun getBack(view: View) {
+    fun getBack(view: View) {
         finish()
     }
 

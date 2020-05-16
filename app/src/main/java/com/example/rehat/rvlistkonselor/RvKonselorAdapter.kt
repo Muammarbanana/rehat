@@ -40,6 +40,7 @@ class Adapter(private val list:ArrayList<Konselor>) : androidx.recyclerview.widg
             intent.putExtra("Lokasi", list[position].lokasi)
             intent.putExtra("Foto", list[position].urlfoto)
             intent.putExtra("Bio", list[position].bio)
+            intent.putExtra("Alamat", list[position].alamat)
             holder.view.context.startActivity(intent)
         }
     }

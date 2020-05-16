@@ -21,7 +21,7 @@ class KonsultasiOnline : AppCompatActivity() {
     }
 
     // Fungsi klik
-    private fun getBack(view: View) {
+    fun getBack(view: View) {
         finish()
     }
 }
