@@ -31,6 +31,7 @@ class BuatJanji : AppCompatActivity() {
     private lateinit var ref : DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var id: String
+    private lateinit var address: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class BuatJanji : AppCompatActivity() {
         janjiNamaKonselor.text = intent.getStringExtra("Nama")
         lokasiJanji.text = intent.getStringExtra("Lokasi")
         id = intent.getStringExtra("Id")
-        val address = intent.getStringExtra("Alamat")
+        address = intent.getStringExtra("Alamat")
 
         rvHari.setHasFixedSize(true)
         rvHari.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -159,7 +160,8 @@ class BuatJanji : AppCompatActivity() {
             }
         }
         val catatan = editTextCatatan.text.toString()
-        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id, 0))
+        val namadokter = janjiNamaKonselor.text.toString()
+        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id, 0, namadokter, address))
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         finish()
     }
@@ -167,5 +169,4 @@ class BuatJanji : AppCompatActivity() {
     fun getBack(view: View) {
         finish()
     }
-
 }

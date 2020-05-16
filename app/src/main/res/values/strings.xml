@@ -68,4 +68,7 @@
     <string name="konsultasi_online">Konsultasi Online</string>
     <string name="ilustrasi_menggambarkan_tidak_adanya_percakapan">ilustrasi menggambarkan tidak adanya percakapan</string>
     <string name="tempat_konsultasi">Tempat Konsultasi</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
