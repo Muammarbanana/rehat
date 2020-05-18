@@ -1,9 +1,11 @@
 package com.example.rehat.rvlistmateri
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.rehat.R
+import com.example.rehat.SubMateri
 import kotlinx.android.synthetic.main.list_materi.view.*
 
 
@@ -30,6 +32,13 @@ class Adapter(private val list:ArrayList<Materi>) : androidx.recyclerview.widget
             3 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_3)
             4 -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_4)
             else -> holder.view.cardConstraint.setBackgroundResource(R.drawable.card_5)
+        }
+        holder.view.cardConstraint.setOnClickListener{
+            val intent = Intent(holder.view.context, SubMateri::class.java)
+            intent.putExtra("Id_materi", list[position].materi_id)
+            intent.putExtra("Background", list[position].background.toString())
+            intent.putExtra("Judul", list[position].judul)
+            holder.view.context.startActivity(intent)
         }
     }
 }

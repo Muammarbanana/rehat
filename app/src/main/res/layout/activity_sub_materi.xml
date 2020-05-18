@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3F4FA"
+        tools:context=".SubMateri">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorBlue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+            android:id="@+id/ikonBackSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
+            android:onClick="getBack"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_small_arrow_white" />
+
+    <TextView
+            android:id="@+id/judulMateri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/judul"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="@id/toolbar"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/ikonBackSub"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline202"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1168" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline203"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1493" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline204"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1558" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline205"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1883" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline206"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2143" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline207"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0444" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline208"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9566" />
+
+    <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hai Calvin,"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline203"
+            app:layout_constraintEnd_toStartOf="@+id/guideline208"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline207"
+            app:layout_constraintTop_toTopOf="@+id/guideline202" />
+
+    <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ini materi yang bisa kamu pelajari"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline205"
+            app:layout_constraintEnd_toStartOf="@+id/guideline208"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline207"
+            app:layout_constraintTop_toTopOf="@+id/guideline204" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSubMateri"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline208"
+            app:layout_constraintStart_toStartOf="@+id/guideline207"
+            app:layout_constraintTop_toTopOf="@+id/guideline206" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,8 +36,6 @@ class KonsultasiFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_konsultasi, container, false)
 
-        Log.d("Cycle", "Ini onCreateView")
-
         auth = FirebaseAuth.getInstance()
 
         getDataJanji(view)
@@ -74,45 +72,5 @@ class KonsultasiFragment : Fragment() {
                 view.tabsKonsultasi.setupWithViewPager(view.viewPager2)
             }
         })
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        Log.d("Cycle", "ini onAttach")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("Cycle", "Ini onResume")
-        /*val manager = KonsultasiFragment().fragmentManager
-        val trans = manager?.beginTransaction()
-        trans?.remove(KonsultasiFragment())
-        trans?.commit()*/
-        //view?.let { getDataJanji(it) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Cycle", "Ini onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("Cycle", "Ini onStop")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("Cycle", "Ini onStart")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("Cycle", "Ini onDestroy")
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Log.d("Cycle", "Ini onActivityCreated")
     }
 }

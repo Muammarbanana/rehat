@@ -110,6 +110,25 @@
                     app:layout_constraintStart_toStartOf="@+id/guideline179"
                     app:layout_constraintTop_toTopOf="@+id/guideline177" />
 
+            <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGray"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline177"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                    android:id="@+id/view1"
+                    android:layout_width="0.5dp"
+                    android:layout_height="0dp"
+                    android:background="@color/colorGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline179"
+                    app:layout_constraintStart_toStartOf="@+id/guideline179"
+                    app:layout_constraintTop_toTopOf="@+id/guideline177" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

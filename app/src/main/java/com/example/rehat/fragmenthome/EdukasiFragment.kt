@@ -53,7 +53,8 @@ class EdukasiFragment : Fragment() {
                         val judul = h.child("judul").value.toString()
                         val sub = h.child("jumlahsub").value.toString()
                         val background = h.child("background").value.toString()
-                        daftarMateri.add(Materi("Chapter $i: $judul", "$sub Materi", background.toInt()))
+                        val materi_id = h.child("materi_id").value.toString()
+                        daftarMateri.add(Materi(materi_id,"Chapter $i: $judul", "$sub Materi", background.toInt()))
                         i += 1
                     }
                     val adapter = Adapter(daftarMateri)
