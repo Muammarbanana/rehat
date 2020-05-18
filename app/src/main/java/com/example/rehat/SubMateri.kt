@@ -25,17 +25,18 @@ class SubMateri : AppCompatActivity() {
 
         val id = intent.getStringExtra("Id_materi")
         val background = intent.getStringExtra("Background").toInt()
+        val backgroundcolor = getBackgroundColor(background)
         judulMateri.text = intent.getStringExtra("Judul")
 
-        toolbar.background = ColorDrawable(Color.parseColor(getBackgroundColor(background)))
+        toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))
         val window = this.window
-        window.statusBarColor = Color.parseColor(getBackgroundColor(background))
+        window.statusBarColor = Color.parseColor(backgroundcolor)
 
-        getDataSubMateri(id.toDouble())
+        getDataSubMateri(id.toDouble(), backgroundcolor)
 
     }
 
-    private fun getDataSubMateri(id: Double) {
+    private fun getDataSubMateri(id: Double, color: String) {
         val daftarSub = arrayListOf<SubMateri>()
         ref  = FirebaseDatabase.getInstance().getReference("submateri")
         ref.orderByChild("materi_id").equalTo(id).addValueEventListener(object: ValueEventListener{
@@ -47,8 +48,10 @@ class SubMateri : AppCompatActivity() {
                 if (p0.exists()) {
                     for (h in p0.children) {
                         val judul = h.child("judul").value.toString()
+                        val gambar = h.child("src_img").value.toString()
+                        val jenis = h.child("jenis").value.toString()
                         val isi = h.child("isi").value.toString()
-                        daftarSub.add(SubMateri(judul, isi))
+                        daftarSub.add(SubMateri(judul, gambar, jenis, isi, color))
                     }
                     val adapter = Adapter(daftarSub)
                     adapter.notifyDataSetChanged()

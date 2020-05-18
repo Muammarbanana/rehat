@@ -14,7 +14,7 @@
             app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardConstraint"
+                android:id="@+id/cardConstSubMateri"
                 android:layout_width="match_parent"
                 android:layout_height="71dp">
 
@@ -68,7 +68,7 @@
                     app:layout_constraintGuide_percent="0.8309" />
 
             <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/imgMateri"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toTopOf="@+id/guideline215"
