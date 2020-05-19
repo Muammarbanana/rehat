@@ -85,10 +85,10 @@
             android:src="@drawable/ic_add_photo"
             app:layout_constraintBottom_toTopOf="@+id/guideline227"
             app:layout_constraintEnd_toStartOf="@+id/guideline224"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.93"
             app:layout_constraintStart_toStartOf="@+id/guideline223"
             app:layout_constraintTop_toTopOf="@+id/guideline228"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.93" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
