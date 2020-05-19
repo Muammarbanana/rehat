@@ -12,7 +12,11 @@ import androidx.appcompat.app.AlertDialog
 import com.example.rehat.R
 import com.example.rehat.WelcomeScreen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.fragment_profile.view.profileName
 import kotlinx.android.synthetic.main.pop_alert.view.*
 
 /**
@@ -21,6 +25,7 @@ import kotlinx.android.synthetic.main.pop_alert.view.*
 class ProfileFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var ref: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +38,8 @@ class ProfileFragment : Fragment() {
         view.teksKeluar.setOnClickListener {
             popAlert(view)
         }
+        getName(view)
+
         return view
     }
 
@@ -60,6 +67,26 @@ class ProfileFragment : Fragment() {
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         view.context.startActivity(intent)
+    }
+
+    private fun getName(view: View) {
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val name = h.child("nama").value.toString()
+                        val photo = h.child("photo").value.toString()
+                        profileName.text = name
+                        Picasso.get().load(photo).into(profilPic)
+                    }
+                }
+            }
+        })
     }
 
 }

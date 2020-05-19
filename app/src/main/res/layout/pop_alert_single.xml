@@ -93,7 +93,7 @@
                     android:id="@+id/view"
                     android:layout_width="0dp"
                     android:layout_height="0.5dp"
-                    android:background="@color/colorGray"
+                    android:background="#F3F4FA"
                     app:layout_constraintBottom_toTopOf="@+id/guideline177"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
