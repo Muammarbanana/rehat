@@ -17,6 +17,7 @@ class IsiMateri : AppCompatActivity() {
         judulMateri.text = intent.getStringExtra("Judul")
         Picasso.get().load(intent.getStringExtra("Gambar")).resize(328,191).centerCrop().into(imgMateri)
         textIsi.text = intent.getStringExtra("Isi")
+        imgMateri.contentDescription = intent.getStringExtra("Desk")
         val backgroundcolor = intent.getStringExtra("Warna")
 
         toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))

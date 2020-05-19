@@ -38,6 +38,7 @@ class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.wid
             intent.putExtra("Gambar", list[position].gambar)
             intent.putExtra("Isi", list[position].isi)
             intent.putExtra("Warna", list[position].color)
+            intent.putExtra("Desk", list[position].desc)
             holder.view.context.startActivity(intent)
         }
     }
