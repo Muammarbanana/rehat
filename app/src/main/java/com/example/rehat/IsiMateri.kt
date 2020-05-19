@@ -20,17 +20,11 @@ class IsiMateri : AppCompatActivity() {
 
         judulMateri.text = intent.getStringExtra("Judul")
         Picasso.get().load(intent.getStringExtra("Gambar")).resize(328,191).centerCrop().into(imgMateri)
-        val isi = intent.getStringExtra("Isi")
+        val htmlString = intent.getStringExtra("Isi")
         imgMateri.contentDescription = intent.getStringExtra("Desk")
         val backgroundcolor = intent.getStringExtra("Warna")
-        val arrayisi = isi.split("\n").toTypedArray()
 
-        rvIsiMateri.setHasFixedSize(true)
-        rvIsiMateri.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        val adapter = Adapter(arrayisi)
-        adapter.notifyDataSetChanged()
-        rvIsiMateri.adapter = adapter
+        webView.loadData(htmlString, "text/html; charset=utf-8", "UTF-8");
 
         toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))
         val window = this.window
