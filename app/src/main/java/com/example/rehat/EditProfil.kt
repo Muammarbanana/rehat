@@ -76,7 +76,7 @@ class EditProfil : AppCompatActivity() {
             gender = radio.text.toString()
         }
 
-        if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty() || gender == "") {
+        if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty() || gender == "" || katasandi.isEmpty()) {
             Toast.makeText(this, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
         } else if (katasandi != katasandikon) {
             Toast.makeText(this, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
@@ -118,14 +118,16 @@ class EditProfil : AppCompatActivity() {
                         val email = h.child("email").value.toString()
                         val birth = h.child("birth").value.toString()
                         val arrdate = birth.split("-")
-                        day = arrdate[0].toInt()
-                        month = arrdate[1].toInt() - 1
-                        year = arrdate[2].toInt()
-                        val c = Calendar.getInstance()
-                        c.set(Calendar.YEAR, year)
-                        c.set(Calendar.MONTH, month)
-                        c.set(Calendar.DAY_OF_MONTH, day)
-                        btnDate.text = sdf.format(c.time)
+                        if (birth != "null") {
+                            day = arrdate[0].toInt()
+                            month = arrdate[1].toInt() - 1
+                            year = arrdate[2].toInt()
+                            val c = Calendar.getInstance()
+                            c.set(Calendar.YEAR, year)
+                            c.set(Calendar.MONTH, month)
+                            c.set(Calendar.DAY_OF_MONTH, day)
+                            btnDate.text = sdf.format(c.time)
+                        }
                         editTextNamaLengkap.setText(name)
                         editTextNamaPengguna.setText(username)
                         editTextEmail.setText(email)
