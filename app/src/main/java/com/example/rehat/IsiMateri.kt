@@ -24,7 +24,8 @@ class IsiMateri : AppCompatActivity() {
         imgMateri.contentDescription = intent.getStringExtra("Desk")
         val backgroundcolor = intent.getStringExtra("Warna")
 
-        webView.loadData(htmlString, "text/html; charset=utf-8", "UTF-8");
+        //webView.loadData(htmlString, "text/html; charset=utf-8", "UTF-8");
+        webView.loadUrl(htmlString)
 
         toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))
         val window = this.window
