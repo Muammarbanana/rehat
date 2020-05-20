@@ -77,7 +77,7 @@ class ProfileFragment : Fragment() {
 
     private fun getName(view: View) {
         ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }

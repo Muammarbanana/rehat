@@ -271,42 +271,32 @@
                 android:id="@+id/rgJenisKelamin"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/guideline236"
                 app:layout_constraintEnd_toStartOf="@+id/guideline222"
                 app:layout_constraintStart_toStartOf="@+id/guideline219"
                 app:layout_constraintTop_toBottomOf="@+id/profilJenisKelamin">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <RadioButton
+                    android:id="@+id/rbLaki"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="Laki-Laki"
+                    android:textColor="@color/colorDarkBlue"
+                    android:textSize="16sp" />
 
-                <RadioButton
-                        android:id="@+id/rbLaki"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Laki-Laki"
-                        android:textColor="@color/colorDarkBlue"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                <RadioButton
-                        android:id="@+id/rbPerem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Perempuan"
-                        android:textColor="@color/colorDarkBlue"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/rbLaki"
-                        app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <RadioButton
+                    android:id="@+id/rbPerem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="Perempuan"
+                    android:textColor="@color/colorDarkBlue"
+                    android:textSize="16sp" />
 
         </RadioGroup>
 
@@ -393,7 +383,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat_regular"
                 android:hint="@string/masukkan_kata_sandi"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
                 android:textSize="12sp"
@@ -427,7 +417,7 @@
                 android:ems="10"
                 android:fontFamily="@font/montserrat_regular"
                 android:hint="@string/masukkan_kata_sandi"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorGray"
                 android:textSize="12sp"
