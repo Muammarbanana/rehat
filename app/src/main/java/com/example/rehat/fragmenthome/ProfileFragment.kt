@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.rehat.EditProfil
 import com.example.rehat.R
 import com.example.rehat.WelcomeScreen
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +40,11 @@ class ProfileFragment : Fragment() {
             popAlert(view)
         }
         getName(view)
+
+        view.teksEditProfile.setOnClickListener {
+            val intent = Intent(view.context, EditProfil::class.java)
+            view.context.startActivity(intent)
+        }
 
         return view
     }
