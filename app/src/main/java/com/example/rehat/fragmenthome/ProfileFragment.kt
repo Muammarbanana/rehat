@@ -88,7 +88,12 @@ class ProfileFragment : Fragment() {
                         val name = h.child("nama").value.toString()
                         val photo = h.child("photo").value.toString()
                         profileName.text = name
-                        Picasso.get().load(photo).into(profilPic)
+                        if (photo == "null") {
+                            lengkapiProfil.visibility = View.VISIBLE
+                            imgWarning.visibility = View.VISIBLE
+                        } else {
+                            Picasso.get().load(photo).into(profilPic)
+                        }
                     }
                 }
             }
