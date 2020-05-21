@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -33,4 +34,16 @@ class IsiMateri : AppCompatActivity() {
     }
 
     fun getBack(view: View) { finish() }
+
+    fun shareMateri(view: View) {
+        val text = judulMateri.text
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "$text \n\nBaca materi selengkapnya di https://drive.google.com/open?id=1C9dlCqQYjwHadR59MI9i9FKCQWWwE-j_")
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
 }
