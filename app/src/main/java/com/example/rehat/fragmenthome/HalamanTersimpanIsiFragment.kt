@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.rehat.R
@@ -59,5 +60,4 @@ class HalamanTersimpanIsiFragment : Fragment() {
             Log.d("pantat", "hah, kosong")
         }
     }
-
 }

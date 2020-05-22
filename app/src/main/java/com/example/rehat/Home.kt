@@ -70,8 +70,9 @@ class Home : AppCompatActivity() {
         tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)?.contentDescription = "Profil"
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        Log.d("Status", "ini onResume")
         getAllData()
         setupTabIcons()
     }
@@ -79,7 +80,7 @@ class Home : AppCompatActivity() {
     fun getAllData(){
         var pages: ArrayList<Fragment>
         val materi = roomDB?.materiDao()?.getAll()
-        if (materi != null) {
+        if (materi?.isNotEmpty()!!) {
             pages = arrayListOf(
                 EdukasiFragment(),
                 HalamanTersimpanIsiFragment(),

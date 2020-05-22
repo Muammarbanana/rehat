@@ -1,5 +1,6 @@
 package com.example.rehat
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -80,5 +81,18 @@ class SubMateri : AppCompatActivity() {
         }
     }
 
-    fun getBack(view: View) { finish() }
+    fun getBack(view: View) {
+        var intent = Intent(this, Home::class.java)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        this.startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var intent = Intent(this, Home::class.java)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        this.startActivity(intent)
+    }
 }

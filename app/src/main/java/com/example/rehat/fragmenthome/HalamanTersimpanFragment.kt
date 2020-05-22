@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.fragment_halaman_tersimpan.view.*
 class HalamanTersimpanFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
-    private var roomDB: RoomDB? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,28 +42,6 @@ class HalamanTersimpanFragment : Fragment() {
             viewModel.selectedTab("go to tab 1")
         }
 
-        roomDB = Room.databaseBuilder(view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
-
-        getAllData()
-
         return view
-    }
-
-    fun deleteDataRoom(materi: MateriEntity) {
-        roomDB?.materiDao()?.delete(materi)
-    }
-
-    fun getAllData(){
-            val materi = roomDB?.materiDao()?.getAll()
-            if (materi != null) {
-
-            } else {
-                Log.d("pantat", "hah, kosong")
-            }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //Log.d("Status", "ini on Resume")
     }
 }

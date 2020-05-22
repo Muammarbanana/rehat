@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "materi")
 data class MateriEntity (
-    @ColumnInfo(name = "isi")var isi: String,
-    @PrimaryKey @ColumnInfo(name = "id") var id: String
+    @ColumnInfo(name = "judul")var judul: String,
+    @PrimaryKey @ColumnInfo(name = "id") var id: String,
+    @ColumnInfo(name = "jenis") var jenis: String,
+    @ColumnInfo(name = "gambar") var gambar: String,
+    @ColumnInfo(name = "isi") var isi: String,
+    @ColumnInfo(name = "color") var color: String,
+    @ColumnInfo(name = "desc") var desc: String
 )

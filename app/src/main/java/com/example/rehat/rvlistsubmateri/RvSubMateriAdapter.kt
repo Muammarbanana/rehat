@@ -1,26 +1,21 @@
 package com.example.rehat.rvlistsubmateri
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
+import android.graphics.BitmapFactory
+import android.os.StrictMode
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.room.Room
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.list_materi.view.*
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
+import java.io.InputStream
+import java.net.URL
 
 
 class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>(){
@@ -59,7 +54,16 @@ class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.wid
             if (holder.view.imgSimpan.tag == R.drawable.ic_simpan_materi_dark) {
                 Toast.makeText(holder.view.context, "Materi sudah ada di dalam daftar simpan", Toast.LENGTH_SHORT).show()
             } else {
-                insertToDb(MateriEntity(list[position].judul, list[position].id), roomDB)
+                insertToDb(
+                    MateriEntity(
+                    list[position].judul,
+                    list[position].id,
+                    list[position].jenis,
+                    list[position].gambar,
+                    list[position].isi,
+                    list[position].color,
+                    list[position].desc
+                ), roomDB)
                 holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
                 holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark
                 Toast.makeText(holder.view.context, "Materi berhasil disimpan", Toast.LENGTH_SHORT).show()
