@@ -4,8 +4,15 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.room.Room
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
+import com.example.rehat.roomdb.MateriEntity
+import com.example.rehat.roomdb.RoomDB
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.list_materi.view.*
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
 
@@ -41,5 +48,16 @@ class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.wid
             intent.putExtra("Desk", list[position].desc)
             holder.view.context.startActivity(intent)
         }
+        holder.view.imgSimpan.setOnClickListener {
+            var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").build()
+            insertToDb(MateriEntity(list[position].judul, list[position].id), roomDB)
+            holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
+        }
+    }
+
+    private fun insertToDb(materi: MateriEntity, roomDB: RoomDB){
+        Thread{
+            roomDB?.materiDao()?.insert(materi)
+        }.start()
     }
 }

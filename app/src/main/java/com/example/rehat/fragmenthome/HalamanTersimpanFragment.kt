@@ -2,12 +2,21 @@ package com.example.rehat.fragmenthome
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.room.Room
 import com.example.rehat.R
 import com.example.rehat.SharedViewModel
+import com.example.rehat.roomdb.MateriEntity
+import com.example.rehat.roomdb.RoomDB
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_halaman_tersimpan.*
 import kotlinx.android.synthetic.main.fragment_halaman_tersimpan.view.*
 
@@ -17,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_halaman_tersimpan.view.*
 class HalamanTersimpanFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
+    private val materi: ArrayList<MateriEntity> = ArrayList()
+    private var roomDB: RoomDB? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +44,35 @@ class HalamanTersimpanFragment : Fragment() {
             viewModel.selectedTab("go to tab 1")
         }
 
+        roomDB = Room.databaseBuilder(view.context, RoomDB::class.java, "materiDB").build()
+
+        getAllData()
+
         return view
+    }
+
+    fun insertToDb(materi: MateriEntity){
+        Thread{
+            roomDB?.materiDao()?.insert(materi)
+        }.start()
+    }
+
+    fun deleteDataRoom(materi: MateriEntity) {
+        Thread{
+            roomDB?.materiDao()?.delete(materi)
+        }.start()
+    }
+
+    fun getAllData(){
+        Thread{
+            val materi = roomDB?.materiDao()?.getAll()
+            if (materi != null) {
+                for (h in materi) {
+                    Log.d("pantat", h.isi)
+                }
+            } else {
+                Log.d("pantat", "hah, kosong")
+            }
+        }.start()
     }
 }

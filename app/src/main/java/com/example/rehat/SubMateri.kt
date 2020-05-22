@@ -7,14 +7,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rehat.roomdb.MateriEntity
+import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.rvlistsubmateri.Adapter
 import com.example.rehat.rvlistsubmateri.SubMateri
 import com.google.firebase.database.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sub_materi.*
 
 class SubMateri : AppCompatActivity() {
 
     private lateinit var ref: DatabaseReference
+    private val materi: ArrayList<MateriEntity> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +59,8 @@ class SubMateri : AppCompatActivity() {
                         val jenis = h.child("jenis").value.toString()
                         val isi = h.child("isi").value.toString()
                         val deskripsigambar = h.child("img_desc").value.toString()
-                        daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar))
+                        val id = h.key.toString()
+                        daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, id))
                     }
                     val adapter = Adapter(daftarSub)
                     adapter.notifyDataSetChanged()
