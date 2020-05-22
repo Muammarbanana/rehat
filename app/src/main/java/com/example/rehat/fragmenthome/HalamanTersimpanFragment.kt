@@ -44,7 +44,7 @@ class HalamanTersimpanFragment : Fragment() {
             viewModel.selectedTab("go to tab 1")
         }
 
-        roomDB = Room.databaseBuilder(view.context, RoomDB::class.java, "materiDB").build()
+        roomDB = Room.databaseBuilder(view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
 
         getAllData()
 
@@ -52,19 +52,14 @@ class HalamanTersimpanFragment : Fragment() {
     }
 
     fun insertToDb(materi: MateriEntity){
-        Thread{
-            roomDB?.materiDao()?.insert(materi)
-        }.start()
+        roomDB?.materiDao()?.insert(materi)
     }
 
     fun deleteDataRoom(materi: MateriEntity) {
-        Thread{
-            roomDB?.materiDao()?.delete(materi)
-        }.start()
+        roomDB?.materiDao()?.delete(materi)
     }
 
     fun getAllData(){
-        Thread{
             val materi = roomDB?.materiDao()?.getAll()
             if (materi != null) {
                 for (h in materi) {
@@ -73,6 +68,5 @@ class HalamanTersimpanFragment : Fragment() {
             } else {
                 Log.d("pantat", "hah, kosong")
             }
-        }.start()
     }
 }

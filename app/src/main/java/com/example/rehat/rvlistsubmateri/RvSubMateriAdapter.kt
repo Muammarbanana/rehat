@@ -1,9 +1,15 @@
 package com.example.rehat.rvlistsubmateri
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.room.Room
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
@@ -32,6 +38,7 @@ class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.wid
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
         holder.view.judulSub.text = list[position].judul
         when (list[position].jenis.toInt()) {
             1 -> holder.view.imgMateri.setImageResource(R.drawable.ic_img_reading)
@@ -49,15 +56,26 @@ class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.wid
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {
-            var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").build()
-            insertToDb(MateriEntity(list[position].judul, list[position].id), roomDB)
-            holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
+            if (holder.view.imgSimpan.tag == R.drawable.ic_simpan_materi_dark) {
+                Toast.makeText(holder.view.context, "Materi sudah ada di dalam daftar simpan", Toast.LENGTH_SHORT).show()
+            } else {
+                insertToDb(MateriEntity(list[position].judul, list[position].id), roomDB)
+                holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
+                holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark
+                Toast.makeText(holder.view.context, "Materi berhasil disimpan", Toast.LENGTH_SHORT).show()
+            }
         }
+        changeIconSimpan(roomDB, list[position].id, holder)
     }
 
     private fun insertToDb(materi: MateriEntity, roomDB: RoomDB){
-        Thread{
-            roomDB?.materiDao()?.insert(materi)
-        }.start()
+        roomDB?.materiDao()?.insert(materi)
+    }
+
+    private fun changeIconSimpan(roomDB: RoomDB, id: String, holder: Holder){
+        val data = roomDB?.materiDao()?.getDatabyID(id)
+        if (data != null) {
+            holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
+        }
     }
 }
