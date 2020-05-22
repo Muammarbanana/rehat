@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.fragment_halaman_tersimpan.view.*
 class HalamanTersimpanFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
-    private val materi: ArrayList<MateriEntity> = ArrayList()
     private var roomDB: RoomDB? = null
 
     override fun onCreateView(
@@ -51,10 +50,6 @@ class HalamanTersimpanFragment : Fragment() {
         return view
     }
 
-    fun insertToDb(materi: MateriEntity){
-        roomDB?.materiDao()?.insert(materi)
-    }
-
     fun deleteDataRoom(materi: MateriEntity) {
         roomDB?.materiDao()?.delete(materi)
     }
@@ -62,11 +57,14 @@ class HalamanTersimpanFragment : Fragment() {
     fun getAllData(){
             val materi = roomDB?.materiDao()?.getAll()
             if (materi != null) {
-                for (h in materi) {
-                    Log.d("pantat", h.isi)
-                }
+
             } else {
                 Log.d("pantat", "hah, kosong")
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Log.d("Status", "ini on Resume")
     }
 }

@@ -5,15 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.rehat.fragmenthome.*
 
-class PagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
-
-    private val pages = listOf(
-        EdukasiFragment(),
-        HalamanTersimpanFragment(),
-        KonsultasiFragment(),
-        NotifikasiFragment(),
-        ProfileFragment()
-    )
+class PagerAdapter(fm: FragmentManager, var pages: ArrayList<Fragment>): FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return pages[position]
