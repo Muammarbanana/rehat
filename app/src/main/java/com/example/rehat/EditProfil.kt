@@ -1,7 +1,9 @@
 package com.example.rehat
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
@@ -28,6 +30,8 @@ class EditProfil : AppCompatActivity() {
     private val numformat = "dd-MM-yyyy"
     private val sdf = SimpleDateFormat(format, Locale.getDefault())
     private val sdfnum = SimpleDateFormat(numformat, Locale.getDefault())
+    private val SPEECH_REQUEST_CODE = 0
+    private var inputIdentificator = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +63,13 @@ class EditProfil : AppCompatActivity() {
         btnSimpanPerubahan.setOnClickListener {
             editProfil(birthdate)
         }
+
+        micName.setOnClickListener {inputIdentificator = 0; getVoice() }
+        micUsername.setOnClickListener { inputIdentificator = 1; getVoice() }
+        micEmail.setOnClickListener { inputIdentificator = 2; getVoice() }
+        micPass.setOnClickListener { inputIdentificator = 3; getVoice() }
+        micKonf.setOnClickListener { inputIdentificator = 4; getVoice() }
+
     }
 
     private fun editProfil(birthdate: String) {
@@ -135,5 +146,31 @@ class EditProfil : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun getVoice() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        startActivityForResult(intent, SPEECH_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val spokenText: String? =
+                data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).let { results ->
+                    results?.get(0)
+                }
+            // Do something with spokenText
+            when(inputIdentificator) {
+                0 -> editTextNamaLengkap.setText(spokenText)
+                1 -> editTextNamaPengguna.setText(spokenText)
+                2 -> editTextEmail.setText(spokenText)
+                3 -> editKataSandi.setText(spokenText)
+                else -> editKonfirmasiKataSandi.setText(spokenText)
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

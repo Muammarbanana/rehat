@@ -450,7 +450,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline245" />
 
         <ImageView
-                android:id="@+id/imageView13"
+                android:id="@+id/micName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/masukkan_nama_lengkap_suara"
@@ -462,7 +462,7 @@
                 app:srcCompat="@drawable/ic_microphone" />
 
         <ImageView
-                android:id="@+id/imageView14"
+                android:id="@+id/micUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/masukkan_nama_suara"
@@ -474,7 +474,7 @@
                 app:srcCompat="@drawable/ic_microphone" />
 
         <ImageView
-                android:id="@+id/imageView15"
+                android:id="@+id/micEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/masukkan_email_suara"
@@ -486,7 +486,7 @@
                 app:srcCompat="@drawable/ic_microphone" />
 
         <ImageView
-                android:id="@+id/imageView16"
+                android:id="@+id/micPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/masukkan_sandi_suara"
@@ -498,7 +498,7 @@
                 app:srcCompat="@drawable/ic_microphone" />
 
         <ImageView
-                android:id="@+id/imageView17"
+                android:id="@+id/micKonf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/masukkan_sandi_ulang_suara"
