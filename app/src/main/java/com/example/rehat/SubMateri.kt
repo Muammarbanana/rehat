@@ -63,7 +63,7 @@ class SubMateri : AppCompatActivity() {
                         val id = h.key.toString()
                         daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, id))
                     }
-                    val adapter = AdapterSub(daftarSub)
+                    val adapter = AdapterSub(daftarSub, this@SubMateri, 1)
                     adapter.notifyDataSetChanged()
                     rvSubMateri.adapter = adapter
                 }

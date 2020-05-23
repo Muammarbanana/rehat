@@ -57,7 +57,7 @@ class Home : AppCompatActivity() {
 
         imgBack.setOnClickListener {
             showTitle()
-            var tr = supportFragmentManager.beginTransaction()
+            val tr = supportFragmentManager.beginTransaction()
             tr.replace(R.id.edukasiConst, EdukasiFragment())
             tr.commit()
         }
