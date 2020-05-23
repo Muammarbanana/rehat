@@ -35,6 +35,7 @@ class EdukasiFragment : Fragment() {
 
     private lateinit var ref: DatabaseReference
     private lateinit var root: View
+    private lateinit var viewModel: SharedViewModel
     private val SPEECH_REQUEST_CODE = 0
 
     override fun onCreateView(
@@ -43,6 +44,10 @@ class EdukasiFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_edukasi, container, false)
+
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
 
         root.rvMateri.setHasFixedSize(true)
         root.rvMateri.layoutManager =
@@ -54,7 +59,7 @@ class EdukasiFragment : Fragment() {
 
         root.editTextSearch.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                getDataMateriSearch(root, root.editTextSearch.text.toString())
+                getDataMateriSearch(root, root.editTextSearch.text.toString(), viewModel)
                 hideKeyboard()
                 return@setOnKeyListener true
             }
@@ -95,7 +100,7 @@ class EdukasiFragment : Fragment() {
         })
     }
 
-    private fun getDataMateriSearch(view: View, parameter: String) {
+    private fun getDataMateriSearch(view: View, parameter: String, viewModel: SharedViewModel) {
         val daftarSubMateri = arrayListOf<SubMateri>()
         val daftarSubMateriFiltered = arrayListOf<SubMateri>()
         ref = FirebaseDatabase.getInstance().getReference("submateri")
@@ -122,10 +127,14 @@ class EdukasiFragment : Fragment() {
                     }
                     if (parameter == "") {
                         changeView(3)
+                        viewModel.selectedTab("backtohome")
                     } else {
-                        when (daftarSubMateriFiltered.size) {
-                            0 -> changeView(1)
-                            else -> changeView(2)
+                        if (daftarSubMateriFiltered.size == 0) {
+                            changeView(1)
+                            viewModel.selectedTab("searching")
+                        } else {
+                            changeView(2)
+                            viewModel.selectedTab("searching")
                         }
                     }
                     val adapter = AdapterSub(daftarSubMateriFiltered)

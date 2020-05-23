@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.view.View
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.example.rehat.fragmenthome.*
@@ -32,8 +35,10 @@ class Home : AppCompatActivity() {
         )[SharedViewModel::class.java]
 
         viewModel.selected.observeForever(androidx.lifecycle.Observer {
-            if (it.equals("go to tab 1")) {
-                tabsMain.getTabAt(0)?.select()
+            when (it) {
+                "go to tab 1" -> tabsMain.getTabAt(0)?.select()
+                "searching" -> hideTitle()
+                "backtohome" -> showTitle()
             }
         })
 
@@ -48,6 +53,13 @@ class Home : AppCompatActivity() {
 
         tombolChat.setOnClickListener {
             startActivity(Intent(this, KonsultasiOnline::class.java))
+        }
+
+        imgBack.setOnClickListener {
+            showTitle()
+            var tr = supportFragmentManager.beginTransaction()
+            tr.replace(R.id.edukasiConst, EdukasiFragment())
+            tr.commit()
         }
 
         // ganti title saat tab dipilih
@@ -107,5 +119,19 @@ class Home : AppCompatActivity() {
             tabsMain.setupWithViewPager(viewPager1)
             setupTabIcons()
         })
+    }
+
+    private fun hideTitle() {
+        homeTitle.visibility = View.GONE
+        tombolChat.visibility = View.GONE
+        imgBack.visibility = View.VISIBLE
+        teksPencarian.visibility = View.VISIBLE
+    }
+
+    private fun showTitle() {
+        homeTitle.visibility = View.VISIBLE
+        tombolChat.visibility = View.VISIBLE
+        imgBack.visibility = View.GONE
+        teksPencarian.visibility = View.GONE
     }
 }
