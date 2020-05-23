@@ -4,21 +4,22 @@ import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import com.google.android.material.tabs.TabLayout
-import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.example.rehat.fragmenthome.*
 import com.example.rehat.roomdb.RoomDB
-import com.google.firebase.database.*
+import com.example.rehat.viewmodel.SharedViewModel
+import com.example.rehat.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
 class Home : AppCompatActivity() {
 
-    private lateinit var viewModel: SharedViewModel
     private var roomDB: RoomDB? = null
+    private lateinit var viewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +27,18 @@ class Home : AppCompatActivity() {
 
         roomDB = Room.databaseBuilder(this, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
 
-        viewModel = ViewModelProviders.of(this)[SharedViewModel::class.java]
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(roomDB!!.materiDao())
+        )[SharedViewModel::class.java]
 
         viewModel.selected.observeForever(androidx.lifecycle.Observer {
             if (it.equals("go to tab 1")) {
                 tabsMain.getTabAt(0)?.select()
             }
+        })
+
+        viewModel.listenMateri().observe(this, Observer{
+            getAllData()
         })
 
         if (intent.extras != null) {
@@ -78,25 +85,27 @@ class Home : AppCompatActivity() {
 
     fun getAllData(){
         var pages: ArrayList<Fragment>
-        val materi = roomDB?.materiDao()?.getAll()
-        if (materi?.isNotEmpty()!!) {
-            pages = arrayListOf(
-                EdukasiFragment(),
-                HalamanTersimpanIsiFragment(),
-                KonsultasiFragment(),
-                NotifikasiFragment(),
-                ProfileFragment()
-            )
-        } else {
-            pages = arrayListOf(
-                EdukasiFragment(),
-                HalamanTersimpanFragment(),
-                KonsultasiFragment(),
-                NotifikasiFragment(),
-                ProfileFragment())
-        }
-        viewPager1.adapter =
-            PagerAdapter(supportFragmentManager, pages)
-        tabsMain.setupWithViewPager(viewPager1)
+        roomDB?.materiDao()?.getAll()?.observe(this, Observer{
+            if (it?.isNotEmpty()!!) {
+                pages = arrayListOf(
+                    EdukasiFragment(),
+                    HalamanTersimpanIsiFragment(),
+                    KonsultasiFragment(),
+                    NotifikasiFragment(),
+                    ProfileFragment()
+                )
+            } else {
+                pages = arrayListOf(
+                    EdukasiFragment(),
+                    HalamanTersimpanFragment(),
+                    KonsultasiFragment(),
+                    NotifikasiFragment(),
+                    ProfileFragment())
+            }
+            viewPager1.adapter =
+                PagerAdapter(supportFragmentManager, pages)
+            tabsMain.setupWithViewPager(viewPager1)
+            setupTabIcons()
+        })
     }
 }

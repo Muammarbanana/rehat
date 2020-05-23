@@ -3,21 +3,27 @@ package com.example.rehat.fragmenthome
 import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.example.rehat.R
 import com.example.rehat.rvlistmateri.Adapter
 import com.example.rehat.rvlistmateri.Materi
 import com.example.rehat.rvlistsubmateri.AdapterSub
 import com.example.rehat.rvlistsubmateri.SubMateri
+import com.example.rehat.viewmodel.SharedViewModel
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_edukasi.*
 import kotlinx.android.synthetic.main.fragment_edukasi.view.*
 
@@ -29,6 +35,7 @@ class EdukasiFragment : Fragment() {
 
     private lateinit var ref: DatabaseReference
     private lateinit var root: View
+    private val SPEECH_REQUEST_CODE = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +59,10 @@ class EdukasiFragment : Fragment() {
                 return@setOnKeyListener true
             }
             false
+        }
+
+        root.btnSearchMic.setOnClickListener {
+            getVoice()
         }
 
         return root
@@ -151,6 +162,7 @@ class EdukasiFragment : Fragment() {
         const.connect(R.id.teksCopyright, ConstraintSet.TOP, R.id.rvHasilSearch, ConstraintSet.BOTTOM, 42)
         const.applyTo(edukasiConst)
         root.edukasiDaftar.visibility = View.VISIBLE
+        root.edukasiDaftar.text = "Ini materi yang dapat kami temukan"
         root.edukasiHei.visibility = View.VISIBLE
         root.rvMateri.visibility = View.GONE
         root.teksTotalEdukasi.visibility = View.VISIBLE
@@ -165,6 +177,7 @@ class EdukasiFragment : Fragment() {
         const.connect(R.id.teksCopyright, ConstraintSet.TOP, R.id.rvMateri, ConstraintSet.BOTTOM, 22)
         const.applyTo(edukasiConst)
         root.edukasiDaftar.visibility = View.VISIBLE
+        root.edukasiDaftar.text = "Ini daftar topik edukasi yang tersedia"
         root.edukasiHei.visibility = View.VISIBLE
         root.rvMateri.visibility = View.VISIBLE
         root.teksTotalEdukasi.visibility = View.GONE
@@ -194,5 +207,24 @@ class EdukasiFragment : Fragment() {
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun getVoice() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        startActivityForResult(intent, SPEECH_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val spokenText: String? =
+                data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).let { results ->
+                    results?.get(0)
+                }
+            // Do something with spokenText
+            root.editTextSearch.setText(spokenText)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

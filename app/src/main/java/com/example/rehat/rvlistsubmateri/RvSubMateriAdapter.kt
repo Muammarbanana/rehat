@@ -1,9 +1,6 @@
 package com.example.rehat.rvlistsubmateri
 
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.StrictMode
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +11,9 @@ import com.example.rehat.R
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
-import java.io.InputStream
-import java.net.URL
 
 
-class AdapterSub(private val list:ArrayList<SubMateri>) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterSub.Holder>(){
+class AdapterSub(private val list:ArrayList<SubMateri>) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterSub.Holder>() {
 
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 

@@ -1,5 +1,6 @@
 package com.example.rehat.roomdb
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +11,7 @@ import com.example.rehat.rvlistmateri.Materi
 @Dao
 interface MateriDAO {
     @Query("SELECT * from materi")
-    fun getAll(): List<MateriEntity>
+    fun getAll(): LiveData<List<MateriEntity>>
 
     @Insert(onConflict = REPLACE)
     fun insert(materi: MateriEntity)
