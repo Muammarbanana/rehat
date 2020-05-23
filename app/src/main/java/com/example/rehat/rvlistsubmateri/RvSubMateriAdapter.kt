@@ -18,7 +18,7 @@ import java.io.InputStream
 import java.net.URL
 
 
-class Adapter(private val list:ArrayList<SubMateri>) : androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>(){
+class AdapterSub(private val list:ArrayList<SubMateri>) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterSub.Holder>(){
 
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 

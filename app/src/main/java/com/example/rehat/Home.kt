@@ -72,7 +72,6 @@ class Home : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("Status", "ini onResume")
         getAllData()
         setupTabIcons()
     }

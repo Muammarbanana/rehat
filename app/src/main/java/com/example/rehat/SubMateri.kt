@@ -10,7 +10,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
-import com.example.rehat.rvlistsubmateri.Adapter
+import com.example.rehat.rvlistsubmateri.AdapterSub
 import com.example.rehat.rvlistsubmateri.SubMateri
 import com.google.firebase.database.*
 import io.reactivex.Observable
@@ -63,7 +63,7 @@ class SubMateri : AppCompatActivity() {
                         val id = h.key.toString()
                         daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, id))
                     }
-                    val adapter = Adapter(daftarSub)
+                    val adapter = AdapterSub(daftarSub)
                     adapter.notifyDataSetChanged()
                     rvSubMateri.adapter = adapter
                 }

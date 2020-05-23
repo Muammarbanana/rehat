@@ -2,13 +2,15 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nestedScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorLight">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edukasiConst"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#F3F4FA"
             tools:context=".fragmenthome.EdukasiFragment">
 
@@ -17,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.98" />
+                app:layout_constraintGuide_begin="524dp" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline24"
@@ -90,7 +92,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/editTextSearch"
                 app:layout_constraintTop_toTopOf="@+id/guideline96"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.5" />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMateri"
@@ -98,13 +100,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintBottom_toTopOf="@+id/guideline23"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
                 app:layout_constraintTop_toBottomOf="@+id/edukasiDaftar"
                 app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+                android:id="@+id/teksCopyright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
@@ -134,7 +137,7 @@
                 app:layout_constraintGuide_begin="68dp" />
 
         <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/btnSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/cari_materi_dengan_suara"
@@ -158,6 +161,58 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="140dp" />
+
+        <ImageView
+                android:id="@+id/imgNoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:contentDescription="Ilustrasi menggambarkan beberapa kertas yang kosong"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline25"
+                app:layout_constraintStart_toStartOf="@+id/guideline24"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+                app:srcCompat="@drawable/ic_img_no_data" />
+
+        <TextView
+                android:id="@+id/teksKosong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineSpacingExtra="12sp"
+                android:text="Maaf kami tidak dapat menemukan materi yang sesuai, coba kamu cari dengan kata kunci lain :)"
+                android:textAlignment="center"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline25"
+                app:layout_constraintStart_toStartOf="@+id/guideline24"
+                app:layout_constraintTop_toBottomOf="@+id/imgNoData" />
+
+        <TextView
+                android:id="@+id/teksTotalEdukasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Total"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline25"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline24"
+                app:layout_constraintTop_toBottomOf="@+id/edukasiDaftar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHasilSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/guideline23"
+                app:layout_constraintEnd_toStartOf="@+id/guideline25"
+                app:layout_constraintStart_toStartOf="@+id/guideline24"
+                app:layout_constraintTop_toBottomOf="@+id/teksTotalEdukasi"
+                app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
