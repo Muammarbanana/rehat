@@ -4,15 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.AsyncListUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rehat.model.Janji
 import com.example.rehat.rvlisthari.Adapter
 import com.example.rehat.rvlistwaktu.AdapterWaktu
 import com.example.rehat.rvlisthari.Hari
@@ -20,7 +18,6 @@ import com.example.rehat.rvlistwaktu.Waktu
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
-import kotlinx.android.synthetic.main.pop_alert.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -161,7 +158,19 @@ class BuatJanji : AppCompatActivity() {
         }
         val catatan = editTextCatatan.text.toString()
         val namadokter = janjiNamaKonselor.text.toString()
-        ref.push().setValue(Janji(lokasiJanji.text.toString(),tanggal, jam, catatan, auth.currentUser?.uid!!, id, 0, namadokter, address))
+        ref.push().setValue(
+            Janji(
+                lokasiJanji.text.toString(),
+                tanggal,
+                jam,
+                catatan,
+                auth.currentUser?.uid!!,
+                id,
+                0,
+                namadokter,
+                address
+            )
+        )
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         var intent = Intent(this, Home::class.java)
         intent.putExtra("DataTabChat", "2")

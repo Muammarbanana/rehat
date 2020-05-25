@@ -57,7 +57,7 @@
             app:layout_constraintGuide_percent="0.9566" />
 
     <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/savedHei"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hai Calvin,"

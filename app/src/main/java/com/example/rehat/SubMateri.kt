@@ -12,6 +12,7 @@ import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.rvlistsubmateri.AdapterSub
 import com.example.rehat.rvlistsubmateri.SubMateri
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_sub_materi.*
 class SubMateri : AppCompatActivity() {
 
     private lateinit var ref: DatabaseReference
-    private val materi: ArrayList<MateriEntity> = ArrayList()
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +37,13 @@ class SubMateri : AppCompatActivity() {
         val backgroundcolor = getBackgroundColor(background)
         judulMateri.text = intent.getStringExtra("Judul")
 
+        auth = FirebaseAuth.getInstance()
+
         toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))
         val window = this.window
         window.statusBarColor = Color.parseColor(backgroundcolor)
 
+        getName()
         getDataSubMateri(id.toDouble(), backgroundcolor)
 
     }
@@ -66,6 +70,24 @@ class SubMateri : AppCompatActivity() {
                     val adapter = AdapterSub(daftarSub, this@SubMateri, 1)
                     adapter.notifyDataSetChanged()
                     rvSubMateri.adapter = adapter
+                }
+            }
+        })
+    }
+
+    private fun getName() {
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val name = h.child("nama").value.toString()
+                        subHei.text = "Hai $name,"
+                    }
                 }
             }
         })

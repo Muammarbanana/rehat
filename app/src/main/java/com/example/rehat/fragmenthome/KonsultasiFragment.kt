@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.example.rehat.PagerAdapterKonsultasi
+import com.example.rehat.pageradapter.PagerAdapterKonsultasi
 import com.example.rehat.R
 import com.example.rehat.viewmodel.SharedViewModel
 import com.example.rehat.fragmentkonsultasi.KonselorFragment
@@ -64,7 +64,11 @@ class KonsultasiFragment : Fragment() {
                 } else {
                     pages = arrayListOf(KonselorFragment(), PersetujuanFragment())
                 }
-                view.viewPager2.adapter = PagerAdapterKonsultasi(childFragmentManager, pages)
+                view.viewPager2.adapter =
+                    PagerAdapterKonsultasi(
+                        childFragmentManager,
+                        pages
+                    )
                 view.tabsKonsultasi.setupWithViewPager(view.viewPager2)
             }
         })

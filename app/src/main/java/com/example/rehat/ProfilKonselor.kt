@@ -48,6 +48,7 @@ class ProfilKonselor : AppCompatActivity() {
 
         checkPromise()
         getDataHari(id.toDouble())
+        getName()
     }
 
     private fun openMap(address: String) {
@@ -66,6 +67,24 @@ class ProfilKonselor : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
                     btnJanji.setOnClickListener { popAlert() }
+                }
+            }
+        })
+    }
+
+    private fun getName() {
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val name = h.child("nama").value.toString()
+                        konsHei.text = "Hai $name,"
+                    }
                 }
             }
         })

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.rehat.R
 import com.example.rehat.rvlistkonselor.Adapter
 import com.example.rehat.rvlistkonselor.Konselor
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_konselor.view.*
 import java.util.ArrayList
@@ -19,6 +20,7 @@ import java.util.ArrayList
 class KonselorFragment : Fragment() {
 
     private lateinit var ref: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +33,9 @@ class KonselorFragment : Fragment() {
         view.rvKonselor.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(activity)
 
+        auth = FirebaseAuth.getInstance()
+
+        getName(view)
         getDataKonselor(view)
 
         return view
@@ -59,6 +64,25 @@ class KonselorFragment : Fragment() {
                     val adapter = Adapter(daftarKonselor)
                     adapter.notifyDataSetChanged()
                     view.rvKonselor.adapter = adapter
+                }
+            }
+        })
+    }
+
+    private fun getName(view: View) {
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object:
+            ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val name = h.child("nama").value.toString()
+                        view.konselorHei.text = "Hai $name,"
+                    }
                 }
             }
         })

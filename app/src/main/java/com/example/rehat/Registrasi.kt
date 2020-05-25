@@ -5,16 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
-import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
+import com.example.rehat.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_registrasi.*
 import kotlinx.android.synthetic.main.activity_registrasi.editTextNamaPengguna
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 
 class Registrasi : AppCompatActivity() {
@@ -71,7 +68,8 @@ class Registrasi : AppCompatActivity() {
         } else {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = User(nama, namapengguna, email)
+                    val user =
+                        User(nama, namapengguna, email)
                     ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
                         .setValue(user)
                     auth.signOut()

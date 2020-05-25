@@ -22,6 +22,7 @@ import com.example.rehat.rvlistmateri.Materi
 import com.example.rehat.rvlistsubmateri.AdapterSub
 import com.example.rehat.rvlistsubmateri.SubMateri
 import com.example.rehat.viewmodel.SharedViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_edukasi.*
@@ -36,6 +37,7 @@ class EdukasiFragment : Fragment() {
     private lateinit var ref: DatabaseReference
     private lateinit var root: View
     private lateinit var viewModel: SharedViewModel
+    private lateinit var auth: FirebaseAuth
     private val SPEECH_REQUEST_CODE = 0
 
     override fun onCreateView(
@@ -49,12 +51,15 @@ class EdukasiFragment : Fragment() {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
+        auth = FirebaseAuth.getInstance()
+
         root.rvMateri.setHasFixedSize(true)
         root.rvMateri.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(activity)
         root.rvHasilSearch.setHasFixedSize(true)
         root.rvHasilSearch.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
 
+        getName()
         getDataMateri(root)
 
         root.editTextSearch.setOnKeyListener { v, keyCode, event ->
@@ -142,6 +147,24 @@ class EdukasiFragment : Fragment() {
                     val tekstotal = "Total ${daftarSubMateriFiltered.size.toString()}"
                     view.teksTotalEdukasi.text = tekstotal
                     view.rvHasilSearch.adapter = adapter
+                }
+            }
+        })
+    }
+
+    private fun getName() {
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val name = h.child("nama").value.toString()
+                        root.edukasiHei.text = "Hai $name,"
+                    }
                 }
             }
         })

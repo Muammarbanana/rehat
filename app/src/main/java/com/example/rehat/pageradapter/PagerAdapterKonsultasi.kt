@@ -1,11 +1,10 @@
-package com.example.rehat
+package com.example.rehat.pageradapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.rehat.fragmenthome.*
 
-class PagerAdapter(fm: FragmentManager, var pages: ArrayList<Fragment>): FragmentPagerAdapter(fm) {
+class PagerAdapterKonsultasi(fm: FragmentManager, var pages: ArrayList<Fragment>): FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return pages[position]
@@ -15,8 +14,11 @@ class PagerAdapter(fm: FragmentManager, var pages: ArrayList<Fragment>): Fragmen
         return pages.size
     }
 
-    // judul untuk tabs
     override fun getPageTitle(position: Int): CharSequence? {
-        return null
+        return when(position){
+            0 -> "Memilih Konselor"
+            else -> "Status Persetujuan"
+        }
     }
+
 }
