@@ -10,9 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:background="@color/colorPrimary">
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline13"
