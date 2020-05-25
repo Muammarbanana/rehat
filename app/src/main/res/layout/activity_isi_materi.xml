@@ -45,6 +45,7 @@
             android:id="@+id/imgShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="bagikan materi"
             android:onClick="shareMateri"
             app:layout_constraintBottom_toBottomOf="@id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"

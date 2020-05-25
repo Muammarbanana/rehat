@@ -156,6 +156,10 @@ class EdukasiFragment : Fragment() {
     }
 
     private fun changeToDataNol() {
+        val const = ConstraintSet()
+        const.clone(edukasiConst)
+        const.connect(R.id.teksCopyright, ConstraintSet.TOP, R.id.teksKosong, ConstraintSet.BOTTOM, 22)
+        const.applyTo(edukasiConst)
         root.edukasiDaftar.visibility = View.GONE
         root.edukasiHei.visibility = View.GONE
         root.rvMateri.visibility = View.GONE

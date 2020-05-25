@@ -96,6 +96,7 @@
                     android:id="@+id/imgSimpan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="simpan materi"
                     app:layout_constraintStart_toStartOf="@+id/guideline212"
                     app:layout_constraintTop_toTopOf="@+id/guideline213"
                     app:srcCompat="@drawable/ic_simpan_materi" />

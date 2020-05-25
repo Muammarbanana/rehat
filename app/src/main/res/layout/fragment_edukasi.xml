@@ -4,13 +4,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nestedScroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorLight">
+        android:layout_height="match_parent"
+        android:background="#F3F4FA"
+        android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edukasiConst"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#F3F4FA"
             tools:context=".fragmenthome.EdukasiFragment">
 
@@ -18,8 +19,7 @@
                 android:id="@+id/guideline23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="524dp" />
+                android:orientation="horizontal" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline24"
@@ -120,7 +120,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"
                 app:layout_constraintStart_toStartOf="@+id/guideline24"
                 app:layout_constraintTop_toBottomOf="@+id/rvMateri"
-                app:layout_constraintVertical_bias="0.9" />
+                app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline94"
@@ -215,4 +215,5 @@
                 app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>
