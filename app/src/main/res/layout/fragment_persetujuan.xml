@@ -45,12 +45,12 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:contentDescription="@string/ilustrasi_bertemu"
-            app:srcCompat="@drawable/img_meeting"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/guideline30"
             app:layout_constraintEnd_toStartOf="@+id/guideline29"
             app:layout_constraintStart_toStartOf="@+id/guideline28"
-            app:layout_constraintTop_toTopOf="@+id/guideline26" />
+            app:layout_constraintTop_toTopOf="@+id/guideline26"
+            app:srcCompat="@drawable/img_meeting" />
 
     <TextView
             android:id="@+id/teksBelum"

@@ -156,7 +156,7 @@
             android:id="@+id/imageView5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:contentDescription="@string/ilustrasi_menggambarkan_tidak_adanya_percakapan"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/guideline153"
             app:layout_constraintEnd_toStartOf="@+id/guideline147"
             app:layout_constraintStart_toStartOf="@+id/guideline146"

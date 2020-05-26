@@ -45,12 +45,12 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:contentDescription="@string/ilustrasi_sendirian"
-            app:srcCompat="@drawable/img_waiting"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/guideline32"
             app:layout_constraintEnd_toStartOf="@+id/guideline34"
             app:layout_constraintStart_toStartOf="@+id/guideline33"
-            app:layout_constraintTop_toTopOf="@+id/guideline31" />
+            app:layout_constraintTop_toTopOf="@+id/guideline31"
+            app:srcCompat="@drawable/img_waiting" />
 
     <TextView
             android:layout_width="0dp"

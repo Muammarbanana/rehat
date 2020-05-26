@@ -82,6 +82,7 @@
             android:id="@+id/imgAddPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Ganti foto profil"
             android:src="@drawable/ic_add_photo"
             app:layout_constraintBottom_toTopOf="@+id/guideline227"
             app:layout_constraintEnd_toStartOf="@+id/guideline224"

@@ -46,7 +46,7 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:contentDescription="@string/ilustrasi_kosong"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/guideline30"
             app:layout_constraintEnd_toStartOf="@+id/guideline103"
             app:layout_constraintStart_toStartOf="@+id/guideline102"
