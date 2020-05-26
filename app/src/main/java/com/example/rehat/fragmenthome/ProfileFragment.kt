@@ -106,8 +106,10 @@ class ProfileFragment : Fragment() {
                     for (h in p0.children) {
                         val name = h.child("nama").value.toString()
                         val photo = h.child("photo").value.toString()
+                        val gender = h.child("gender").value.toString()
+                        val birth = h.child("birth").value.toString()
                         root.profileName.text = name
-                        if (photo == "null" || photo == "") {
+                        if (gender == "null" || birth == "null") {
                             lengkapiProfil.visibility = View.VISIBLE
                             imgWarning.visibility = View.VISIBLE
                         } else {
