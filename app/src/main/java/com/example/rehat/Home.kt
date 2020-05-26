@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -40,13 +42,14 @@ class Home : AppCompatActivity() {
             }
         })
 
-        viewModel.listenMateri().observe(this, Observer{
-            getAllData()
-        })
+        getAllData()
 
         if (intent.extras != null) {
-            val nomorTab = intent.getStringExtra("DataTabChat")
-            tabsMain.getTabAt(nomorTab.toInt())?.select()
+            Handler().postDelayed({
+                val nomorTab = intent.getStringExtra("DataTabChat")
+                tabsMain.setScrollPosition(nomorTab.toInt(), 0f, true)
+                viewPager1.currentItem = nomorTab.toInt()
+            },100)
         }
 
         tombolChat.setOnClickListener {

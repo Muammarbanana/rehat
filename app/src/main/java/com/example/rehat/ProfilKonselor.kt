@@ -145,6 +145,9 @@ class ProfilKonselor : AppCompatActivity() {
 
     // Fungsi klik
     fun getBack(view: View) {
+        val intent = Intent(this, Home::class.java)
+        intent.putExtra("DataTabChat", "2")
+        startActivity(intent)
         finish()
     }
 }
