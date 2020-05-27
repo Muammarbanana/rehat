@@ -95,14 +95,23 @@ class EditProfil : AppCompatActivity() {
             auth.currentUser?.updateEmail(email)
                 ?.addOnCompleteListener(this, OnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        ref.child("email").setValue(email)
-                        ref.child("username").setValue(namapengguna)
-                        ref.child("nama").setValue(namalengkap)
-                        ref.child("gender").setValue(gender)
-                        ref.child("birth").setValue(birthdate)
-                        auth.currentUser?.updatePassword(katasandi)
-                        Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
-                        finish()
+                        auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
+                            if (task2.isSuccessful) {
+                                ref.child("email").setValue(email)
+                                ref.child("username").setValue(namapengguna)
+                                ref.child("nama").setValue(namalengkap)
+                                ref.child("gender").setValue(gender)
+                                ref.child("birth").setValue(birthdate)
+                                Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
                     } else {
                         Toast.makeText(
                             this,

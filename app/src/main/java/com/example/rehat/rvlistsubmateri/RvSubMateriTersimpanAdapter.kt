@@ -51,7 +51,7 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>) : androidx.recy
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {
-            deleteData(roomDB, list[position].id)
+            deleteData(roomDB, list[position].id, position)
             holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi)
             Toast.makeText(holder.view.context, "Materi dihapus dari daftar simpan", Toast.LENGTH_SHORT).show()
         }
@@ -65,7 +65,9 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>) : androidx.recy
         }
     }
 
-    private fun deleteData(roomDB: RoomDB, id: String) {
+    private fun deleteData(roomDB: RoomDB, id: String, position: Int) {
         roomDB?.materiDao()?.deleteDatabyID(id)
+        list.removeAt(position)
+        notifyItemRemoved(position)
     }
 }
