@@ -9,6 +9,7 @@ import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_isi_materi.*
@@ -32,6 +33,9 @@ class IsiMateri : AppCompatActivity() {
         val window = this.window
         window.statusBarColor = Color.parseColor(backgroundcolor)
 
+        backToTop.setOnClickListener {
+            scrollMateri.fullScroll(NestedScrollView.FOCUS_UP)
+        }
     }
 
     fun getBack(view: View) { finish() }

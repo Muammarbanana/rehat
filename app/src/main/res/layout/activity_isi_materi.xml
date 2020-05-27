@@ -55,6 +55,7 @@
             app:srcCompat="@drawable/ic_bagi" />
 
     <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollMateri"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
@@ -122,7 +123,23 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline208"
                     app:layout_constraintStart_toStartOf="@+id/guideline207"
-                    app:layout_constraintTop_toTopOf="@+id/guideline202" />
+                    app:layout_constraintTop_toTopOf="@+id/guideline202"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                    android:id="@+id/backToTop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="65dp"
+                    android:layout_marginBottom="35dp"
+                    android:text="Kembali ke Atas"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline208"
+                    app:layout_constraintStart_toStartOf="@+id/guideline207"
+                    app:layout_constraintTop_toBottomOf="@+id/webView"
+                    app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -185,6 +185,7 @@ class ProfilKonselor : AppCompatActivity() {
         return latlong
     }
 
+    // get route distance, must use Google Maps Distance API (Paid)
     fun getDistance(
         lat1: Double,
         lon1: Double,
