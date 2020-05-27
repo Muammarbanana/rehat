@@ -37,6 +37,7 @@ class BuatJanji : AppCompatActivity() {
 
         janjiNamaKonselor.text = intent.getStringExtra("Nama")
         lokasiJanji.text = intent.getStringExtra("Lokasi")
+        teksJarak.text = intent.getStringExtra("Jarak") + " km dari lokasi kamu"
         id = intent.getStringExtra("Id")
         address = intent.getStringExtra("Alamat")
 

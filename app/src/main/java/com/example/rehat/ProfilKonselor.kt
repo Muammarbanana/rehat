@@ -1,20 +1,33 @@
 package com.example.rehat
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.Sampler
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.example.rehat.rvlisthari.Hari
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profil_konselor.*
 import kotlinx.android.synthetic.main.pop_alert_single.view.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.ProtocolException
+import java.net.URL
+import kotlin.math.roundToInt
+
 
 class ProfilKonselor : AppCompatActivity() {
 
@@ -22,6 +35,7 @@ class ProfilKonselor : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var id: String
 
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profil_konselor)
@@ -33,6 +47,15 @@ class ProfilKonselor : AppCompatActivity() {
         textBio.text = intent.getStringExtra("Bio")
         id = intent.getStringExtra("Id")
         val address = intent.getStringExtra("Alamat")
+        val loc = getLocFromAdrres(address)
+        val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val userloc = locmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        //val distance = getDistance(userloc.latitude, userloc.longitude, loc[0], loc[1])
+        var distance = FloatArray(1)
+        Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
+        val kmdistance = distance[0] / 1000
+        teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+
         auth = FirebaseAuth.getInstance()
 
         teksLihatMaps.setOnClickListener { openMap(address) }
@@ -43,6 +66,7 @@ class ProfilKonselor : AppCompatActivity() {
             intent.putExtra("Lokasi", textLokasi.text.toString())
             intent.putExtra("Id", id)
             intent.putExtra("Alamat", address)
+            intent.putExtra("Jarak", kmdistance.roundToInt().toString())
             startActivity(intent)
         }
 
@@ -149,5 +173,57 @@ class ProfilKonselor : AppCompatActivity() {
         intent.putExtra("DataTabChat", "2")
         startActivity(intent)
         finish()
+    }
+
+    fun getLocFromAdrres(address: String): ArrayList<Double> {
+        var coder = Geocoder(this)
+        var straddress = coder.getFromLocationName(address, 1)
+        var location = straddress[0]
+        var latlong = ArrayList<Double>()
+        latlong.add(location.latitude)
+        latlong.add(location.longitude)
+        return latlong
+    }
+
+    fun getDistance(
+        lat1: Double,
+        lon1: Double,
+        lat2: Double,
+        lon2: Double
+    ): String? {
+        var parsedDistance = ""
+        var response: String
+        val thread = Thread(Runnable {
+            try {
+                val url =
+                    URL("http://maps.googleapis.com/maps/api/directions/json?origin=$lat1,$lon1&destination=$lat2,$lon2&sensor=false&units=metric&mode=driving")
+                val conn: HttpURLConnection = url.openConnection() as HttpURLConnection
+                conn.requestMethod = "POST"
+                val `in`: InputStream = BufferedInputStream(conn.inputStream)
+                response = org.apache.commons.io.IOUtils.toString(`in`, "UTF-8")
+                val jsonObject = JSONObject(response)
+                val array = jsonObject.getJSONArray("routes")
+                val routes = array.getJSONObject(0)
+                val legs = routes.getJSONArray("legs")
+                val steps = legs.getJSONObject(0)
+                val distance = steps.getJSONObject("distance")
+                parsedDistance = distance.getString("text")
+            } catch (e: ProtocolException) {
+                e.printStackTrace()
+            } catch (e: MalformedURLException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        })
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return parsedDistance
     }
 }
