@@ -15,10 +15,11 @@ import com.example.rehat.IsiMateri
 import com.example.rehat.R
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
+import com.example.rehat.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
 
 
-class AdapterTersimpan(private val list:ArrayList<MateriEntity>) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterTersimpan.Holder>(){
+class AdapterTersimpan(private val list:ArrayList<MateriEntity>, private val viewModel: SharedViewModel) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterTersimpan.Holder>(){
 
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
@@ -69,5 +70,6 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>) : androidx.recy
         roomDB?.materiDao()?.deleteDatabyID(id)
         list.removeAt(position)
         notifyItemRemoved(position)
+        viewModel.selectedTab("savedpagedel")
     }
 }

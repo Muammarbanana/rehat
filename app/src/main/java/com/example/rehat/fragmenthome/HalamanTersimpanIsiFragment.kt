@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
@@ -53,6 +54,13 @@ class HalamanTersimpanIsiFragment : Fragment() {
             getAllData()
         }
 
+        // Update Total text when one of the item deleted
+        viewModel.selected.observeForever(androidx.lifecycle.Observer{
+            if (it == "savedpagedel") {
+                getAllData()
+            }
+        })
+
         getName()
 
         return root
@@ -65,10 +73,10 @@ class HalamanTersimpanIsiFragment : Fragment() {
                 for (h in it) {
                     listmateri.add(h)
                 }
-                val adapter = AdapterTersimpan(listmateri)
+                val adapter = AdapterTersimpan(listmateri, viewModel)
                 adapter.notifyDataSetChanged()
                 root.rvMateriTersimpan.adapter = adapter
-                root.teksTotal.text = "Total: ${listmateri.size.toString()}"
+                root.teksTotal.text = "Total: ${adapter.itemCount}"
             }
         })
     }

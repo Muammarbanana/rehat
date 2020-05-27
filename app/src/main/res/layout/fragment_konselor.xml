@@ -47,7 +47,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/hai"
                 android:textColor="@color/colorDarkBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline25"

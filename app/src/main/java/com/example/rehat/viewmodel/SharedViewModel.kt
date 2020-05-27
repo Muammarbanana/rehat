@@ -19,11 +19,6 @@ class SharedViewModel(private val materiDao: MateriDAO): ViewModel() {
         selected.value = item
     }
 
-    fun sendVoiceData(item: String, data: String) {
-        selected.value = item
-        datavoice.value = data
-    }
-
     fun listenMateri(): LiveData<List<MateriEntity>> {
         return materi
     }
