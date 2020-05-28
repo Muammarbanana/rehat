@@ -38,7 +38,7 @@ class IsiMateri : AppCompatActivity() {
         daftardesk = intent.getStringArrayListExtra("DaftarDesk")
         val slider = intent.getIntExtra("Slider", 0)
         position = intent.getStringExtra("Position").toInt()
-        
+
         getMateriContent(position)
 
         toolbar.background = ColorDrawable(Color.parseColor(backgroundcolor))
