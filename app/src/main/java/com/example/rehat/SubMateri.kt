@@ -65,7 +65,7 @@ class SubMateri : AppCompatActivity() {
                         val isi = h.child("isi").value.toString()
                         val deskripsigambar = h.child("img_desc").value.toString()
                         val idsub = h.key.toString()
-                        daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, idsub))
+                        daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, idsub, 1))
                     }
                     val adapter = AdapterSub(daftarSub, this@SubMateri, 1)
                     adapter.notifyDataSetChanged()

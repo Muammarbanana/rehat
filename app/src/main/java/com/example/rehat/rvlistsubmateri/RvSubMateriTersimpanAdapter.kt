@@ -44,11 +44,23 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>, private val vie
         }
         holder.view.cardConstSubMateri.setOnClickListener {
             val intent = Intent(holder.view.context, IsiMateri::class.java)
-            intent.putExtra("Judul", list[position].judul)
-            intent.putExtra("Gambar", list[position].gambar)
-            intent.putExtra("Isi", list[position].isi)
+            var daftarJudul = arrayListOf<String>()
+            var daftarGambar = arrayListOf<String>()
+            var daftarIsi = arrayListOf<String>()
+            var daftarDesk = arrayListOf<String>()
             intent.putExtra("Warna", list[position].color)
-            intent.putExtra("Desk", list[position].desc)
+            intent.putExtra("Position", position.toString())
+            intent.putExtra("Slider", 0)
+            for (h in list) {
+                daftarJudul.add(h.judul)
+                daftarGambar.add(h.gambar)
+                daftarIsi.add(h.isi)
+                daftarDesk.add(h.desc)
+            }
+            intent.putExtra("DaftarJudul", daftarJudul)
+            intent.putExtra("DaftarGambar", daftarGambar)
+            intent.putExtra("DaftarIsi", daftarIsi)
+            intent.putExtra("DaftarDesk", daftarDesk)
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {

@@ -1,6 +1,7 @@
 package com.example.rehat.rvlistsubmateri
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,11 +42,23 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
         }
         holder.view.cardConstSubMateri.setOnClickListener {
             val intent = Intent(holder.view.context, IsiMateri::class.java)
-            intent.putExtra("Judul", list[position].judul)
-            intent.putExtra("Gambar", list[position].gambar)
-            intent.putExtra("Isi", list[position].isi)
+            var daftarJudul = arrayListOf<String>()
+            var daftarGambar = arrayListOf<String>()
+            var daftarIsi = arrayListOf<String>()
+            var daftarDesk = arrayListOf<String>()
             intent.putExtra("Warna", list[position].color)
-            intent.putExtra("Desk", list[position].desc)
+            intent.putExtra("Position", position.toString())
+            intent.putExtra("Slider", list[position].slider)
+            for (h in list) {
+                daftarJudul.add(h.judul)
+                daftarGambar.add(h.gambar)
+                daftarIsi.add(h.isi)
+                daftarDesk.add(h.desc)
+            }
+            intent.putExtra("DaftarJudul", daftarJudul)
+            intent.putExtra("DaftarGambar", daftarGambar)
+            intent.putExtra("DaftarIsi", daftarIsi)
+            intent.putExtra("DaftarDesk", daftarDesk)
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {
@@ -54,13 +67,13 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
             } else {
                 insertToDb(
                     MateriEntity(
-                    list[position].judul,
-                    list[position].id,
-                    list[position].jenis,
-                    list[position].gambar,
-                    list[position].isi,
-                    list[position].color,
-                    list[position].desc
+                        list[position].judul,
+                        list[position].id,
+                        list[position].jenis,
+                        list[position].gambar,
+                        list[position].isi,
+                        list[position].color,
+                        list[position].desc
                 ), roomDB)
                 holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
                 holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark

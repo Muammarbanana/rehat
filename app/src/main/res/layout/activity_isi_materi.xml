@@ -141,6 +141,26 @@
                     app:layout_constraintTop_toBottomOf="@+id/webView"
                     app:layout_constraintVertical_bias="1.0" />
 
+            <ImageView
+                    android:id="@+id/ikonNextMateri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/backToTop"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline208"
+                    app:layout_constraintStart_toEndOf="@+id/backToTop"
+                    app:layout_constraintTop_toTopOf="@+id/backToTop"
+                    app:srcCompat="@drawable/ic_small_right" />
+
+            <ImageView
+                    android:id="@+id/ikonPrevMateri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/backToTop"
+                    app:layout_constraintEnd_toStartOf="@+id/backToTop"
+                    app:layout_constraintStart_toStartOf="@+id/guideline207"
+                    app:layout_constraintTop_toTopOf="@+id/backToTop"
+                    app:srcCompat="@drawable/ic_small_left" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

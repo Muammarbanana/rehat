@@ -123,7 +123,7 @@ class EdukasiFragment : Fragment() {
                         val isi = h.child("isi").value.toString()
                         val deskripsigambar = h.child("img_desc").value.toString()
                         val id = h.key.toString()
-                        daftarSubMateri.add(SubMateri(judul, gambar, jenis, isi, getBackgroundColor(id.toInt()), deskripsigambar, id))
+                        daftarSubMateri.add(SubMateri(judul, gambar, jenis, isi, getBackgroundColor(id.toInt()), deskripsigambar, id, 0))
                     }
                     for (h in daftarSubMateri) {
                         if (h.judul.toLowerCase().contains(parameter.toLowerCase())) {
