@@ -99,7 +99,7 @@ class Home : AppCompatActivity() {
     fun getAllData(){
         var pages: ArrayList<Fragment>
         roomDB?.materiDao()?.getAll()?.observe(this, Observer{
-            if (it?.isNotEmpty()!!) {
+            if (it?.size != 0) {
                 pages = arrayListOf(
                     EdukasiFragment(),
                     HalamanTersimpanIsiFragment(),

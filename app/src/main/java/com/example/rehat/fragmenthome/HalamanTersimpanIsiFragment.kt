@@ -66,6 +66,11 @@ class HalamanTersimpanIsiFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAllData()
+    }
+
     fun getAllData(){
         var listmateri = arrayListOf<MateriEntity>()
         roomDB?.materiDao()?.getAll()?.observe(this,  Observer{
@@ -73,10 +78,16 @@ class HalamanTersimpanIsiFragment : Fragment() {
                 for (h in it) {
                     listmateri.add(h)
                 }
-                val adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
-                adapter.notifyDataSetChanged()
-                root.rvMateriTersimpan.adapter = adapter
-                root.teksTotal.text = "Total: ${adapter.itemCount}"
+                if (listmateri.size == 0) {
+                    val tr = fragmentManager?.beginTransaction()
+                    tr?.replace(R.id.savedPageConst, HalamanTersimpanFragment())
+                    tr?.commit()
+                } else {
+                    val adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
+                    adapter.notifyDataSetChanged()
+                    root.rvMateriTersimpan.adapter = adapter
+                    root.teksTotal.text = "Total: ${adapter.itemCount}"
+                }
             }
         })
     }

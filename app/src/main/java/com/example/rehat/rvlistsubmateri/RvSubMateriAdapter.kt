@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
-import com.example.rehat.fragmenthome.EdukasiFragment
 import com.example.rehat.fragmenthome.HalamanTersimpanIsiFragment
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
@@ -32,7 +32,8 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
+        val roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
+        val jumlahdata = roomDB.materiDao().getDataCount()
         holder.view.judulSub.text = list[position].judul
         when (list[position].jenis.toInt()) {
             1 -> holder.view.imgMateri.setImageResource(R.drawable.ic_img_reading)
@@ -62,6 +63,17 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {
+            if (fragindicator == 0) {
+                if (jumlahdata == 0) {
+                    val tr = fragcont.supportFragmentManager.beginTransaction()
+                    tr.replace(R.id.empSavedPageConst, HalamanTersimpanIsiFragment())
+                    tr.commit()
+                } else {
+                    val tr = fragcont.supportFragmentManager.beginTransaction()
+                    tr.replace(R.id.savedPageConst, HalamanTersimpanIsiFragment())
+                    tr.commit()
+                }
+            }
             if (holder.view.imgSimpan.tag == R.drawable.ic_simpan_materi_dark) {
                 Toast.makeText(holder.view.context, "Materi sudah ada di dalam daftar simpan", Toast.LENGTH_SHORT).show()
             } else {
@@ -78,11 +90,6 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                 holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
                 holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark
                 Toast.makeText(holder.view.context, "Materi berhasil disimpan", Toast.LENGTH_SHORT).show()
-                if (fragindicator == 0) {
-                    val tr = fragcont.supportFragmentManager.beginTransaction()
-                    tr.replace(R.id.empSavedPageConst, HalamanTersimpanIsiFragment())
-                    tr.commit()
-                }
             }
         }
         changeIconSimpan(roomDB, list[position].id, holder)

@@ -36,11 +36,7 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (list.size == 0) {
-            val tr = fragcont.supportFragmentManager.beginTransaction()
-            tr.replace(R.id.savedPageConst, HalamanTersimpanFragment())
-            tr.commit()
-        }
+        Log.d("Pantat", list.size.toString())
         var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
         holder.view.judulSub.text = list[position].judul
         when (list[position].jenis.toInt()) {
