@@ -6,6 +6,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,8 @@ class EdukasiFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_edukasi, container, false)
+
+        Log.d("Pantat", "Ini onCreateView")
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
@@ -262,5 +265,20 @@ class EdukasiFragment : Fragment() {
             root.editTextSearch.setText(spokenText)
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Pantat", "Ini onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Pantat", "Ini onStop")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Pantat", "Ini onResume")
     }
 }

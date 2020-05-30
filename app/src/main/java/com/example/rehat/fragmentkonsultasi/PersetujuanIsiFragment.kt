@@ -55,6 +55,10 @@ class PersetujuanIsiFragment : Fragment() {
                         root.agrTanggal.text = tanggal
                         root.agrJam.text = jam + " WIB"
                         root.agrCatatan.text = catatan
+                        root.agrAddress.contentDescription = "Alamat konsultasi, $alamat"
+                        root.agrTanggal.contentDescription = "Hari dan tanggal, $tanggal"
+                        root.agrJam.contentDescription = "Pukul, $jam WIB"
+                        root.agrCatatan.contentDescription = "Catatan tambahan, $catatan"
                     }
                 }
             }

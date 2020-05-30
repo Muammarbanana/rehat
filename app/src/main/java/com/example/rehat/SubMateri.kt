@@ -103,18 +103,5 @@ class SubMateri : AppCompatActivity() {
         }
     }
 
-    fun getBack(view: View) {
-        var intent = Intent(this, Home::class.java)
-        intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        this.startActivity(intent)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        var intent = Intent(this, Home::class.java)
-        intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        this.startActivity(intent)
-    }
+    fun getBack(view: View) { finish() }
 }
