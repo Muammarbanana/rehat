@@ -87,7 +87,7 @@ class EditProfil : AppCompatActivity() {
             gender = radio.text.toString()
         }
 
-        if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty() || gender == "" || katasandi.isEmpty()) {
+        if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty()) {
             Toast.makeText(this, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
         } else if (katasandi != katasandikon) {
             Toast.makeText(this, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
@@ -95,23 +95,33 @@ class EditProfil : AppCompatActivity() {
             auth.currentUser?.updateEmail(email)
                 ?.addOnCompleteListener(this, OnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
-                            if (task2.isSuccessful) {
-                                ref.child("email").setValue(email)
-                                ref.child("username").setValue(namapengguna)
-                                ref.child("nama").setValue(namalengkap)
-                                ref.child("gender").setValue(gender)
-                                ref.child("birth").setValue(birthdate)
-                                Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
-                                finish()
-                            } else {
-                                Toast.makeText(
-                                    this,
-                                    "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        })
+                        if (katasandi.isNotEmpty()) {
+                            auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
+                                if (task2.isSuccessful) {
+                                    ref.child("email").setValue(email)
+                                    ref.child("username").setValue(namapengguna)
+                                    ref.child("nama").setValue(namalengkap)
+                                    ref.child("gender").setValue(gender)
+                                    ref.child("birth").setValue(birthdate)
+                                    Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                } else {
+                                    Toast.makeText(
+                                        this,
+                                        "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            })
+                        } else {
+                            ref.child("email").setValue(email)
+                            ref.child("username").setValue(namapengguna)
+                            ref.child("nama").setValue(namalengkap)
+                            ref.child("gender").setValue(gender)
+                            ref.child("birth").setValue(birthdate)
+                            Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
                     } else {
                         Toast.makeText(
                             this,

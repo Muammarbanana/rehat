@@ -92,6 +92,7 @@
             app:layout_constraintVertical_bias="0.93" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constProfil"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/rounded_background_white"
@@ -136,7 +137,7 @@
                 android:text="@string/lengkapi_profile_kamu"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/guideline41"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +164,7 @@
                 android:layout_width="15.08dp"
                 android:layout_height="16dp"
                 android:contentDescription="@string/peringatan"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/guideline41"
                 app:layout_constraintEnd_toStartOf="@+id/guideline220"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -172,7 +173,7 @@
                 app:srcCompat="@drawable/ic_warning" />
 
         <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/ikonEditProfil"
                 android:layout_width="10dp"
                 android:layout_height="12dp"
                 android:contentDescription="@string/edit_profile"
@@ -196,6 +197,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
         <ImageView
+                android:id="@+id/ikonHubungi"
                 android:layout_width="14dp"
                 android:layout_height="16dp"
                 android:contentDescription="@string/hubungi_kami"
@@ -219,6 +221,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline43" />
 
         <ImageView
+                android:id="@+id/ikonSyarat"
                 android:layout_width="16dp"
                 android:layout_height="16.05dp"
                 android:contentDescription="@string/syarat_dan_ketentuan"
@@ -318,6 +321,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0.5dp"
                 android:background="#F3F4FA"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/guideline44"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

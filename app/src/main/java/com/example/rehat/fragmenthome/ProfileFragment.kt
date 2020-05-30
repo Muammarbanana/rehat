@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintSet
 import com.example.rehat.EditProfil
 import com.example.rehat.R
 import com.example.rehat.WelcomeScreen
@@ -109,11 +110,30 @@ class ProfileFragment : Fragment() {
                         val gender = h.child("gender").value.toString()
                         val birth = h.child("birth").value.toString()
                         root.profileName.text = name
-                        if (gender == "null" || birth == "null") {
-                            lengkapiProfil.visibility = View.VISIBLE
-                            imgWarning.visibility = View.VISIBLE
+                        Picasso.get().load(photo).into(root.profilPic)
+                        if (gender == "null" || birth == "null" || gender == "") {
+                            root.lengkapiProfil.visibility = View.VISIBLE
+                            root.imgWarning.visibility = View.VISIBLE
+                            root.view3.visibility = View.VISIBLE
                         } else {
-                            Picasso.get().load(photo).into(root.profilPic)
+                            val const = ConstraintSet()
+                            const.clone(root.constProfil)
+                            const.connect(R.id.teksEditProfile, ConstraintSet.TOP, R.id.constProfil, ConstraintSet.TOP)
+                            const.connect(R.id.teksEditProfile, ConstraintSet.BOTTOM, R.id.guideline41, ConstraintSet.TOP)
+                            const.connect(R.id.ikonEditProfil, ConstraintSet.TOP, R.id.constProfil, ConstraintSet.TOP)
+                            const.connect(R.id.ikonEditProfil, ConstraintSet.BOTTOM, R.id.guideline41, ConstraintSet.TOP)
+                            const.connect(R.id.teksHubungiKami, ConstraintSet.TOP, R.id.guideline41, ConstraintSet.BOTTOM)
+                            const.connect(R.id.teksHubungiKami, ConstraintSet.BOTTOM, R.id.guideline42, ConstraintSet.TOP)
+                            const.connect(R.id.ikonHubungi, ConstraintSet.TOP, R.id.guideline41, ConstraintSet.BOTTOM)
+                            const.connect(R.id.ikonHubungi, ConstraintSet.BOTTOM, R.id.guideline42, ConstraintSet.TOP)
+                            const.connect(R.id.teksSyarat, ConstraintSet.TOP, R.id.guideline42, ConstraintSet.BOTTOM)
+                            const.connect(R.id.teksSyarat, ConstraintSet.BOTTOM, R.id.guideline43, ConstraintSet.TOP)
+                            const.connect(R.id.ikonSyarat, ConstraintSet.TOP, R.id.guideline42, ConstraintSet.BOTTOM)
+                            const.connect(R.id.ikonSyarat, ConstraintSet.BOTTOM, R.id.guideline43, ConstraintSet.TOP)
+                            const.setVerticalBias(R.id.teksEditProfile, 0.7F)
+                            const.setVerticalBias(R.id.ikonEditProfil, 0.7F)
+                            const.applyTo(root.constProfil)
+                            root.guideline41.setGuidelinePercent(0.1833F)
                         }
                     }
                 }
