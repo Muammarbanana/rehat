@@ -10,16 +10,18 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.room.Room
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
+import com.example.rehat.fragmenthome.HalamanTersimpanFragment
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
 
 
-class AdapterTersimpan(private val list:ArrayList<MateriEntity>, private val viewModel: SharedViewModel) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterTersimpan.Holder>(){
+class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val fragcont: FragmentActivity, private val viewModel: SharedViewModel) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterTersimpan.Holder>(){
 
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
@@ -34,6 +36,11 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>, private val vie
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        if (list.size == 0) {
+            val tr = fragcont.supportFragmentManager.beginTransaction()
+            tr.replace(R.id.savedPageConst, HalamanTersimpanFragment())
+            tr.commit()
+        }
         var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
         holder.view.judulSub.text = list[position].judul
         when (list[position].jenis.toInt()) {
@@ -82,6 +89,11 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>, private val vie
         roomDB?.materiDao()?.deleteDatabyID(id)
         list.removeAt(position)
         notifyItemRemoved(position)
+        if (list.size == 0) {
+            val tr = fragcont.supportFragmentManager.beginTransaction()
+            tr.replace(R.id.savedPageConst, HalamanTersimpanFragment())
+            tr.commit()
+        }
         viewModel.selectedTab("savedpagedel")
     }
 }

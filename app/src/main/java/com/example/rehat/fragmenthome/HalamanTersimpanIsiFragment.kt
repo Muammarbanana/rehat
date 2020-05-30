@@ -73,7 +73,7 @@ class HalamanTersimpanIsiFragment : Fragment() {
                 for (h in it) {
                     listmateri.add(h)
                 }
-                val adapter = AdapterTersimpan(listmateri, viewModel)
+                val adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
                 adapter.notifyDataSetChanged()
                 root.rvMateriTersimpan.adapter = adapter
                 root.teksTotal.text = "Total: ${adapter.itemCount}"

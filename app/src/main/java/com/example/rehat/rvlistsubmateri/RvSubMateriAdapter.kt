@@ -80,7 +80,7 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                 Toast.makeText(holder.view.context, "Materi berhasil disimpan", Toast.LENGTH_SHORT).show()
                 if (fragindicator == 0) {
                     val tr = fragcont.supportFragmentManager.beginTransaction()
-                    tr.replace(R.id.savedPageConst, HalamanTersimpanIsiFragment())
+                    tr.replace(R.id.empSavedPageConst, HalamanTersimpanIsiFragment())
                     tr.commit()
                 }
             }
