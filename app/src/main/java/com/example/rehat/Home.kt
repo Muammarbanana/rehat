@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
@@ -152,5 +154,21 @@ class Home : AppCompatActivity() {
         tombolChat.visibility = View.VISIBLE
         imgBackProfil.visibility = View.GONE
         teksEditProfil.visibility = View.GONE
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle?) {
+        savedInstanceState?.putInt("homeTitleState", homeTitle.visibility)
+        savedInstanceState?.putInt("tombolChatState", tombolChat.visibility)
+        savedInstanceState?.putInt("imgBackProfilState", imgBackProfil.visibility)
+        savedInstanceState?.putInt("teksEditProfilState", teksEditProfil.visibility)
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        homeTitle.visibility = savedInstanceState?.getInt("homeTitleState")!!
+        tombolChat.visibility = savedInstanceState.getInt("tombolChatState")
+        imgBackProfil.visibility = savedInstanceState.getInt("imgBackProfilState")
+        teksEditProfil.visibility = savedInstanceState.getInt("teksEditProfilState")
     }
 }

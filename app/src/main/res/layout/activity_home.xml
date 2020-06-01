@@ -123,6 +123,7 @@
             android:id="@+id/imgBackProfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/guideline20"
             app:layout_constraintStart_toStartOf="parent"
