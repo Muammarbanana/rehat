@@ -1,25 +1,24 @@
 package com.example.rehat
 
+import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import com.google.android.material.tabs.TabLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.example.rehat.fragmenthome.*
 import com.example.rehat.pageradapter.PagerAdapter
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
 import com.example.rehat.viewmodel.ViewModelFactory
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
+
 
 class Home : AppCompatActivity() {
 
@@ -156,19 +155,28 @@ class Home : AppCompatActivity() {
         teksEditProfil.visibility = View.GONE
     }
 
-    override fun onSaveInstanceState(savedInstanceState: Bundle?) {
-        savedInstanceState?.putInt("homeTitleState", homeTitle.visibility)
-        savedInstanceState?.putInt("tombolChatState", tombolChat.visibility)
-        savedInstanceState?.putInt("imgBackProfilState", imgBackProfil.visibility)
-        savedInstanceState?.putInt("teksEditProfilState", teksEditProfil.visibility)
-        super.onSaveInstanceState(savedInstanceState)
+    private fun setSharedPref(homeTitle: Int, tombolChat: Int, imgBack: Int, teksPencarian: Int) {
+        val datatitle = getSharedPreferences("DataTitle", Context.MODE_PRIVATE)
+        val titledata = datatitle.edit()
+        titledata.putInt("homeTitleState", homeTitle)
+        titledata.putInt("tombolChatState", tombolChat)
+        titledata.putInt("imgBackState", imgBack)
+        titledata.putInt("teksPencarianState", teksPencarian)
+        titledata.apply()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        homeTitle.visibility = savedInstanceState?.getInt("homeTitleState")!!
-        tombolChat.visibility = savedInstanceState.getInt("tombolChatState")
-        imgBackProfil.visibility = savedInstanceState.getInt("imgBackProfilState")
-        teksEditProfil.visibility = savedInstanceState.getInt("teksEditProfilState")
+    override fun onPause() {
+        super.onPause()
+        setSharedPref(homeTitle.visibility, tombolChat.visibility, imgBack.visibility, teksPencarian.visibility)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val datatitle = getSharedPreferences("DataTitle", Context.MODE_PRIVATE)
+        homeTitle.visibility = datatitle.getInt("homeTitleState", 0)
+        tombolChat.visibility = datatitle.getInt("tombolChatState", 0)
+        imgBack.visibility = datatitle.getInt("imgBackState", View.GONE)
+        teksPencarian.visibility = datatitle.getInt("teksPencarianState", View.GONE)
+
     }
 }
