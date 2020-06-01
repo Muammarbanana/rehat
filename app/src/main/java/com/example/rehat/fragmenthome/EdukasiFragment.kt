@@ -48,8 +48,6 @@ class EdukasiFragment : Fragment() {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_edukasi, container, false)
 
-        Log.d("Pantat", "Ini onCreateView")
-
         viewModel = activity?.run {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
@@ -267,18 +265,11 @@ class EdukasiFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("Pantat", "Ini onPause")
-    }
-
     override fun onStop() {
         super.onStop()
-        Log.d("Pantat", "Ini onStop")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("Pantat", "Ini onResume")
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+        viewModel.selectedTab("backtohome")
     }
 }

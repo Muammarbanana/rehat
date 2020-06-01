@@ -39,6 +39,8 @@ class Home : AppCompatActivity() {
                 "go to tab 1" -> tabsMain.getTabAt(0)?.select()
                 "searching" -> hideTitle()
                 "backtohome" -> showTitle()
+                "editprofil" -> hideTitleProfil()
+                "backtohomeprofil" -> showTitleProfil()
             }
         })
 
@@ -61,6 +63,11 @@ class Home : AppCompatActivity() {
             val tr = supportFragmentManager.beginTransaction()
             tr.replace(R.id.edukasiConst, EdukasiFragment())
             tr.commit()
+        }
+
+        imgBackProfil.setOnClickListener {
+            showTitleProfil()
+            supportFragmentManager.popBackStack()
         }
 
         // ganti title saat tab dipilih
@@ -88,12 +95,6 @@ class Home : AppCompatActivity() {
         tabsMain.getTabAt(2)?.setIcon(R.drawable.tab_selector_konsultasi)?.contentDescription = "Konsultasi"
         tabsMain.getTabAt(3)?.setIcon(R.drawable.tab_selector_notifikasi)?.contentDescription = "Notifikasi"
         tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)?.contentDescription = "Profil"
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getAllData()
-        setupTabIcons()
     }
 
     fun getAllData(){
@@ -137,5 +138,19 @@ class Home : AppCompatActivity() {
         tombolChat.visibility = View.VISIBLE
         imgBack.visibility = View.GONE
         teksPencarian.visibility = View.GONE
+    }
+
+    private fun hideTitleProfil() {
+        homeTitle.visibility = View.GONE
+        tombolChat.visibility = View.GONE
+        imgBackProfil.visibility = View.VISIBLE
+        teksEditProfil.visibility = View.VISIBLE
+    }
+
+    private fun showTitleProfil() {
+        homeTitle.visibility = View.VISIBLE
+        tombolChat.visibility = View.VISIBLE
+        imgBackProfil.visibility = View.GONE
+        teksEditProfil.visibility = View.GONE
     }
 }

@@ -16,9 +16,11 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.ViewModelProviders
 import com.example.rehat.EditProfil
 import com.example.rehat.R
 import com.example.rehat.WelcomeScreen
+import com.example.rehat.viewmodel.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -39,7 +41,8 @@ class ProfileFragment : Fragment() {
     private lateinit var storage: StorageReference
     private lateinit var root: View
     private lateinit var imageUri: Uri
-    private val PICK_IMAGE_REQUEST = 1;
+    private val PICK_IMAGE_REQUEST = 1
+    private lateinit var viewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,14 +56,21 @@ class ProfileFragment : Fragment() {
             popAlert(root)
         }
 
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
         storage = FirebaseStorage.getInstance().getReference("profilepic")
         ref = FirebaseDatabase.getInstance().getReference("Users")
 
         getName(root)
 
         root.teksEditProfile.setOnClickListener {
-            val intent = Intent(root.context, EditProfil::class.java)
-            root.context.startActivity(intent)
+            val tr = activity?.supportFragmentManager?.beginTransaction()
+            tr?.replace(R.id.frameProfil, EditProfileFragment())
+            tr?.addToBackStack(null)
+            tr?.commit()
+            viewModel.selectedTab("editprofil")
         }
 
         root.imgAddPhoto.setOnClickListener {
@@ -112,6 +122,24 @@ class ProfileFragment : Fragment() {
                         root.profileName.text = name
                         Picasso.get().load(photo).into(root.profilPic)
                         if (gender == "null" || birth == "null" || gender == "") {
+                            val const = ConstraintSet()
+                            const.clone(root.constProfil)
+                            const.connect(R.id.teksEditProfile, ConstraintSet.TOP, R.id.guideline41, ConstraintSet.TOP)
+                            const.connect(R.id.teksEditProfile, ConstraintSet.BOTTOM, R.id.guideline42, ConstraintSet.TOP)
+                            const.connect(R.id.ikonEditProfil, ConstraintSet.TOP, R.id.guideline41, ConstraintSet.TOP)
+                            const.connect(R.id.ikonEditProfil, ConstraintSet.BOTTOM, R.id.guideline42, ConstraintSet.TOP)
+                            const.connect(R.id.teksHubungiKami, ConstraintSet.TOP, R.id.guideline42, ConstraintSet.BOTTOM)
+                            const.connect(R.id.teksHubungiKami, ConstraintSet.BOTTOM, R.id.guideline43, ConstraintSet.TOP)
+                            const.connect(R.id.ikonHubungi, ConstraintSet.TOP, R.id.guideline42, ConstraintSet.BOTTOM)
+                            const.connect(R.id.ikonHubungi, ConstraintSet.BOTTOM, R.id.guideline43, ConstraintSet.TOP)
+                            const.connect(R.id.teksSyarat, ConstraintSet.TOP, R.id.guideline43, ConstraintSet.BOTTOM)
+                            const.connect(R.id.teksSyarat, ConstraintSet.BOTTOM, R.id.guideline44, ConstraintSet.TOP)
+                            const.connect(R.id.ikonSyarat, ConstraintSet.TOP, R.id.guideline43, ConstraintSet.BOTTOM)
+                            const.connect(R.id.ikonSyarat, ConstraintSet.BOTTOM, R.id.guideline44, ConstraintSet.TOP)
+                            const.setVerticalBias(R.id.teksEditProfile, 0.5F)
+                            const.setVerticalBias(R.id.ikonEditProfil, 0.5F)
+                            const.applyTo(root.constProfil)
+                            root.guideline41.setGuidelinePercent(0.14991F)
                             root.lengkapiProfil.visibility = View.VISIBLE
                             root.imgWarning.visibility = View.VISIBLE
                             root.view3.visibility = View.VISIBLE
@@ -134,6 +162,9 @@ class ProfileFragment : Fragment() {
                             const.setVerticalBias(R.id.ikonEditProfil, 0.7F)
                             const.applyTo(root.constProfil)
                             root.guideline41.setGuidelinePercent(0.1833F)
+                            root.lengkapiProfil.visibility = View.GONE
+                            root.imgWarning.visibility = View.GONE
+                            root.view3.visibility = View.GONE
                         }
                     }
                 }
@@ -176,5 +207,13 @@ class ProfileFragment : Fragment() {
         val cr = root.context.contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cr.getType(uri))!!
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[SharedViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+        viewModel.selectedTab("backtohomeprofil")
     }
 }

@@ -103,5 +103,11 @@ class SubMateri : AppCompatActivity() {
         }
     }
 
-    fun getBack(view: View) { finish() }
+    fun getBack(view: View) {
+        var intent = Intent(this, Home::class.java)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
+    }
 }
