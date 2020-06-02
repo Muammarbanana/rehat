@@ -1,35 +1,25 @@
-package com.example.rehat.fragmenthome
+package com.example.rehat
 
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-
-import com.example.rehat.R
 import com.example.rehat.viewmodel.SharedViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_edit_profile.view.*
+import kotlinx.android.synthetic.main.activity_edit_profil.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- */
-class EditProfileFragment : Fragment() {
+class EditProfil : AppCompatActivity() {
 
-    private lateinit var root: View
     private lateinit var ref: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private var day = 0
@@ -41,26 +31,16 @@ class EditProfileFragment : Fragment() {
     private val sdfnum = SimpleDateFormat(numformat, Locale.getDefault())
     private val SPEECH_REQUEST_CODE = 0
     private var inputIdentificator = 0
-    private lateinit var viewModel: SharedViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_edit_profile, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profil)
 
         auth = FirebaseAuth.getInstance()
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[SharedViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
-
-        viewModel.selectedTab("editprofil")
-
         // Date
         val c = Calendar.getInstance()
-        root.btnDate.text = sdf.format(c.time)
+        btnDate.text = sdf.format(c.time)
         var birthdate = sdfnum.format(c.time)
         year = c.get(Calendar.YEAR)
         month = c.get(Calendar.MONTH)
@@ -68,67 +48,67 @@ class EditProfileFragment : Fragment() {
 
         getData()
 
-        root.btnDate.setOnClickListener {
-            val dpd = DatePickerDialog(root.context, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
+        btnDate.setOnClickListener {
+            val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
                 c.set(Calendar.YEAR, mYear)
                 c.set(Calendar.MONTH, mMonth)
                 c.set(Calendar.DAY_OF_MONTH, mDay)
-                root.btnDate.text = sdf.format(c.time)
+                btnDate.text = sdf.format(c.time)
                 birthdate = sdfnum.format(c.time)
             }, year, month, day)
             dpd.show()
+            btnDate.setTextColor(Color.parseColor("#172B4D"))
         }
 
-        root.btnSimpanPerubahan.setOnClickListener {
-            editProfil(birthdate, viewModel)
+        btnSimpanPerubahan.setOnClickListener {
+            editProfil(birthdate)
         }
 
-        root.micName.setOnClickListener {inputIdentificator = 0; getVoice() }
-        root.micUsername.setOnClickListener { inputIdentificator = 1; getVoice() }
-        root.micEmail.setOnClickListener { inputIdentificator = 2; getVoice() }
-        root.micPass.setOnClickListener { inputIdentificator = 3; getVoice() }
-        root.micKonf.setOnClickListener { inputIdentificator = 4; getVoice() }
+        imgBackEditProfil.setOnClickListener { finish() }
 
-        return root
+        micName.setOnClickListener {inputIdentificator = 0; getVoice() }
+        micUsername.setOnClickListener { inputIdentificator = 1; getVoice() }
+        micEmail.setOnClickListener { inputIdentificator = 2; getVoice() }
+        micPass.setOnClickListener { inputIdentificator = 3; getVoice() }
+        micKonf.setOnClickListener { inputIdentificator = 4; getVoice() }
     }
 
-    private fun editProfil(birthdate: String, viewModel: SharedViewModel) {
+    private fun editProfil(birthdate: String) {
         ref = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid!!)
-        val namalengkap = root.editTextNamaLengkap.text.toString()
-        val namapengguna = root.editTextNamaPengguna.text.toString()
-        val email = root.editTextEmail.text.toString()
-        val id = root.rgJenisKelamin.checkedRadioButtonId
+        val namalengkap = editTextNamaLengkap.text.toString()
+        val namapengguna = editTextNamaPengguna.text.toString()
+        val email = editTextEmail.text.toString()
+        val id = rgJenisKelamin.checkedRadioButtonId
         var gender = ""
-        val katasandi = root.editKataSandi.text.toString()
-        val katasandikon = root.editKonfirmasiKataSandi.text.toString()
+        val katasandi = editKataSandi.text.toString()
+        val katasandikon = editKonfirmasiKataSandi.text.toString()
 
         if (id != -1) {
-            val radio: RadioButton = root.findViewById(id)
+            val radio: RadioButton = findViewById(id)
             gender = radio.text.toString()
         }
 
         if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty()) {
-            Toast.makeText(root.context, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
         } else if (katasandi != katasandikon) {
-            Toast.makeText(root.context, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
         } else {
             auth.currentUser?.updateEmail(email)
-                ?.addOnCompleteListener(OnCompleteListener { task ->
+                ?.addOnCompleteListener(this, OnCompleteListener { task ->
                     if (task.isSuccessful) {
                         if (katasandi.isNotEmpty()) {
-                            auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener( OnCompleteListener { task2 ->
+                            auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
                                 if (task2.isSuccessful) {
                                     ref.child("email").setValue(email)
                                     ref.child("username").setValue(namapengguna)
                                     ref.child("nama").setValue(namalengkap)
                                     ref.child("gender").setValue(gender)
                                     ref.child("birth").setValue(birthdate)
-                                    Toast.makeText(root.context, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
-                                    activity?.supportFragmentManager?.popBackStack()
-                                    viewModel.selectedTab("backtohomeprofil")
+                                    Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                                    finish()
                                 } else {
                                     Toast.makeText(
-                                        root.context,
+                                        this,
                                         "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
                                         Toast.LENGTH_SHORT
                                     ).show()
@@ -140,13 +120,12 @@ class EditProfileFragment : Fragment() {
                             ref.child("nama").setValue(namalengkap)
                             ref.child("gender").setValue(gender)
                             ref.child("birth").setValue(birthdate)
-                            Toast.makeText(root.context, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
-                            activity?.supportFragmentManager?.popBackStack()
-                            viewModel.selectedTab("backtohomeprofil")
+                            Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                            finish()
                         }
                     } else {
                         Toast.makeText(
-                            root.context,
+                            this,
                             "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -180,15 +159,15 @@ class EditProfileFragment : Fragment() {
                             c.set(Calendar.YEAR, year)
                             c.set(Calendar.MONTH, month)
                             c.set(Calendar.DAY_OF_MONTH, day)
-                            root.btnDate.text = sdf.format(c.time)
-                            root.btnDate.setTextColor(Color.parseColor("#172B4D"))
+                            btnDate.text = sdf.format(c.time)
+                            btnDate.setTextColor(Color.parseColor("#172B4D"))
                         }
-                        root.editTextNamaLengkap.setText(name)
-                        root.editTextNamaPengguna.setText(username)
-                        root.editTextEmail.setText(email)
+                        editTextNamaLengkap.setText(name)
+                        editTextNamaPengguna.setText(username)
+                        editTextEmail.setText(email)
                         when (gender) {
-                            "Perempuan" -> root.rgJenisKelamin.check(R.id.rbPerem)
-                            "Laki-Laki" -> root.rgJenisKelamin.check(R.id.rbLaki)
+                            "Perempuan" -> rgJenisKelamin.check(R.id.rbPerem)
+                            "Laki-Laki" -> rgJenisKelamin.check(R.id.rbLaki)
                         }
                     }
                 }
@@ -211,11 +190,11 @@ class EditProfileFragment : Fragment() {
                 }
             // Do something with spokenText
             when(inputIdentificator) {
-                0 -> root.editTextNamaLengkap.setText(spokenText)
-                1 -> root.editTextNamaPengguna.setText(spokenText)
-                2 -> root.editTextEmail.setText(spokenText)
-                3 -> root.editKataSandi.setText(spokenText)
-                else -> root.editKonfirmasiKataSandi.setText(spokenText)
+                0 -> editTextNamaLengkap.setText(spokenText)
+                1 -> editTextNamaPengguna.setText(spokenText)
+                2 -> editTextEmail.setText(spokenText)
+                3 -> editKataSandi.setText(spokenText)
+                else -> editKonfirmasiKataSandi.setText(spokenText)
             }
 
         }

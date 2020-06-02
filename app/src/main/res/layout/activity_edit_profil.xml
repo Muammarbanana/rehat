@@ -1,16 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/frameEditProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragmenthome.EditProfileFragment">
+        android:background="#F3F4FA"
+        tools:context=".EditProfil">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar4"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+            android:id="@+id/imgBackEditProfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+            app:layout_constraintStart_toStartOf="@+id/toolbar4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_small_arrow" />
+
+    <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_profile"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar4"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgBackEditProfil"
+            app:layout_constraintTop_toTopOf="@+id/toolbar4" />
 
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F3F4FA">
+            android:layout_height="0dp"
+            android:background="#F3F4FA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar4">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -394,7 +434,7 @@
                     android:contentDescription="masukkan kata sandi baru"
                     android:ems="10"
                     android:fontFamily="@font/montserrat_regular"
-                    android:hint="masukkan kata sandi baru"
+                    android:hint="Masukkan kata sandi baru"
                     android:inputType="textPassword"
                     android:textColor="@color/colorBlack"
                     android:textColorHint="@color/colorGray"
@@ -520,4 +560,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

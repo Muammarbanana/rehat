@@ -14,7 +14,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.lifecycle.ViewModelProviders
+import com.example.rehat.EditProfil
 import com.example.rehat.R
 import com.example.rehat.WelcomeScreen
 import com.example.rehat.viewmodel.SharedViewModel
@@ -52,21 +52,14 @@ class ProfileFragment : Fragment() {
             popAlert(root)
         }
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[SharedViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
-
         storage = FirebaseStorage.getInstance().getReference("profilepic")
         ref = FirebaseDatabase.getInstance().getReference("Users")
 
         getName(root)
 
         root.teksEditProfile.setOnClickListener {
-            val tr = activity?.supportFragmentManager?.beginTransaction()
-            tr?.replace(R.id.frameProfil, EditProfileFragment())
-            tr?.addToBackStack(null)
-            tr?.commit()
-            viewModel.selectedTab("editprofil")
+            val intent = Intent(root.context, EditProfil::class.java)
+            startActivity(intent)
         }
 
         root.imgAddPhoto.setOnClickListener {
@@ -203,13 +196,5 @@ class ProfileFragment : Fragment() {
         val cr = root.context.contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cr.getType(uri))!!
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel = activity?.run {
-            ViewModelProviders.of(this)[SharedViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
-        viewModel.selectedTab("backtohomeprofil")
     }
 }

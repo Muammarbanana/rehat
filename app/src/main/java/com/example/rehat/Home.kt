@@ -40,8 +40,6 @@ class Home : AppCompatActivity() {
                 "go to tab 1" -> tabsMain.getTabAt(0)?.select()
                 "searching" -> hideTitle()
                 "backtohome" -> showTitle()
-                "editprofil" -> hideTitleProfil()
-                "backtohomeprofil" -> showTitleProfil()
             }
         })
 
@@ -64,11 +62,6 @@ class Home : AppCompatActivity() {
             val tr = supportFragmentManager.beginTransaction()
             tr.replace(R.id.edukasiConst, EdukasiFragment())
             tr.commit()
-        }
-
-        imgBackProfil.setOnClickListener {
-            showTitleProfil()
-            supportFragmentManager.popBackStack()
         }
 
         // ganti title saat tab dipilih
@@ -141,20 +134,6 @@ class Home : AppCompatActivity() {
         teksPencarian.visibility = View.GONE
     }
 
-    private fun hideTitleProfil() {
-        homeTitle.visibility = View.GONE
-        tombolChat.visibility = View.GONE
-        imgBackProfil.visibility = View.VISIBLE
-        teksEditProfil.visibility = View.VISIBLE
-    }
-
-    private fun showTitleProfil() {
-        homeTitle.visibility = View.VISIBLE
-        tombolChat.visibility = View.VISIBLE
-        imgBackProfil.visibility = View.GONE
-        teksEditProfil.visibility = View.GONE
-    }
-
     private fun setSharedPref(homeTitle: Int, tombolChat: Int, imgBack: Int, teksPencarian: Int) {
         val datatitle = getSharedPreferences("DataTitle", Context.MODE_PRIVATE)
         val titledata = datatitle.edit()
@@ -177,6 +156,5 @@ class Home : AppCompatActivity() {
         tombolChat.visibility = datatitle.getInt("tombolChatState", 0)
         imgBack.visibility = datatitle.getInt("imgBackState", View.GONE)
         teksPencarian.visibility = datatitle.getInt("teksPencarianState", View.GONE)
-
     }
 }
