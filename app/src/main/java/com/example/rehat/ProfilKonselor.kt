@@ -71,7 +71,7 @@ class ProfilKonselor : AppCompatActivity() {
         }
 
         checkPromise()
-        getDataHari(id.toDouble())
+        getDataHari(id)
         getName()
     }
 
@@ -125,7 +125,7 @@ class ProfilKonselor : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun getDataHari(id: Double) {
+    private fun getDataHari(id: String) {
         var daftarHari = arrayListOf<String>()
         ref = FirebaseDatabase.getInstance().getReference("jadwal")
         ref.orderByChild("id_konselor").equalTo(id).addListenerForSingleValueEvent(object: ValueEventListener {
