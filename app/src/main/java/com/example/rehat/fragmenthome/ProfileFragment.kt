@@ -23,7 +23,9 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.fragment_profile.view.profilPic
 import kotlinx.android.synthetic.main.fragment_profile.view.profileName
 import kotlinx.android.synthetic.main.pop_alert.view.*
 
@@ -109,7 +111,12 @@ class ProfileFragment : Fragment() {
                         val gender = h.child("gender").value.toString()
                         val birth = h.child("birth").value.toString()
                         root.profileName.text = name
-                        Picasso.get().load(photo).into(root.profilPic)
+                        if (photo == "null" || photo == "") {
+                            profilPic.contentDescription = "Belum memasang foto profil"
+                        } else {
+                            Picasso.get().load(photo).into(root.profilPic)
+                            profilPic.contentDescription = ""
+                        }
                         if (gender == "null" || birth == "null" || gender == "") {
                             val const = ConstraintSet()
                             const.clone(root.constProfil)
