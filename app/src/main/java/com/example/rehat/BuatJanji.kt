@@ -51,10 +51,10 @@ class BuatJanji : AppCompatActivity() {
 
         textLihatMaps.setOnClickListener { openMap(address) }
 
-        getDataJadwal(id.toDouble())
+        getDataJadwal(id)
     }
 
-    private fun getDataJadwal(id: Double) {
+    private fun getDataJadwal(id: String) {
         var daftarHari = arrayListOf<Hari>()
         val daftarJam = arrayListOf<Waktu>()
         ref = FirebaseDatabase.getInstance().getReference("jadwal")
