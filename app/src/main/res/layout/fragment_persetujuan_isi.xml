@@ -263,6 +263,7 @@
                     android:layout_height="0dp"
                     android:background="@drawable/rounded_button_bot_grey"
                     android:clickable="false"
+                    android:contentDescription="Status persetujuan menunggu konfirmasi"
                     android:text="Menunggu Konfirmasi"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"

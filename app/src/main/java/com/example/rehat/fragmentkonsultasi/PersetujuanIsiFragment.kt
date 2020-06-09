@@ -1,5 +1,6 @@
 package com.example.rehat.fragmentkonsultasi
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.rehat.R
+import com.example.rehat.RincianPersetujuan
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_persetujuan_isi.*
@@ -50,6 +52,8 @@ class PersetujuanIsiFragment : Fragment() {
                         val tanggal = h.child("tanggal").value.toString()
                         val jam = h.child("jam").value.toString()
                         val catatan = h.child("catatan").value.toString()
+                        val status = h.child("status").value.toString()
+                        val idjanji = h.key.toString()
                         root.agrName.text = namadokter
                         root.agrAddress.text = alamat
                         root.agrTanggal.text = tanggal
@@ -59,6 +63,28 @@ class PersetujuanIsiFragment : Fragment() {
                         root.agrTanggal.contentDescription = "Hari dan tanggal, $tanggal"
                         root.agrJam.contentDescription = "Pukul, $jam WIB"
                         root.agrCatatan.contentDescription = "Catatan tambahan, $catatan"
+                        when (status.toInt()) {
+                            1 -> {
+                                agrBtnStatus.text = "Diterima"
+                                agrBtnStatus.setBackgroundResource(R.drawable.rounded_button_bot_green)
+                                agrBtnStatus.contentDescription = "Status persetujuan diterima, lihat rincian pertemuan"
+                                agrBtnStatus.setOnClickListener {
+                                    val intent = Intent(root.context, RincianPersetujuan::class.java)
+                                    intent.putExtra("idJanji", idjanji)
+                                    root.context.startActivity(intent)
+                                }
+                            }
+                            2 -> {
+                                agrBtnStatus.text = "Ditolak"
+                                agrBtnStatus.setBackgroundResource(R.drawable.rounded_button_bot_red)
+                                agrBtnStatus.contentDescription = "Status persetujuan ditolak, lihat alasan penolakan"
+                                agrBtnStatus.setOnClickListener{
+                                    val intent = Intent(root.context, RincianPersetujuan::class.java)
+                                    intent.putExtra("idJanji", idjanji)
+                                    root.context.startActivity(intent)
+                                }
+                            }
+                        }
                     }
                 }
             }
