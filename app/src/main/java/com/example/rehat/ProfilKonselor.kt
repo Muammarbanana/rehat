@@ -70,7 +70,7 @@ class ProfilKonselor : AppCompatActivity() {
             startActivity(intent)
         }
 
-        checkPromise()
+        checkPromise(address, kmdistance.roundToInt().toString())
         getDataHari(id)
         getName()
     }
@@ -81,7 +81,7 @@ class ProfilKonselor : AppCompatActivity() {
         this.startActivity(intent)
     }
 
-    private fun checkPromise() {
+    private fun checkPromise(address: String, kmdistance: String) {
         ref = FirebaseDatabase.getInstance().getReference("janji")
         ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -90,7 +90,22 @@ class ProfilKonselor : AppCompatActivity() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-                    btnJanji.setOnClickListener { popAlert() }
+                    for (h in p0.children) {
+                        val status = h.child("status").value.toString()
+                        if (status.toInt() == 1 || status.toInt() == 0) {
+                            btnJanji.setOnClickListener { popAlert() }
+                        } else {
+                            btnJanji.setOnClickListener {
+                                val intent = Intent(this@ProfilKonselor, BuatJanji::class.java)
+                                intent.putExtra("Nama", namaKonselor.text.toString())
+                                intent.putExtra("Lokasi", textLokasi.text.toString())
+                                intent.putExtra("Id", id)
+                                intent.putExtra("Alamat", address)
+                                intent.putExtra("Jarak", kmdistance)
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }
             }
         })

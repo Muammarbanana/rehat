@@ -159,19 +159,44 @@ class BuatJanji : AppCompatActivity() {
         }
         val catatan = editTextCatatan.text.toString()
         val namadokter = janjiNamaKonselor.text.toString()
-        ref.push().setValue(
-            Janji(
-                lokasiJanji.text.toString(),
-                tanggal,
-                jam,
-                catatan,
-                auth.currentUser?.uid!!,
-                id,
-                0,
-                namadokter,
-                address
-            )
-        )
+        ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val key = h.key.toString()
+                        ref.child(key).child("tempat").setValue(lokasiJanji.text.toString())
+                        ref.child(key).child("tanggal").setValue(tanggal)
+                        ref.child(key).child("jam").setValue(jam)
+                        ref.child(key).child("catatan").setValue(catatan)
+                        ref.child(key).child("id_user").setValue(auth.currentUser?.uid!!)
+                        ref.child(key).child("id_konselor").setValue(id)
+                        ref.child(key).child("status").setValue(0)
+                        ref.child(key).child("namadokter").setValue(namadokter)
+                        ref.child(key).child("alamat").setValue(address)
+                        ref.child(key).child("pesan").removeValue()
+                    }
+                } else {
+                    ref.push().setValue(
+                        Janji(
+                            lokasiJanji.text.toString(),
+                            tanggal,
+                            jam,
+                            catatan,
+                            auth.currentUser?.uid!!,
+                            id,
+                            0,
+                            namadokter,
+                            address
+                        )
+                    )
+                }
+            }
+
+        })
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         var intent = Intent(this, Home::class.java)
         intent.putExtra("DataTabChat", "2")
