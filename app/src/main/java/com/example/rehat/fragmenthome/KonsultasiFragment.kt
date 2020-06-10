@@ -34,8 +34,6 @@ class KonsultasiFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        getDataJanji(view)
-
         viewModel = activity?.run {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
@@ -46,31 +44,15 @@ class KonsultasiFragment : Fragment() {
             }
         })
 
+        val pages = arrayListOf(KonselorFragment(), PersetujuanFragment())
+
+        view.viewPager2.adapter =
+            PagerAdapterKonsultasi(
+                childFragmentManager,
+                pages
+            )
+        view.tabsKonsultasi.setupWithViewPager(view.viewPager2)
+
         return view
-    }
-
-    private fun getDataJanji(view: View) {
-        var pages: ArrayList<Fragment>
-        ref = FirebaseDatabase.getInstance().getReference("janji")
-        ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addValueEventListener(object:
-            ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()) {
-                    pages = arrayListOf(KonselorFragment(), PersetujuanIsiFragment())
-                } else {
-                    pages = arrayListOf(KonselorFragment(), PersetujuanFragment())
-                }
-                view.viewPager2.adapter =
-                    PagerAdapterKonsultasi(
-                        childFragmentManager,
-                        pages
-                    )
-                view.tabsKonsultasi.setupWithViewPager(view.viewPager2)
-            }
-        })
     }
 }

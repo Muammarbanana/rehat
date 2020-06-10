@@ -50,6 +50,7 @@ class KonselorFragment : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                daftarKonselor.clear()
                 if(p0.exists()) {
                     for(h in p0.children) {
                         val nama = h.child("nama_konselor").value.toString()

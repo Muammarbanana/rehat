@@ -20,23 +20,45 @@ class PersetujuanFragment : Fragment() {
     private lateinit var viewModel: SharedViewModel
     private lateinit var ref: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var root: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_persetujuan, container, false)
+        root = inflater.inflate(R.layout.fragment_persetujuan, container, false)
         //getDataJanji(inflater, container)
+
+        auth = FirebaseAuth.getInstance()
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        view.btnPilihKonselor.setOnClickListener {
+        root.btnPilihKonselor.setOnClickListener {
             viewModel.selectedTab("go to tab pilih konselor")
         }
 
-        return view
+        getDataJanji()
+
+        return root
+    }
+
+    private fun getDataJanji() {
+        ref = FirebaseDatabase.getInstance().getReference("janji")
+        ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+                    transaction?.replace(R.id.framePersetujuan, PersetujuanIsiFragment())
+                    transaction?.commitAllowingStateLoss()
+                }
+            }
+
+        })
     }
 }

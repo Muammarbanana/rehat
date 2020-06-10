@@ -89,6 +89,31 @@ class PersetujuanIsiFragment : Fragment() {
                 }
             }
         })
+
+        ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.framePersetujuanIsi, PersetujuanFragment())
+                transaction?.commitAllowingStateLoss()
+            }
+
+        })
     }
 
     private fun getName() {
