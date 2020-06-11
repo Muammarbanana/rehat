@@ -33,7 +33,9 @@ class ChatKonsultasi : AppCompatActivity() {
 
         listenForMessages()
 
-        rvChat.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        layoutManager.stackFromEnd = true
+        rvChat.layoutManager = layoutManager
         rvChat.adapter = adapter
 
         imgSend.setOnClickListener{
@@ -55,10 +57,11 @@ class ChatKonsultasi : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("messages/$fromId/$toId")
         val toref = FirebaseDatabase.getInstance().getReference("messages/$toId/$fromId")
         val chatmessage = ChatMessage(fromId!!, toId, message, timestamp)
-        ref.push().setValue(chatmessage)
+        ref.push().setValue(chatmessage).addOnSuccessListener {
+            editTextMessage.text.clear()
+            rvChat.scrollToPosition(adapter.itemCount - 1)
+        }
         toref.push().setValue(chatmessage)
-        editTextMessage.text.clear()
-        rvChat.scrollToPosition(adapter.itemCount - 1)
     }
 
     private fun listenForMessages() {
@@ -123,8 +126,8 @@ class ChatToItem(val text: String, val time: String): Item<GroupieViewHolder>() 
     }
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.teksChat.text = text
-        viewHolder.itemView.chatime.text = time
+        viewHolder.itemView.teksChatTo.text = text
+        viewHolder.itemView.chatimeTo.text = time
     }
 
 }
