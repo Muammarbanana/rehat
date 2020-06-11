@@ -56,4 +56,5 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
     implementation 'commons-io:commons-io:2.6'
+    implementation "com.xwray:groupie:2.8.0"
 }

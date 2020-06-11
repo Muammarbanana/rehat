@@ -70,6 +70,13 @@ class ProfilKonselor : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnKonsul.setOnClickListener {
+            val intent = Intent(this, ChatKonsultasi::class.java)
+            intent.putExtra("Nama", namaKonselor.text.toString())
+            intent.putExtra("Id", id)
+            startActivity(intent)
+        }
+
         checkPromise(address, kmdistance.roundToInt().toString())
         getDataHari(id)
         getName()
