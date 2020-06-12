@@ -1,7 +1,11 @@
 package com.example.rehat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.example.rehat.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +24,7 @@ import java.util.*
 class ChatKonsultasi : AppCompatActivity() {
 
     val adapter = GroupAdapter<GroupieViewHolder>()
+    private val SPEECH_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,26 @@ class ChatKonsultasi : AppCompatActivity() {
         layoutManager.stackFromEnd = true
         rvChat.layoutManager = layoutManager
         rvChat.adapter = adapter
+
+        editTextMessage.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (editTextMessage.text.toString() == ""){
+                    imgMic.visibility = View.VISIBLE
+                    imgSend.visibility = View.GONE
+                } else {
+                    imgMic.visibility = View.GONE
+                    imgSend.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        imgMic.setOnClickListener { getVoice() }
 
         imgSend.setOnClickListener{
             val message = editTextMessage.text.toString()
@@ -120,6 +145,26 @@ class ChatKonsultasi : AppCompatActivity() {
         val sdf = SimpleDateFormat("HH.mm", Locale.getDefault())
         val time = Date(timestamp)
         return sdf.format(time)
+    }
+
+    private fun getVoice() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        startActivityForResult(intent, SPEECH_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val spokenText: String? =
+                data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).let { results ->
+                    results?.get(0)
+                }
+            // Do something with spokenText
+            editTextMessage.setText(spokenText)
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
 

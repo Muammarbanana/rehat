@@ -132,6 +132,7 @@
             android:id="@+id/imgSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline148"
             app:layout_constraintTop_toTopOf="@+id/guideline152"
@@ -182,5 +183,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline145" />
+
+    <ImageView
+            android:id="@+id/imgMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="konsultasi menggunakan pesan suara"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline149"
+            app:layout_constraintStart_toStartOf="@+id/guideline147"
+            app:layout_constraintTop_toTopOf="@+id/guideline152"
+            app:srcCompat="@drawable/ic_microphone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
