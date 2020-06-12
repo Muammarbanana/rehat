@@ -69,10 +69,6 @@ class ChatKonsultasi : AppCompatActivity() {
                 performSendMessage(message)
             }
         }
-
-        teksSelesai.setOnClickListener {
-            popAlert()
-        }
     }
 
     fun getBack(view: View) {
@@ -138,6 +134,11 @@ class ChatKonsultasi : AppCompatActivity() {
                 val chatmessage = p0.getValue(ChatMessage::class.java)
 
                 if (chatmessage != null) {
+                    teksSelesai.setOnClickListener {
+                        popAlert()
+                    }
+                    teksSelesai.isClickable = true
+                    teksSelesai.setTextColor(Color.parseColor("#1A8748"))
                     if (date != convertToDate(Date(chatmessage.timestamp))) {
                         adapter.add(DateItem(convertToDate(Date(chatmessage.timestamp))))
                     }
