@@ -107,7 +107,7 @@ class Home : AppCompatActivity() {
                     EdukasiFragment(),
                     HalamanTersimpanIsiFragment(),
                     KonsultasiFragment(),
-                    NotifikasiFragment(),
+                    NotifikasiIsiFragment(),
                     ProfileFragment()
                 )
             } else {
