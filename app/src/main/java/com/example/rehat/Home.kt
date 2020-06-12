@@ -160,6 +160,13 @@ class Home : AppCompatActivity() {
                             })
                         }
                     }
+                } else {
+                    tombolChat.setOnClickListener {
+                        val intent = Intent(this@Home, KonsultasiOnline::class.java)
+                        startActivity(intent)
+                    }
+                    tombolChat.setImageResource(R.drawable.ic_chat)
+                    tombolChat.contentDescription = "pesan konsultasi online"
                 }
             }
         })
@@ -196,6 +203,7 @@ class Home : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        checkChatKonsul()
         val datatitle = getSharedPreferences("DataTitle", Context.MODE_PRIVATE)
         homeTitle.visibility = datatitle.getInt("homeTitleState", 0)
         tombolChat.visibility = datatitle.getInt("tombolChatState", 0)

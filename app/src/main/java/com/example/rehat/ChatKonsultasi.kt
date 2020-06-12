@@ -66,6 +66,10 @@ class ChatKonsultasi : AppCompatActivity() {
                 performSendMessage(message)
             }
         }
+
+        teksSelesai.setOnClickListener {
+            akhiriChat()
+        }
     }
 
     fun getBack(view: View) {
@@ -170,6 +174,20 @@ class ChatKonsultasi : AppCompatActivity() {
             datevalue = sdf.format(timestamp)
         }
         return datevalue
+    }
+
+    private fun akhiriChat() {
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = intent.getStringExtra("Id")
+        val fromRef = FirebaseDatabase.getInstance().getReference("messages/$fromId/$toId")
+        val toRef = FirebaseDatabase.getInstance().getReference("messages/$toId/$fromId")
+        val latestToRef = FirebaseDatabase.getInstance().getReference("latest_messages/$toId/$fromId")
+        val latestFromRef = FirebaseDatabase.getInstance().getReference("latest_messages/$fromId/$toId")
+        fromRef.removeValue()
+        toRef.removeValue()
+        latestToRef.removeValue()
+        latestFromRef.removeValue()
+        finish()
     }
 
     private fun getVoice() {
