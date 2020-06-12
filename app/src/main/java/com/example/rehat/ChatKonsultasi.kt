@@ -1,12 +1,14 @@
 package com.example.rehat
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.example.rehat.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.chat_from.view.chatime
 import kotlinx.android.synthetic.main.chat_from.view.teksChat
 import kotlinx.android.synthetic.main.chat_to.view.*
 import kotlinx.android.synthetic.main.date_header.view.*
+import kotlinx.android.synthetic.main.pop_alert.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -68,7 +71,7 @@ class ChatKonsultasi : AppCompatActivity() {
         }
 
         teksSelesai.setOnClickListener {
-            akhiriChat()
+            popAlert()
         }
     }
 
@@ -188,6 +191,23 @@ class ChatKonsultasi : AppCompatActivity() {
         latestToRef.removeValue()
         latestFromRef.removeValue()
         finish()
+    }
+
+    private fun popAlert() {
+        val dialog = AlertDialog.Builder(this).create()
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.pop_alert, null)
+        dialog.setView(dialogView)
+        dialog.setCancelable(true)
+        dialogView.alertText.text = "Apakah kamu yakin ingin mengakhiri konsultasi online? Pesan akan otomatis dihapus jika konsultasi dinyatakan selesai"
+        dialogView.btnAccept.text = "Ya, Akhiri"
+        dialogView.btnAccept.setTextColor(Color.parseColor("#DB4437"))
+        dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
+        dialogView.btnAccept.setOnClickListener {
+            akhiriChat()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun getVoice() {
