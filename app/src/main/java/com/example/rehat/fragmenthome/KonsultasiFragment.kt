@@ -41,6 +41,8 @@ class KonsultasiFragment : Fragment() {
         viewModel.selected.observeForever(androidx.lifecycle.Observer {
             if (it.equals("go to tab pilih konselor")) {
                 view.tabsKonsultasi.getTabAt(0)?.select()
+            } else if (it.equals("ke halaman persetujuan")) {
+                view.tabsKonsultasi.getTabAt(1)?.select()
             }
         })
 

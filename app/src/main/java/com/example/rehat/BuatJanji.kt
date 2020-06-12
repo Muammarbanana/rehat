@@ -199,7 +199,7 @@ class BuatJanji : AppCompatActivity() {
         })
         Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
         var intent = Intent(this, Home::class.java)
-        intent.putExtra("DataTabChat", "2")
+        intent.putExtra("DataTabChat", "9")
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)

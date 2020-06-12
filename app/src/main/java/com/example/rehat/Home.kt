@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_konsultasi.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
 import java.util.*
 
@@ -57,8 +58,14 @@ class Home : AppCompatActivity() {
         if (intent.extras != null) {
             Handler().postDelayed({
                 val nomorTab = intent.getStringExtra("DataTabChat")
-                tabsMain.setScrollPosition(nomorTab.toInt(), 0f, true)
-                viewPager1.currentItem = nomorTab.toInt()
+                if (nomorTab == "2") {
+                    tabsMain.setScrollPosition(nomorTab.toInt(), 0f, true)
+                    viewPager1.currentItem = nomorTab.toInt()
+                } else {
+                    tabsMain.setScrollPosition(2, 0f, true)
+                    viewPager1.currentItem = 2
+                    viewModel.selectedTab("ke halaman persetujuan")
+                }
             },100)
         }
 

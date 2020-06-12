@@ -142,7 +142,7 @@ class ProfilKonselor : AppCompatActivity() {
                                     popAlert("Kamu tidak bisa konsultasi dengan Konselor lain secara bersamaan. Mohon selesaikan dulu konsultasi onlinemu")
                                 }
                                 btnJanji.setOnClickListener {
-                                    popAlert("Kamu tidak bisa konsultasi dengan Konselor lain secara bersamaan. Mohon selesaikan dulu konsultasi onlinemu")
+                                    popAlert("Kamu tidak bisa membuat janji pertemuan lebih dari satu. Mohon selesaikan dulu pertemuanmu dengan Konselor")
                                 }
                             }
                         }
