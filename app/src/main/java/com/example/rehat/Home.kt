@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +17,11 @@ import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
 import com.example.rehat.viewmodel.ViewModelFactory
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -63,6 +69,8 @@ class Home : AppCompatActivity() {
             tr.replace(R.id.edukasiConst, EdukasiFragment())
             tr.commit()
         }
+
+        checkChatKonsul()
 
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
@@ -117,6 +125,43 @@ class Home : AppCompatActivity() {
                 )
             tabsMain.setupWithViewPager(viewPager1)
             setupTabIcons()
+        })
+    }
+
+    private fun checkChatKonsul() {
+        val ref = FirebaseDatabase.getInstance().getReference("messages")
+        ref.orderByKey().equalTo(FirebaseAuth.getInstance().uid).addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    p0.children.forEach { p1 ->
+                        p1.children.forEach {
+                            val id = it.key.toString()
+                            tombolChat.setOnClickListener {
+                                val intent = Intent(this@Home, ChatKonsultasi::class.java)
+                                intent.putExtra("Id", id)
+                                startActivity(intent)
+                            }
+                            tombolChat.setImageResource(R.drawable.ic_pesan_konsultasi)
+                            val ref1 = FirebaseDatabase.getInstance().getReference("konselor")
+                            ref1.orderByKey().equalTo(id).addListenerForSingleValueEvent(object: ValueEventListener{
+                                override fun onCancelled(p0: DatabaseError){
+                                }
+
+                                override fun onDataChange(p0: DataSnapshot) {
+                                    p0.children.forEach {
+                                        val nama = it.child("nama_konselor").value.toString()
+                                        tombolChat.contentDescription = "Terdapat pesan masuk dari $nama"
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            }
         })
     }
 

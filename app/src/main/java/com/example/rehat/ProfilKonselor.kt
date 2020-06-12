@@ -78,6 +78,7 @@ class ProfilKonselor : AppCompatActivity() {
         }
 
         checkPromise(address, kmdistance.roundToInt().toString())
+        checkChatKonsul()
         getDataHari(id)
         getName()
     }
@@ -100,7 +101,7 @@ class ProfilKonselor : AppCompatActivity() {
                     for (h in p0.children) {
                         val status = h.child("status").value.toString()
                         if (status.toInt() == 1 || status.toInt() == 0) {
-                            btnJanji.setOnClickListener { popAlert() }
+                            btnJanji.setOnClickListener { popAlert("Kamu tidak bisa membuat janji pertemuan lebih dari satu. Mohon selesaikan dulu pertemuanmu dengan Konselor") }
                         } else {
                             btnJanji.setOnClickListener {
                                 val intent = Intent(this@ProfilKonselor, BuatJanji::class.java)
@@ -110,6 +111,39 @@ class ProfilKonselor : AppCompatActivity() {
                                 intent.putExtra("Alamat", address)
                                 intent.putExtra("Jarak", kmdistance)
                                 startActivity(intent)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun checkChatKonsul() {
+        ref = FirebaseDatabase.getInstance().getReference("messages")
+        ref.orderByKey().equalTo(auth.currentUser?.uid!!).addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    p0.children.forEach {p1 ->
+                        p1.children.forEach {
+                            if (it.key.toString() == id) {
+                                btnKonsul.setOnClickListener {
+                                    val intent = Intent(this@ProfilKonselor, ChatKonsultasi::class.java)
+                                    intent.putExtra("Nama", namaKonselor.text.toString())
+                                    intent.putExtra("Id", id)
+                                    startActivity(intent)
+                                }
+                            } else {
+                                btnKonsul.setOnClickListener {
+                                    popAlert("Kamu tidak bisa konsultasi dengan Konselor lain secara bersamaan. Mohon selesaikan dulu konsultasi onlinemu")
+                                }
+                                btnJanji.setOnClickListener {
+                                    popAlert("Kamu tidak bisa konsultasi dengan Konselor lain secara bersamaan. Mohon selesaikan dulu konsultasi onlinemu")
+                                }
                             }
                         }
                     }
@@ -136,13 +170,13 @@ class ProfilKonselor : AppCompatActivity() {
         })
     }
 
-    private fun popAlert() {
+    private fun popAlert(teks: String) {
         val dialog = AlertDialog.Builder(this).create()
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.pop_alert_single, null)
         dialog.setView(dialogView)
         dialog.setCancelable(true)
-        dialogView.alertText.text = "Kamu tidak bisa membuat janji pertemuan lebih dari satu. Mohon selesaikan dulu pertemuanmu dengan Konselor"
+        dialogView.alertText.text = teks
         dialogView.btnAccept.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }

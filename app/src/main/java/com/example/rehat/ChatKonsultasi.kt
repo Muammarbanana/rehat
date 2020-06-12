@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.rehat.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -28,8 +25,7 @@ class ChatKonsultasi : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_konsultasi)
 
-        val namakonselor = intent.getStringExtra("Nama")
-        chatNamaKonselor.text = namakonselor
+        getConselorName(intent.getStringExtra("Id"))
 
         listenForMessages()
 
@@ -48,6 +44,25 @@ class ChatKonsultasi : AppCompatActivity() {
 
     fun getBack(view: View) {
         finish()
+    }
+
+    private fun getConselorName(id: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("konselor")
+        ref.orderByKey().equalTo(id).addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    p0.children.forEach {
+                        val nama = it.child("nama_konselor").value.toString()
+                        chatNamaKonselor.text = nama
+                    }
+                }
+            }
+
+        })
     }
 
     private fun performSendMessage(message: String) {
@@ -102,7 +117,7 @@ class ChatKonsultasi : AppCompatActivity() {
     }
 
     private fun converToHours(timestamp: Long): String {
-        val sdf = SimpleDateFormat("hh.mm", Locale.getDefault())
+        val sdf = SimpleDateFormat("HH.mm", Locale.getDefault())
         val time = Date(timestamp)
         return sdf.format(time)
     }
