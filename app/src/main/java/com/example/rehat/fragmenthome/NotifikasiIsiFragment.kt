@@ -1,11 +1,14 @@
 package com.example.rehat.fragmenthome
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.rehat.Home
 
 import com.example.rehat.R
 import com.example.rehat.model.Notifikasi
@@ -151,6 +154,12 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
         viewHolder.itemView.constListNotifikasi.setOnClickListener {
             val ref = FirebaseDatabase.getInstance().getReference("notifikasi/$idnotif")
             ref.child("statusbaca").setValue(1)
+            var intent = Intent(viewHolder.itemView.context, Home::class.java)
+            intent.putExtra("DataTabChat", "9")
+            intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            viewHolder.itemView.context.startActivity(intent)
+            (viewHolder.itemView.context as Activity).finish()
         }
     }
 
