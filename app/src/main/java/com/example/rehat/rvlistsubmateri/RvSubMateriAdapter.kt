@@ -15,13 +15,17 @@ import com.example.rehat.fragmenthome.HalamanTersimpanIsiFragment
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
 class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: FragmentActivity, private val fragindicator: Int) : androidx.recyclerview.widget.RecyclerView.Adapter<AdapterSub.Holder>() {
 
     class Holder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
+    private lateinit var ortu: ViewGroup
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        this.ortu = parent
         return Holder(
             LayoutInflater.from(
                 parent.context
@@ -75,7 +79,12 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                 }
             }
             if (holder.view.imgSimpan.tag == R.drawable.ic_simpan_materi_dark) {
-                Toast.makeText(holder.view.context, "Materi sudah ada di dalam daftar simpan", Toast.LENGTH_SHORT).show()
+                val toastLayout = LayoutInflater.from(ortu.context).inflate(R.layout.toast_layout, ortu, false)
+                val toast = Toast(holder.view.context)
+                toastLayout.textToast.text = "Materi sudah ada di dalam daftar simpan"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = toastLayout
+                toast.show()
             } else {
                 insertToDb(
                     MateriEntity(
@@ -89,7 +98,12 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                 ), roomDB)
                 holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
                 holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark
-                Toast.makeText(holder.view.context, "Materi berhasil disimpan", Toast.LENGTH_SHORT).show()
+                val toastLayout = LayoutInflater.from(ortu.context).inflate(R.layout.toast_layout, ortu, false)
+                val toast = Toast(holder.view.context)
+                toastLayout.textToast.text = "Materi berhasil disimpan"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = toastLayout
+                toast.show()
             }
         }
         changeIconSimpan(roomDB, list[position].id, holder)
