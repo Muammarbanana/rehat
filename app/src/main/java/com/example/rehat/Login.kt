@@ -10,6 +10,7 @@ import com.example.rehat.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
 class Login : AppCompatActivity() {
@@ -33,7 +34,12 @@ class Login : AppCompatActivity() {
             val namaPengguna = editTextNamaPengguna.text.toString()
             val password = editTextKataSandi.text.toString()
             if (namaPengguna.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Tolong isi username dan password", Toast.LENGTH_SHORT).show()
+                val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                val toast = Toast(this)
+                toastLayout.textToast.text = "Tolong isi nama pengguna dan kata sandi"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = toastLayout
+                toast.show()
                 return@setOnClickListener
             }
             passUsername(object : MyCallBack {
@@ -67,20 +73,33 @@ class Login : AppCompatActivity() {
 
     // Login with email and password
     private fun loginUser(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(this, "Login Sukses", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, Home::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(baseContext, "Login Gagal", Toast.LENGTH_SHORT).show()
+        if (email.isNotEmpty()) {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val intent = Intent(this, Home::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                        val toast = Toast(this)
+                        toastLayout.textToast.text = "Nama pengguna atau kata sandi salah, silakan coba lagi"
+                        toast.duration = Toast.LENGTH_SHORT
+                        toast.view = toastLayout
+                        toast.show()
+                    }
                 }
-            }
+        } else {
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+            val toast = Toast(this)
+            toastLayout.textToast.text = "Pengguna tidak ditemukan"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
+        }
     }
 
     // Read username from database and get the user email for login

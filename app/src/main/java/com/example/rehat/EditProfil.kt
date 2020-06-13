@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_edit_profil.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -89,9 +90,19 @@ class EditProfil : AppCompatActivity() {
         }
 
         if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+            val toast = Toast(this)
+            toastLayout.textToast.text = "Tidak boleh ada kolom yang kosong"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
         } else if (katasandi != katasandikon) {
-            Toast.makeText(this, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+            val toast = Toast(this)
+            toastLayout.textToast.text = "Konfirmasi kata sandi tidak cocok"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
         } else {
             auth.currentUser?.updateEmail(email)
                 ?.addOnCompleteListener(this, OnCompleteListener { task ->
@@ -104,14 +115,20 @@ class EditProfil : AppCompatActivity() {
                                     ref.child("nama").setValue(namalengkap)
                                     ref.child("gender").setValue(gender)
                                     ref.child("birth").setValue(birthdate)
-                                    Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                                    val toast = Toast(this)
+                                    toastLayout.textToast.text = "Perubahan berhasil disimpan"
+                                    toast.duration = Toast.LENGTH_SHORT
+                                    toast.view = toastLayout
+                                    toast.show()
                                     finish()
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                                    val toast = Toast(this)
+                                    toastLayout.textToast.text = "Edit profil gagal, silakan keluar dahulu, lalu coba lagi"
+                                    toast.duration = Toast.LENGTH_SHORT
+                                    toast.view = toastLayout
+                                    toast.show()
                                 }
                             })
                         } else {
@@ -120,15 +137,21 @@ class EditProfil : AppCompatActivity() {
                             ref.child("nama").setValue(namalengkap)
                             ref.child("gender").setValue(gender)
                             ref.child("birth").setValue(birthdate)
-                            Toast.makeText(this, "Edit profil berhasil", Toast.LENGTH_SHORT).show()
+                            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                            val toast = Toast(this)
+                            toastLayout.textToast.text = "Perubahan berhasil disimpan"
+                            toast.duration = Toast.LENGTH_SHORT
+                            toast.view = toastLayout
+                            toast.show()
                             finish()
                         }
                     } else {
-                        Toast.makeText(
-                            this,
-                            "Edit profil gagal, silakan keluar dahulu, lalu coba lagi",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                        val toast = Toast(this)
+                        toastLayout.textToast.text = "Edit profil gagal, silakan keluar dahulu, lalu coba lagi"
+                        toast.duration = Toast.LENGTH_SHORT
+                        toast.view = toastLayout
+                        toast.show()
                     }
                 })
         }

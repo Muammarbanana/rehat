@@ -8,6 +8,7 @@ import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.rehat.model.ChatMessage
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.chat_from.view.teksChat
 import kotlinx.android.synthetic.main.chat_to.view.*
 import kotlinx.android.synthetic.main.date_header.view.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -192,6 +194,12 @@ class ChatKonsultasi : AppCompatActivity() {
         latestToRef.removeValue()
         latestFromRef.removeValue()
         finish()
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = "Konsultasi selesai dan pesan terhapus"
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
     }
 
     private fun popAlert() {

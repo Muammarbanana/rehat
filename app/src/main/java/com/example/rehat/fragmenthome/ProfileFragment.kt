@@ -90,7 +90,6 @@ class ProfileFragment : Fragment() {
 
     private fun signOut(view: View) {
         auth.signOut()
-        Toast.makeText(context, "Berhasil Keluar", Toast.LENGTH_SHORT).show()
         var intent = Intent(context, WelcomeScreen::class.java)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

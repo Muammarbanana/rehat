@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_registrasi.*
 import kotlinx.android.synthetic.main.activity_registrasi.editTextNamaPengguna
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
 class Registrasi : AppCompatActivity() {
@@ -62,9 +63,19 @@ class Registrasi : AppCompatActivity() {
         val passwordUlang = editTextKonfirmasiKataSandi.text.toString()
 
         if (nama.isEmpty() || namapengguna.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Tidak boleh ada kolom yang kosong", Toast.LENGTH_SHORT).show()
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+            val toast = Toast(this)
+            toastLayout.textToast.text = "Tidak boleh ada kolom yang kosong"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
         } else if (passwordUlang!=password) {
-            Toast.makeText(this, "Konfirmasi kata sandi tidak cocok", Toast.LENGTH_SHORT).show()
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+            val toast = Toast(this)
+            toastLayout.textToast.text = "Konfirmasi kata sandi tidak cocok"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
         } else {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -73,11 +84,21 @@ class Registrasi : AppCompatActivity() {
                     ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
                         .setValue(user)
                     auth.signOut()
-                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                    val toast = Toast(this)
+                    toastLayout.textToast.text = "Pendaftaran berhasil, silakan login"
+                    toast.duration = Toast.LENGTH_SHORT
+                    toast.view = toastLayout
+                    toast.show()
                     startActivity(Intent(this, Login::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "Registrasi Gagal", Toast.LENGTH_SHORT).show()
+                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                    val toast = Toast(this)
+                    toastLayout.textToast.text = "Pendaftaran gagal"
+                    toast.duration = Toast.LENGTH_SHORT
+                    toast.view = toastLayout
+                    toast.show()
                 }
             }
         }

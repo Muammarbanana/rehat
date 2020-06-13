@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -197,7 +198,12 @@ class BuatJanji : AppCompatActivity() {
             }
 
         })
-        Toast.makeText(this, "Berhasil Membuat Janji Konsultasi", Toast.LENGTH_SHORT).show()
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = "Permohonan konsultasi berhasil dikirim"
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
         var intent = Intent(this, Home::class.java)
         intent.putExtra("DataTabChat", "9")
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
