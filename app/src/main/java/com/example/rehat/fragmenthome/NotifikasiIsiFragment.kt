@@ -53,7 +53,8 @@ class NotifikasiIsiFragment : Fragment() {
     private fun fetchNotification() {
         val iduser = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("notifikasi")
-        ref.orderByChild("iduser").equalTo(iduser).addChildEventListener(object: ChildEventListener{
+        var date = ""
+        ref.orderByChild("timestamp").addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
             }
 
@@ -61,36 +62,38 @@ class NotifikasiIsiFragment : Fragment() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                adapter.clear()
-                var date = ""
                 val notifikasi = p0.getValue(Notifikasi::class.java)
-                val idnotif = p0.key.toString()
+                val user = notifikasi?.iduser.toString()
+                if (user == iduser) {
+                    val idnotif = p0.key.toString()
 
-                if (notifikasi != null) {
-                    if (date != convertToDate(Date(notifikasi.timestamp))) {
-                        adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+                    if (notifikasi != null) {
+                        if (date != convertToDate(Date(notifikasi.timestamp))) {
+                            adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+                        }
+                        val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
+                        val selisih = System.currentTimeMillis() - notifikasi.timestamp
+                        adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
+                        date = convertToDate(Date(notifikasi.timestamp))
                     }
-                    val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
-                    val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                    adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
-                    date = convertToDate(Date(notifikasi.timestamp))
                 }
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                adapter.clear()
-                var date = ""
                 val notifikasi = p0.getValue(Notifikasi::class.java)
-                val idnotif = p0.key.toString()
+                val user = notifikasi?.iduser.toString()
+                if (user == iduser) {
+                    val idnotif = p0.key.toString()
 
-                if (notifikasi != null) {
-                    if (date != convertToDate(Date(notifikasi.timestamp))) {
-                        adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+                    if (notifikasi != null) {
+                        if (date != convertToDate(Date(notifikasi.timestamp))) {
+                            adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+                        }
+                        val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
+                        val selisih = System.currentTimeMillis() - notifikasi.timestamp
+                        adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
+                        date = convertToDate(Date(notifikasi.timestamp))
                     }
-                    val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
-                    val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                    adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
-                    date = convertToDate(Date(notifikasi.timestamp))
                 }
             }
 

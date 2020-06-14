@@ -36,7 +36,7 @@
                 android:theme="@style/AppThemeWhite" />
         <activity
                 android:name=".Home"
-                android:theme="@style/AppThemeWhite"
+                android:theme="@style/AppThemeWhiteMaterial"
                 android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Registrasi" />
         <activity android:name=".Login" />

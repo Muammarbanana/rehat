@@ -11,6 +11,7 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="#F3F4FA"
             app:cardCornerRadius="5dp"
+            android:theme="@style/Theme.MaterialComponents.Bridge"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1dp">
 

@@ -26,4 +26,14 @@
         <item name= "fontFamily" > @font/montserrat </item>
     </style>
 
+    <style name="AppThemeWhiteMaterial" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name= "android:textViewStyle" > @style/RobotoTextViewStyle </item>
+        <item name= "buttonStyle" > @style/RobotoButtonStyle </item>
+        <item name= "android:screenOrientation" > portrait </item>
+    </style>
+
 </resources>

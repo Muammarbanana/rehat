@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -18,12 +19,10 @@ import com.example.rehat.pageradapter.PagerAdapter
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
 import com.example.rehat.viewmodel.ViewModelFactory
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_konsultasi.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
@@ -107,6 +106,56 @@ class Home : AppCompatActivity() {
         tabsMain.getTabAt(2)?.setIcon(R.drawable.tab_selector_konsultasi)?.contentDescription = "Konsultasi"
         tabsMain.getTabAt(3)?.setIcon(R.drawable.tab_selector_notifikasi)?.contentDescription = "Notifikasi"
         tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)?.contentDescription = "Profil"
+        val iduser = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("notifikasi")
+        ref.orderByChild("iduser").equalTo(iduser).addChildEventListener(object: ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                var jumlahnotif = 0
+                val jum = p0.child("statusbaca").value.toString()
+                if (jum == "0") {
+                    jumlahnotif += 1
+                }
+                if (jumlahnotif != 0) {
+                    val notifbadges = tabsMain.getTabAt(3)?.orCreateBadge
+                    notifbadges?.backgroundColor = Color.parseColor("#FB3939")
+                    notifbadges?.isVisible = true
+                    notifbadges?.number = jumlahnotif
+                    tabsMain.getTabAt(3)?.contentDescription = "Terdapat $jumlahnotif notifikasi baru belum dilihat"
+                } else {
+                    tabsMain.getTabAt(3)?.contentDescription = "Notifikasi"
+                }
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                var jumlahnotif = 0
+                val jum = p0.child("statusbaca").value.toString()
+                if (jum == "0") {
+                    jumlahnotif += 1
+                }
+                if (jumlahnotif != 0) {
+                    val notifbadges = tabsMain.getTabAt(3)?.orCreateBadge
+                    notifbadges?.backgroundColor = Color.parseColor("#FB3939")
+                    notifbadges?.isVisible = true
+                    notifbadges?.number = jumlahnotif
+                    tabsMain.getTabAt(3)?.contentDescription = "Terdapat $jumlahnotif notifikasi baru belum dilihat"
+                } else {
+                    tabsMain.getTabAt(3)?.contentDescription = "Notifikasi"
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+
+        })
     }
 
     fun getAllData(){
