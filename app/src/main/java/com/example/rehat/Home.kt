@@ -108,6 +108,7 @@ class Home : AppCompatActivity() {
         tabsMain.getTabAt(4)?.setIcon(R.drawable.tab_selector_profile)?.contentDescription = "Profil"
         val iduser = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("notifikasi")
+        var jumlahnotif = 0
         ref.orderByChild("iduser").equalTo(iduser).addChildEventListener(object: ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -118,7 +119,6 @@ class Home : AppCompatActivity() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                var jumlahnotif = 0
                 val jum = p0.child("statusbaca").value.toString()
                 if (jum == "0") {
                     jumlahnotif += 1
@@ -135,7 +135,6 @@ class Home : AppCompatActivity() {
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                var jumlahnotif = 0
                 val jum = p0.child("statusbaca").value.toString()
                 if (jum == "0") {
                     jumlahnotif += 1

@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="1.0" />
+            app:layout_constraintGuide_percent="0.0451" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
@@ -248,6 +248,19 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.0838" />
 
+    <ImageView
+            android:id="@+id/backLogin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
+            android:onClick="getBack"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintStart_toStartOf="@+id/guideline9"
+            app:layout_constraintTop_toTopOf="@+id/guideline6"
+            app:srcCompat="@drawable/ic_big_arrow" />
+
     <TextView
             android:id="@+id/loginHalo"
             android:layout_width="wrap_content"
@@ -280,18 +293,6 @@
             app:layout_constraintStart_toStartOf="@+id/loginHalo"
             app:layout_constraintTop_toTopOf="@+id/guideline58"
             app:lineHeight="40dp" />
-
-    <ImageView
-            android:id="@+id/backLogin"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/ikon_panah_kembali_ke_halaman_sebelumnya"
-            android:onClick="getBack"
-            app:layout_constraintBottom_toTopOf="@+id/guideline11"
-            app:layout_constraintEnd_toStartOf="@+id/guideline12"
-            app:layout_constraintStart_toStartOf="@+id/guideline9"
-            app:layout_constraintTop_toTopOf="@+id/guideline6"
-            app:srcCompat="@drawable/ic_big_arrow" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline12"
@@ -352,7 +353,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="22sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

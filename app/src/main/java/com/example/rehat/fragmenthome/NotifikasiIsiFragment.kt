@@ -13,11 +13,9 @@ import com.example.rehat.Home
 import com.example.rehat.R
 import com.example.rehat.model.Notifikasi
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -44,60 +42,46 @@ class NotifikasiIsiFragment : Fragment() {
 
         fetchNotification()
 
-        root.rvNotifikasi.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(root.context)
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(root.context)
+        root.rvNotifikasi.layoutManager = layoutManager
         root.rvNotifikasi.adapter = adapter
 
         return root
     }
 
     private fun fetchNotification() {
+        var listNotif = mutableListOf<NotifikasiItem>()
         val iduser = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("notifikasi")
-        var date = ""
-        ref.orderByChild("timestamp").addChildEventListener(object: ChildEventListener{
+        ref.orderByChild("iduser").equalTo(iduser).addValueEventListener(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
+
             }
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                val notifikasi = p0.getValue(Notifikasi::class.java)
-                val user = notifikasi?.iduser.toString()
-                if (user == iduser) {
-                    val idnotif = p0.key.toString()
-
-                    if (notifikasi != null) {
-                        if (date != convertToDate(Date(notifikasi.timestamp))) {
-                            adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+            override fun onDataChange(p0: DataSnapshot) {
+                var date = ""
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val notifikasi = h.getValue(Notifikasi::class.java)
+                        if (notifikasi != null) {
+                            val idnotif = h.key.toString()
+                            val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
+                            val selisih = System.currentTimeMillis() - notifikasi.timestamp
+                            listNotif.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif, notifikasi.timestamp))
                         }
-                        val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
-                        val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                        adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
-                        date = convertToDate(Date(notifikasi.timestamp))
                     }
-                }
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val notifikasi = p0.getValue(Notifikasi::class.java)
-                val user = notifikasi?.iduser.toString()
-                if (user == iduser) {
-                    val idnotif = p0.key.toString()
-
-                    if (notifikasi != null) {
-                        if (date != convertToDate(Date(notifikasi.timestamp))) {
-                            adapter.add(HeaderNotifikasiItem(convertToDate(Date(notifikasi.timestamp))))
+                    date = ""
+                    listNotif.reverse()
+                    var listNotifwithHead = mutableListOf<Group>()
+                    for (i in 0 until listNotif.size) {
+                        if (date != convertToDate(Date(listNotif[i].timestamp))) {
+                            listNotifwithHead.add(HeaderNotifikasiItem(convertToDate(Date(listNotif[i].timestamp))))
                         }
-                        val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
-                        val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                        adapter.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif))
-                        date = convertToDate(Date(notifikasi.timestamp))
+                        listNotifwithHead.add(listNotif[i])
+                        date = convertToDate(Date(listNotif[i].timestamp))
                     }
+                    adapter.addAll(listNotifwithHead)
                 }
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
             }
 
         })
@@ -138,7 +122,7 @@ class NotifikasiIsiFragment : Fragment() {
 
 }
 
-class NotifikasiItem(val text: String, val image: String, val waktu: String, val statusbaca: Int, val idnotif: String): Item<GroupieViewHolder>() {
+class NotifikasiItem(val text: String, val image: String, val waktu: String, val statusbaca: Int, val idnotif: String, val timestamp: Long): Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.list_notifikasi
     }

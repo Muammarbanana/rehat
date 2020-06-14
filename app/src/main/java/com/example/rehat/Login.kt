@@ -50,32 +50,7 @@ class Login : AppCompatActivity() {
                     loginUser(email, password)
                 }
             }, namaPengguna)
-
-            constLogin.isEnabled = false
-            linearMasking.visibility = View.VISIBLE
-            progressBarLogin.progress = 0
-            progressBarLogin.secondaryProgress = 100
-            progressBarLogin.max = 100
-            progressBarLogin.visibility = View.VISIBLE
-            teksLoading.visibility = View.VISIBLE
-            var handler = Handler()
-            Thread(Runnable {
-                var pStatus = 0
-                while (pStatus < 100) {
-                    pStatus += 1;
-
-                    handler.post {
-                        progressBarLogin.progress = pStatus;
-                        teksLoading.text = "$pStatus %";
-                    }
-                    try {
-                        Thread.sleep(15)
-                    } catch (e: InterruptedException) {
-                        e.printStackTrace()
-                    }
-                }
-            }).start()
-
+            showLoading()
         }
 
         imgMicrophone1.setOnClickListener {
@@ -100,6 +75,40 @@ class Login : AppCompatActivity() {
         }
     }
 
+    private fun showLoading() {
+        constLogin.isEnabled = false
+        linearMasking.visibility = View.VISIBLE
+        progressBarLogin.progress = 0
+        progressBarLogin.secondaryProgress = 100
+        progressBarLogin.max = 100
+        progressBarLogin.visibility = View.VISIBLE
+        teksLoading.visibility = View.VISIBLE
+        val handler = Handler()
+        Thread(Runnable {
+            var pStatus = 0
+            while (pStatus < 100) {
+                pStatus += 1;
+
+                handler.post {
+                    progressBarLogin.progress = pStatus;
+                    teksLoading.text = "$pStatus %";
+                }
+                try {
+                    Thread.sleep(15)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }).start()
+    }
+
+    private fun removeLoading() {
+        constLogin.isEnabled = true
+        linearMasking.visibility = View.GONE
+        progressBarLogin.visibility = View.GONE
+        teksLoading.visibility = View.GONE
+    }
+
     // Login with email and password
     private fun loginUser(email: String, password: String) {
         if (email.isNotEmpty()) {
@@ -113,6 +122,7 @@ class Login : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
+                        removeLoading()
                         val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
                         val toast = Toast(this)
                         toastLayout.textToast.text = "Nama pengguna atau kata sandi salah, silakan coba lagi"
@@ -122,9 +132,10 @@ class Login : AppCompatActivity() {
                     }
                 }
         } else {
+            removeLoading()
             val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
             val toast = Toast(this)
-            toastLayout.textToast.text = "Pengguna tidak ditemukan"
+            toastLayout.textToast.text = "Nama pengguna atau kata sandi salah, silakan coba lagi"
             toast.duration = Toast.LENGTH_SHORT
             toast.view = toastLayout
             toast.show()

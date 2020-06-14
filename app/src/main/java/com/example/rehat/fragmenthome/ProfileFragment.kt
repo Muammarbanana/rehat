@@ -77,6 +77,7 @@ class ProfileFragment : Fragment() {
         val dialogView = inflater.inflate(R.layout.pop_alert, null)
         dialog.setView(dialogView)
         dialog.setCancelable(true)
+        dialogView.cardAlert.radius = 10F
         dialogView.alertText.text = "Apakah kamu yakin ingin keluar akun?"
         dialogView.btnAccept.text = "Ya, Keluar"
         dialogView.btnAccept.setTextColor(Color.parseColor("#DB4437"))
