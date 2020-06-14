@@ -25,18 +25,26 @@ class AdapterWaktu(private var list:ArrayList<Waktu>) : androidx.recyclerview.wi
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.view.teksJam.text = list[position].jam + ".00"
-        if (position == selectedItemPosition) {
-            list[position].value = 1
-            holder.view.constWaktu.setBackgroundResource(R.drawable.rounded_button_green_borderless)
-            holder.view.teksJam.setTextColor(Color.parseColor("#FFFFFF"))
+        if (list[position].value == 2) {
+            holder.view.constWaktu.isClickable = false
+            holder.view.teksJam.text = list[position].jam + ".00"
+            holder.view.constWaktu.setBackgroundResource(R.drawable.rounded_button_gray_borderless)
+            holder.view.teksJam.setTextColor(Color.parseColor("#FFFAFA"))
+            holder.view.materialCardWaktu.strokeColor = Color.parseColor("#B5B3BF")
         } else {
-            list[position].value = 0
-            holder.view.constWaktu.setBackgroundColor(Color.parseColor("#F3F4FA"))
-            holder.view.teksJam.setTextColor(Color.parseColor("#172B4D"))
-        }
-        holder.view.constWaktu.setOnClickListener{
-            changeValueSelected(holder)
+            holder.view.teksJam.text = list[position].jam + ".00"
+            holder.view.constWaktu.setOnClickListener{
+                changeValueSelected(holder)
+            }
+            if (position == selectedItemPosition) {
+                list[position].value = 1
+                holder.view.constWaktu.setBackgroundResource(R.drawable.rounded_button_green_borderless)
+                holder.view.teksJam.setTextColor(Color.parseColor("#FFFFFF"))
+            } else {
+                list[position].value = 0
+                holder.view.constWaktu.setBackgroundColor(Color.parseColor("#F3F4FA"))
+                holder.view.teksJam.setTextColor(Color.parseColor("#172B4D"))
+            }
         }
     }
 

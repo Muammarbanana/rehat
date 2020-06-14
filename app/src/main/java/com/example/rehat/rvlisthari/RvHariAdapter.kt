@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.rehat.R
+import com.example.rehat.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.list_hari.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>() {
+class Adapter(private val list:ArrayList<Hari>, private val viewModel: SharedViewModel): androidx.recyclerview.widget.RecyclerView.Adapter<Adapter.Holder>() {
 
     private var selectedItemPosition = -1
 
@@ -45,6 +46,7 @@ class Adapter(private val list:ArrayList<Hari>): androidx.recyclerview.widget.Re
         holder.view.teksTanggal.text = "$hari ${toMonth(bulan.toInt())}"
         holder.view.constHari.setOnClickListener {
             changeValueSelected(holder)
+            viewModel.selectedTab("updatelistjam")
         }
     }
 

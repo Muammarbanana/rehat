@@ -8,13 +8,19 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.rehat.model.Janji
+import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.rvlisthari.Adapter
 import com.example.rehat.rvlistwaktu.AdapterWaktu
 import com.example.rehat.rvlisthari.Hari
 import com.example.rehat.rvlistwaktu.Waktu
+import com.example.rehat.viewmodel.SharedViewModel
+import com.example.rehat.viewmodel.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_buat_janji.*
@@ -30,6 +36,7 @@ class BuatJanji : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var id: String
     private lateinit var address: String
+    private lateinit var viewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,18 @@ class BuatJanji : AppCompatActivity() {
         teksJarak.text = intent.getStringExtra("Jarak") + " km dari lokasi kamu"
         id = intent.getStringExtra("Id")
         address = intent.getStringExtra("Alamat")
+
+        val roomDB = Room.databaseBuilder(this, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
+
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(roomDB!!.materiDao())
+        )[SharedViewModel::class.java]
+
+        viewModel.selected.observeForever{
+            when(it) {
+                "updatelistjam" -> getDataJamFiltered(id)
+            }
+        }
 
         rvHari.setHasFixedSize(true)
         rvHari.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -74,7 +93,7 @@ class BuatJanji : AppCompatActivity() {
                     }
                     daftarHari = ArrayList(daftarHari.distinct())
                     daftarHari.sortBy { it.tanggal }
-                    val adapter = Adapter(ArrayList(daftarHari))
+                    val adapter = Adapter(ArrayList(daftarHari), viewModel)
                     val adapterWaktu = AdapterWaktu(ArrayList(daftarJam.distinct()))
                     adapter.notifyDataSetChanged()
                     adapterWaktu.notifyDataSetChanged()
@@ -83,6 +102,104 @@ class BuatJanji : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun getDataJamFiltered(id: String) {
+        val listJanji = arrayListOf<Janji>()
+        val listJadwal = arrayListOf<Waktu>()
+        ref = FirebaseDatabase.getInstance().getReference("janji")
+        ref.orderByChild("id_konselor").equalTo(id).addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                listJanji.clear()
+                p0.children.forEach {h ->
+                    val idKonselor = h.child("id_konselor").value.toString()
+                    val idUser = h.child("id_user").value.toString()
+                    val status = h.child("status").value.toString()
+                    val jam = h.child("jam").value.toString()
+                    val tanggal = h.child("tanggal").value.toString()
+                    val catatan = h.child("catatan").value.toString()
+                    val tempat = h.child("tempat").value.toString()
+                    val namadokter = h.child("namadokter").value.toString()
+                    val alamat = h.child("alamat").value.toString()
+                    listJanji.add(Janji(tempat, tanggal, jam, catatan, idUser, idKonselor, status.toInt(), namadokter, alamat))
+                }
+                val ref2 = FirebaseDatabase.getInstance().getReference("jadwal")
+                ref2.orderByChild("id_konselor").equalTo(id).addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onCancelled(p1: DatabaseError) {  }
+
+                    override fun onDataChange(p1: DataSnapshot) {
+                        listJadwal.clear()
+                        val jum = rvHari.adapter?.itemCount
+                        var teks: Int; var hari = ""; var tanggal = ""
+                        for (i in 0 until jum!!) {
+                            if ( rvHari.findViewHolderForAdapterPosition(i) != null) {
+                                teks = rvHari
+                                    .findViewHolderForAdapterPosition(i)
+                                    ?.itemView
+                                    ?.findViewById<TextView>(R.id.teksHari)
+                                    ?.currentTextColor!!
+                                if (teks == -1) {
+                                    hari = rvHari
+                                        .findViewHolderForAdapterPosition(i)
+                                        ?.itemView
+                                        ?.findViewById<TextView>(R.id.teksHari)
+                                        ?.text.toString()
+                                    tanggal = rvHari
+                                        .findViewHolderForAdapterPosition(i)
+                                        ?.itemView
+                                        ?.findViewById<TextView>(R.id.teksTanggal)
+                                        ?.text.toString()
+                                    break
+                                }
+                            }
+                        }
+                        if (p1.exists()) {
+                            for (h in p1.children) {
+                                val clock = h.child("jam").value.toString()
+                                val day = h.child("hari").value.toString()
+                                if (hari == toDay(day.toInt())) {
+                                    listJadwal.add(getWaktu(tanggal, clock, listJanji))
+                                }
+                            }
+                            val adapter = AdapterWaktu(listJadwal)
+                            adapter.notifyDataSetChanged()
+                            rvWaktu.adapter = adapter
+                        }
+                    }
+                })
+            }
+
+        })
+
+    }
+
+    private fun getWaktu(tanggal: String, clock: String, listJanji: ArrayList<Janji>): Waktu {
+        var waktu = Waktu(clock, 0)
+        for (counter in 0 until listJanji.size) {
+            if (tanggal == listJanji[counter].tanggal && "$clock.00" == listJanji[counter].jam) {
+                waktu = Waktu(clock, 2)
+                break
+            }
+            waktu = Waktu(clock, 0)
+        }
+        return waktu
+    }
+
+    private fun toDay(value: Int): String {
+        var hari : String
+        when (value) {
+            1 -> hari = "Minggu"
+            2 -> hari = "Senin"
+            3 -> hari = "Selasa"
+            4 -> hari = "Rabu"
+            5 -> hari = "Kamis"
+            6 -> hari = "Jumat"
+            else -> hari = "Sabtu"
+        }
+        return hari
     }
 
     private fun getDate(hari: Int): String {
