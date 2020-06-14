@@ -130,7 +130,7 @@ class Home : AppCompatActivity() {
                     notifbadges?.number = jumlahnotif
                     tabsMain.getTabAt(3)?.contentDescription = "Terdapat $jumlahnotif notifikasi baru belum dilihat"
                 } else {
-                    tabsMain.getTabAt(3)?.contentDescription = "Notifikasi"
+                    tabsMain.getTabAt(3)?.setIcon(R.drawable.tab_selector_notifikasi)?.contentDescription = "Notifikasi"
                 }
             }
 

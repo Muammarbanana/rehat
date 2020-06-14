@@ -2,13 +2,16 @@ package com.example.rehat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.Toast
 import com.example.rehat.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 
@@ -47,6 +50,32 @@ class Login : AppCompatActivity() {
                     loginUser(email, password)
                 }
             }, namaPengguna)
+
+            constLogin.isEnabled = false
+            linearMasking.visibility = View.VISIBLE
+            progressBarLogin.progress = 0
+            progressBarLogin.secondaryProgress = 100
+            progressBarLogin.max = 100
+            progressBarLogin.visibility = View.VISIBLE
+            teksLoading.visibility = View.VISIBLE
+            var handler = Handler()
+            Thread(Runnable {
+                var pStatus = 0
+                while (pStatus < 100) {
+                    pStatus += 1;
+
+                    handler.post {
+                        progressBarLogin.progress = pStatus;
+                        teksLoading.text = "$pStatus %";
+                    }
+                    try {
+                        Thread.sleep(15)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+            }).start()
+
         }
 
         imgMicrophone1.setOnClickListener {
