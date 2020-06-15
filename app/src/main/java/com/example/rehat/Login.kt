@@ -6,11 +6,13 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.rehat.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
@@ -121,6 +123,7 @@ class Login : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()
+                        registerDeviceToken(auth)
                     } else {
                         removeLoading()
                         val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
@@ -139,6 +142,18 @@ class Login : AppCompatActivity() {
             toast.duration = Toast.LENGTH_SHORT
             toast.view = toastLayout
             toast.show()
+        }
+    }
+
+    private fun registerDeviceToken(auth: FirebaseAuth) {
+        val rev = FirebaseDatabase.getInstance().getReference("tokendevice")
+        val token = FirebaseInstanceId.getInstance()
+        token.instanceId.addOnCompleteListener {
+            if(!it.isSuccessful){
+                Log.w("Pesan", "getInstanceId failed", it.exception)
+            }
+            val tokennya = it.result?.token.toString()
+            rev.child(auth.currentUser?.uid!!).child("token").setValue(tokennya)
         }
     }
 

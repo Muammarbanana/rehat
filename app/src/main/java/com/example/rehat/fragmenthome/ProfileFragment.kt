@@ -90,11 +90,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun signOut(view: View) {
+        val uid = auth.currentUser?.uid!!
         auth.signOut()
         var intent = Intent(context, WelcomeScreen::class.java)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         view.context.startActivity(intent)
+        val ref = FirebaseDatabase.getInstance().getReference("tokendevice/$uid")
+        ref.removeValue()
     }
 
     private fun getName(view: View) {
