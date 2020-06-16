@@ -12,5 +12,6 @@ data class MateriEntity (
     @ColumnInfo(name = "gambar") var gambar: String,
     @ColumnInfo(name = "isi") var isi: String,
     @ColumnInfo(name = "color") var color: String,
-    @ColumnInfo(name = "desc") var desc: String
+    @ColumnInfo(name = "desc") var desc: String,
+    @ColumnInfo(name = "iduser") var iduser: String
 )

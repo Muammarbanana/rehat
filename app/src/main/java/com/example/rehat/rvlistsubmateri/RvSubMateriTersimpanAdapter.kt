@@ -18,6 +18,7 @@ import com.example.rehat.fragmenthome.HalamanTersimpanFragment
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 
@@ -71,7 +72,8 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
             holder.view.context.startActivity(intent)
         }
         holder.view.imgSimpan.setOnClickListener {
-            deleteData(roomDB, list[position].id, position)
+            val iduser = FirebaseAuth.getInstance().uid.toString()
+            deleteData(roomDB, list[position].id, position, iduser)
             holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi)
             val toastLayout = LayoutInflater.from(ortu.context).inflate(R.layout.toast_layout, ortu, false)
             val toast = Toast(holder.view.context)
@@ -90,8 +92,8 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
         }
     }
 
-    private fun deleteData(roomDB: RoomDB, id: String, position: Int) {
-        roomDB?.materiDao()?.deleteDatabyID(id)
+    private fun deleteData(roomDB: RoomDB, id: String, position: Int, iduser: String) {
+        roomDB?.materiDao()?.deleteDatabyID(id, iduser)
         list.removeAt(position)
         notifyItemRemoved(position)
         if (list.size == 0) {

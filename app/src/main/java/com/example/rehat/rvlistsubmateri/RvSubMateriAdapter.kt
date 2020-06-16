@@ -14,6 +14,7 @@ import com.example.rehat.R
 import com.example.rehat.fragmenthome.HalamanTersimpanIsiFragment
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 
@@ -86,6 +87,7 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                 toast.view = toastLayout
                 toast.show()
             } else {
+                val iduser = FirebaseAuth.getInstance().uid.toString()
                 insertToDb(
                     MateriEntity(
                         list[position].judul,
@@ -94,7 +96,8 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
                         list[position].gambar,
                         list[position].isi,
                         list[position].color,
-                        list[position].desc
+                        list[position].desc,
+                        iduser
                 ), roomDB)
                 holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
                 holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark

@@ -73,10 +73,13 @@ class HalamanTersimpanIsiFragment : Fragment() {
 
     fun getAllData(){
         var listmateri = arrayListOf<MateriEntity>()
+        val iduser = FirebaseAuth.getInstance().uid.toString()
         roomDB?.materiDao()?.getAll()?.observe(this,  Observer{
             if (it != null) {
                 for (h in it) {
-                    listmateri.add(h)
+                    if (h.iduser == iduser) {
+                        listmateri.add(h)
+                    }
                 }
                 if (listmateri.size == 0) {
                     val tr = fragmentManager?.beginTransaction()
