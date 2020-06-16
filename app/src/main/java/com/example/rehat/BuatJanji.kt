@@ -67,7 +67,50 @@ class BuatJanji : AppCompatActivity() {
         rvWaktu.setHasFixedSize(true)
         rvWaktu.layoutManager = GridLayoutManager(this, 4)
 
-        btnBikinJanji.setOnClickListener { popAlert() }
+        btnBikinJanji.setOnClickListener {
+            var teks: Int; var tanggal = ""; var jam = ""
+            val jum = rvHari.adapter?.itemCount
+            val jmljam = rvWaktu.adapter?.itemCount
+            for (i in 0 until jum!!) {
+                teks = rvHari
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksHari)
+                    ?.currentTextColor!!
+                if (teks == -1) {
+                    tanggal = rvHari
+                        .findViewHolderForAdapterPosition(i)
+                        ?.itemView
+                        ?.findViewById<TextView>(R.id.teksTanggal)
+                        ?.text.toString()
+                    break
+                }
+            }
+            for (i in 0 until jmljam!!) {
+                teks = rvWaktu
+                    .findViewHolderForAdapterPosition(i)
+                    ?.itemView
+                    ?.findViewById<TextView>(R.id.teksJam)
+                    ?.currentTextColor!!
+                if (teks == -1) {
+                    jam = rvWaktu
+                        .findViewHolderForAdapterPosition(i)
+                        ?.itemView
+                        ?.findViewById<TextView>(R.id.teksJam)
+                        ?.text.toString()
+                }
+            }
+            if (jam != "" && tanggal != "") {
+                popAlert(jam, tanggal)
+            } else {
+                val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                val toast = Toast(this)
+                toastLayout.textToast.text = "Mohon tentukan hari atau waktu pertemuan"
+                toast.duration = Toast.LENGTH_SHORT
+                toast.view = toastLayout
+                toast.show()
+            }
+        }
 
         textLihatMaps.setOnClickListener { openMap(address) }
 
@@ -179,7 +222,7 @@ class BuatJanji : AppCompatActivity() {
     private fun getWaktu(tanggal: String, clock: String, listJanji: ArrayList<Janji>): Waktu {
         var waktu = Waktu(clock, 0)
         for (counter in 0 until listJanji.size) {
-            if (tanggal == listJanji[counter].tanggal && "$clock.00" == listJanji[counter].jam) {
+            if (tanggal == listJanji[counter].tanggal && "$clock.00" == listJanji[counter].jam && listJanji[counter].status != 2) {
                 waktu = Waktu(clock, 2)
                 break
             }
@@ -219,7 +262,7 @@ class BuatJanji : AppCompatActivity() {
         return finalDate
     }
 
-    private fun popAlert() {
+    private fun popAlert(jam: String, tanggal: String) {
         val dialog = AlertDialog.Builder(this).create()
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.pop_alert, null)
@@ -228,7 +271,7 @@ class BuatJanji : AppCompatActivity() {
         dialogView.alertText.text = "Apakah kamu yakin ingin mengirim permohonan konsultasi? Pastikan kamu telah mengisi jadwal dengan benar"
         dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogView.btnAccept.setOnClickListener {
-            buatJanji()
+            buatJanji(jam, tanggal)
             dialog.dismiss()
         }
         dialog.show()
@@ -241,40 +284,8 @@ class BuatJanji : AppCompatActivity() {
     }
 
     // Fungsi Klik
-    private fun buatJanji() {
+    private fun buatJanji(jam: String, tanggal: String) {
         ref = FirebaseDatabase.getInstance().getReference("janji")
-        val jum = rvHari.adapter?.itemCount
-        val jmljam = rvWaktu.adapter?.itemCount
-        var teks: Int; var tanggal = ""; var jam = ""
-        for (i in 0 until jum!!) {
-            teks = rvHari
-                .findViewHolderForAdapterPosition(i)
-                ?.itemView
-                ?.findViewById<TextView>(R.id.teksHari)
-                ?.currentTextColor!!
-            if (teks == -1) {
-                tanggal = rvHari
-                    .findViewHolderForAdapterPosition(i)
-                    ?.itemView
-                    ?.findViewById<TextView>(R.id.teksTanggal)
-                    ?.text.toString()
-                break
-            }
-        }
-        for (i in 0 until jmljam!!) {
-            teks = rvWaktu
-                .findViewHolderForAdapterPosition(i)
-                ?.itemView
-                ?.findViewById<TextView>(R.id.teksJam)
-                ?.currentTextColor!!
-            if (teks == -1) {
-                jam = rvWaktu
-                    .findViewHolderForAdapterPosition(i)
-                    ?.itemView
-                    ?.findViewById<TextView>(R.id.teksJam)
-                    ?.text.toString()
-            }
-        }
         val catatan = editTextCatatan.text.toString()
         val namadokter = janjiNamaKonselor.text.toString()
         ref.orderByChild("id_user").equalTo(auth.currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener{
@@ -313,7 +324,6 @@ class BuatJanji : AppCompatActivity() {
                     )
                 }
             }
-
         })
         val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
         val toast = Toast(this)
