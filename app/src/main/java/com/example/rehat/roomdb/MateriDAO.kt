@@ -19,8 +19,8 @@ interface MateriDAO {
     @Delete
     fun delete(materi: MateriEntity)
 
-    @Query("SELECT * FROM materi WHERE id = :idmateri")
-    fun getDatabyID(idmateri: String): MateriEntity
+    @Query("SELECT * FROM materi WHERE id = :idmateri AND iduser = :iduser")
+    fun getDatabyID(idmateri: String, iduser: String): MateriEntity
 
     @Query("DELETE FROM materi WHERE id = :idmateri AND iduser = :iduser")
     fun deleteDatabyID(idmateri: String, iduser: String)

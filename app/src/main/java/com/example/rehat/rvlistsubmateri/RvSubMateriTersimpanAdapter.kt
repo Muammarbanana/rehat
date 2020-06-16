@@ -86,7 +86,8 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
     }
 
     private fun changeIconSimpan(roomDB: RoomDB, id: String, holder: Holder){
-        val data = roomDB?.materiDao()?.getDatabyID(id)
+        val iduser  = FirebaseAuth.getInstance().uid.toString()
+        val data = roomDB?.materiDao()?.getDatabyID(id, iduser)
         if (data != null) {
             holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
         }
