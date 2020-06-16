@@ -42,6 +42,7 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var roomDB = Room.databaseBuilder(holder.view.context, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
         holder.view.judulSub.text = list[position].judul
+        holder.view.imgSimpan.contentDescription = "Hapus materi dari daftar simpan"
         when (list[position].jenis.toInt()) {
             1 -> holder.view.imgMateri.setImageResource(R.drawable.ic_img_reading)
             2 -> holder.view.imgMateri.setImageResource(R.drawable.ic_img_brain)

@@ -117,6 +117,8 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
         val data = roomDB?.materiDao()?.getDatabyID(id)
         if (data != null) {
             holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi_dark)
+            holder.view.imgSimpan.tag = R.drawable.ic_simpan_materi_dark
+            holder.view.imgSimpan.contentDescription = "Hapus materi dari daftar simpan"
         }
     }
 }
