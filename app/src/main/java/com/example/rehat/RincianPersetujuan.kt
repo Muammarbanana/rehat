@@ -64,9 +64,14 @@ class RincianPersetujuan : AppCompatActivity() {
                             val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                             val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
                             //val distance = getDistance(userloc.latitude, userloc.longitude, loc[0], loc[1])
-                            var distance = FloatArray(1)
-                            Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
-                            val kmdistance = distance[0] / 1000
+                            val kmdistance: Float
+                            if (userloc != null) {
+                                val distance = FloatArray(1)
+                                Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
+                                kmdistance = distance[0] / 1000
+                            } else {
+                                kmdistance = 0F
+                            }
                             val intent = Intent(this@RincianPersetujuan, BuatJanji::class.java)
                             intent.putExtra("Nama", namakonselor)
                             intent.putExtra("Lokasi", tempat)
