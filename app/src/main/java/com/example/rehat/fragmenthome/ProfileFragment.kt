@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.android.synthetic.main.fragment_profile.view.profilPic
 import kotlinx.android.synthetic.main.fragment_profile.view.profileName
 import kotlinx.android.synthetic.main.pop_alert.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -84,6 +85,12 @@ class ProfileFragment : Fragment() {
         dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogView.btnAccept.setOnClickListener {
             signOut(view)
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, view.findViewById(R.id.constToast))
+            val toast = Toast(view.context)
+            toastLayout.textToast.text = "Berhasil Keluar"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
             dialog.dismiss()
         }
         dialog.show()

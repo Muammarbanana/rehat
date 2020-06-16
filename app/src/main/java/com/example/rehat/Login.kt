@@ -122,6 +122,12 @@ class Login : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
+                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                        val toast = Toast(this)
+                        toastLayout.textToast.text = "Berhasil Login"
+                        toast.duration = Toast.LENGTH_SHORT
+                        toast.view = toastLayout
+                        toast.show()
                         finish()
                         registerDeviceToken(auth)
                     } else {
