@@ -49,7 +49,7 @@ class ProfilKonselor : AppCompatActivity() {
         val address = intent.getStringExtra("Alamat")
         val loc = getLocFromAdrres(address)
         val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val userloc = locmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
         val kmdistance: Float
         if (userloc != null) {
             var distance = FloatArray(1)
