@@ -62,7 +62,7 @@ class RincianPersetujuan : AppCompatActivity() {
                         btnAturUlang.setOnClickListener {
                             val loc = getLocFromAdrres(address)
                             val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                            val userloc = locmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                            val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
                             //val distance = getDistance(userloc.latitude, userloc.longitude, loc[0], loc[1])
                             var distance = FloatArray(1)
                             Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
