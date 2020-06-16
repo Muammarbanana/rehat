@@ -124,7 +124,7 @@ class ProfileFragment : Fragment() {
                         if (photo == "null" || photo == "") {
                             profilPic.contentDescription = "Belum memasang foto profil"
                         } else {
-                            Picasso.get().load(photo).into(root.profilPic)
+                            Picasso.get().load(photo).resize(90, 90).into(root.profilPic)
                             profilPic.contentDescription = ""
                         }
                         if (gender == "null" || birth == "null" || gender == "") {

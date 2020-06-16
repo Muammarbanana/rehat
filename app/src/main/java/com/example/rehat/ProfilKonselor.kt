@@ -43,7 +43,7 @@ class ProfilKonselor : AppCompatActivity() {
         namaKonselor.text = intent.getStringExtra("Nama")
         textSpesialisasi.text = intent.getStringExtra("Spesialisasi")
         textLokasi.text = intent.getStringExtra("Lokasi")
-        Picasso.get().load(intent.getStringExtra("Foto")).into(fotoKonselor)
+        Picasso.get().load(intent.getStringExtra("Foto")).resize(180, 200).into(fotoKonselor)
         textBio.text = intent.getStringExtra("Bio")
         id = intent.getStringExtra("Id")
         val address = intent.getStringExtra("Alamat")
