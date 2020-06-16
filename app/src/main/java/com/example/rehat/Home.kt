@@ -80,6 +80,7 @@ class Home : AppCompatActivity() {
         }
 
         checkChatKonsul()
+        removeExpiredRequest()
 
         // ganti title saat tab dipilih
         tabsMain.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
@@ -267,5 +268,30 @@ class Home : AppCompatActivity() {
         tombolChat.visibility = datatitle.getInt("tombolChatState", 0)
         imgBack.visibility = datatitle.getInt("imgBackState", View.GONE)
         teksPencarian.visibility = datatitle.getInt("teksPencarianState", View.GONE)
+    }
+
+    private fun removeExpiredRequest() {
+        val ref = FirebaseDatabase.getInstance().getReference("janji")
+        ref.orderByChild("status").equalTo(1.toDouble()).addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val idjanji = h.key.toString()
+                        val timestamp = h.child("timestamp").value
+                        if (timestamp != null) {
+                            val elapsedtime = System.currentTimeMillis() - timestamp.toString().toLong()
+                            if (elapsedtime > 86400000) {
+                                val rev = FirebaseDatabase.getInstance().getReference("janji")
+                                rev.child(idjanji).removeValue()
+                            }
+                        }
+                    }
+                }
+            }
+
+        })
     }
 }

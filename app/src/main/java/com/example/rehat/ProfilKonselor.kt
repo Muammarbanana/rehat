@@ -50,11 +50,16 @@ class ProfilKonselor : AppCompatActivity() {
         val loc = getLocFromAdrres(address)
         val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val userloc = locmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        //val distance = getDistance(userloc.latitude, userloc.longitude, loc[0], loc[1])
-        var distance = FloatArray(1)
-        Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
-        val kmdistance = distance[0] / 1000
-        teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+        val kmdistance: Float
+        if (userloc != null) {
+            var distance = FloatArray(1)
+            Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
+            kmdistance = distance[0] / 1000
+            teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+        } else {
+            teksJarak.text = "Jarak ke lokasi tidak diketahui"
+            kmdistance = 0F
+        }
 
         auth = FirebaseAuth.getInstance()
 
