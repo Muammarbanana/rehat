@@ -57,6 +57,7 @@ class EditProfil : AppCompatActivity() {
                 btnDate.text = sdf.format(c.time)
                 birthdate = sdfnum.format(c.time)
             }, year, month, day)
+            dpd.datePicker.maxDate = System.currentTimeMillis()
             dpd.show()
             btnDate.setTextColor(Color.parseColor("#172B4D"))
         }
