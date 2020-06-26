@@ -9,12 +9,14 @@ import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProviders
 import com.example.rehat.viewmodel.SharedViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_edit_profil.*
+import kotlinx.android.synthetic.main.pop_alert.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,72 +92,50 @@ class EditProfil : AppCompatActivity() {
             gender = radio.text.toString()
         }
 
-        if (namalengkap.isEmpty() || namapengguna.isEmpty() || email.isEmpty()) {
-            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-            val toast = Toast(this)
-            toastLayout.textToast.text = "Tidak boleh ada kolom yang kosong"
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = toastLayout
-            toast.show()
+        if (namalengkap.isEmpty()) {
+            customToast("Terjadi kesalahan, mohon isi nama lengkap terlebih dahulu")
+        } else if (namapengguna.isEmpty()) {
+            customToast("Terjadi kesalahan, mohon isi nama pengguna terlebih dahulu")
+        } else if (email.isEmpty()){
+            customToast("Terjadi kesalahan, mohon isi email terlebih dahulu")
         } else if (katasandi != katasandikon) {
-            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-            val toast = Toast(this)
-            toastLayout.textToast.text = "Konfirmasi kata sandi tidak cocok"
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = toastLayout
-            toast.show()
+            customToast("Terjadi kesalahan, kata sandi tidak sesuai mohon periksa kembali")
         } else {
-            auth.currentUser?.updateEmail(email)
-                ?.addOnCompleteListener(this, OnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        if (katasandi.isNotEmpty()) {
-                            auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
-                                if (task2.isSuccessful) {
-                                    ref.child("email").setValue(email)
-                                    ref.child("username").setValue(namapengguna)
-                                    ref.child("nama").setValue(namalengkap)
-                                    ref.child("gender").setValue(gender)
-                                    ref.child("birth").setValue(birthdate)
-                                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                                    val toast = Toast(this)
-                                    toastLayout.textToast.text = "Perubahan berhasil disimpan"
-                                    toast.duration = Toast.LENGTH_SHORT
-                                    toast.view = toastLayout
-                                    toast.show()
-                                    finish()
-                                } else {
-                                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                                    val toast = Toast(this)
-                                    toastLayout.textToast.text = "Edit profil gagal, silakan keluar dahulu, lalu coba lagi"
-                                    toast.duration = Toast.LENGTH_SHORT
-                                    toast.view = toastLayout
-                                    toast.show()
-                                }
-                            })
-                        } else {
-                            ref.child("email").setValue(email)
-                            ref.child("username").setValue(namapengguna)
-                            ref.child("nama").setValue(namalengkap)
-                            ref.child("gender").setValue(gender)
-                            ref.child("birth").setValue(birthdate)
-                            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                            val toast = Toast(this)
-                            toastLayout.textToast.text = "Perubahan berhasil disimpan"
-                            toast.duration = Toast.LENGTH_SHORT
-                            toast.view = toastLayout
-                            toast.show()
-                            finish()
-                        }
-                    } else {
-                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                        val toast = Toast(this)
-                        toastLayout.textToast.text = "Edit profil gagal, silakan keluar dahulu, lalu coba lagi"
-                        toast.duration = Toast.LENGTH_SHORT
-                        toast.view = toastLayout
-                        toast.show()
-                    }
-                })
+            popAlert(email, katasandi, namapengguna, namalengkap, gender, birthdate)
         }
+    }
+
+    private fun updateProfileData(email: String, katasandi: String, namapengguna: String, namalengkap: String, gender: String, birthdate: String) {
+        auth.currentUser?.updateEmail(email)
+            ?.addOnCompleteListener(this, OnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (katasandi.isNotEmpty()) {
+                        auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
+                            if (task2.isSuccessful) {
+                                ref.child("email").setValue(email)
+                                ref.child("username").setValue(namapengguna)
+                                ref.child("nama").setValue(namalengkap)
+                                ref.child("gender").setValue(gender)
+                                ref.child("birth").setValue(birthdate)
+                                customToast("Perubahan berhasil disimpan")
+                                finish()
+                            } else {
+                                customToast("Edit profil gagal, silakan keluar dahulu, lalu coba lagi")
+                            }
+                        })
+                    } else {
+                        ref.child("email").setValue(email)
+                        ref.child("username").setValue(namapengguna)
+                        ref.child("nama").setValue(namalengkap)
+                        ref.child("gender").setValue(gender)
+                        ref.child("birth").setValue(birthdate)
+                        customToast("Perubahan berhasil disimpan")
+                        finish()
+                    }
+                } else {
+                    customToast("Edit profil gagal, silakan keluar dahulu, lalu coba lagi")
+                }
+            })
     }
 
     private fun getData() {
@@ -223,5 +203,29 @@ class EditProfil : AppCompatActivity() {
 
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun customToast(text: String) {
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = text
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
+    }
+
+    private fun popAlert(email: String, katasandi: String, namapengguna: String, namalengkap: String, gender: String, birthdate: String) {
+        val dialog = AlertDialog.Builder(this).create()
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.pop_alert, null)
+        dialog.setView(dialogView)
+        dialog.setCancelable(true)
+        dialogView.alertText.text = "Apakah kamu yakin ingin menyimpan perubahan data?"
+        dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
+        dialogView.btnAccept.setOnClickListener {
+            updateProfileData(email, katasandi, namapengguna, namalengkap, gender, birthdate)
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }
