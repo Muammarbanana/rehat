@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -37,6 +38,7 @@ class BuatJanji : AppCompatActivity() {
     private lateinit var id: String
     private lateinit var address: String
     private lateinit var viewModel: SharedViewModel
+    private val SPEECH_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +113,8 @@ class BuatJanji : AppCompatActivity() {
                 toast.show()
             }
         }
+
+        micCatatan.setOnClickListener { getVoice() }
 
         textLihatMaps.setOnClickListener { openMap(address) }
 
@@ -341,5 +345,24 @@ class BuatJanji : AppCompatActivity() {
 
     fun getBack(view: View) {
         finish()
+    }
+
+    private fun getVoice() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        startActivityForResult(intent, SPEECH_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val spokenText: String? =
+                data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).let { results ->
+                    results?.get(0)
+                }
+            // Do something with spokenText
+            editTextCatatan.setText(spokenText)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

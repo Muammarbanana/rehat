@@ -353,4 +353,17 @@
             app:layout_constraintStart_toStartOf="@+id/guideline159"
             app:layout_constraintTop_toTopOf="@+id/guideline173"
             app:srcCompat="@drawable/ic_writing" />
+
+    <ImageView
+            android:id="@+id/micCatatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="input catatan tambahan menggunakan suara "
+            app:layout_constraintBottom_toTopOf="@+id/guideline174"
+            app:layout_constraintEnd_toStartOf="@+id/guideline160"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline159"
+            app:layout_constraintTop_toTopOf="@+id/guideline173"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_microphone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
