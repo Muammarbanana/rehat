@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import com.example.rehat.Home
+import com.example.rehat.IsiMateri
 
 import com.example.rehat.R
 import com.example.rehat.model.Notifikasi
 import com.example.rehat.model.NotifikasiMateri
+import com.example.rehat.model.SubMateriKomplit
+import com.example.rehat.rvlistsubmateri.SubMateri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -72,7 +75,8 @@ class NotifikasiIsiFragment : Fragment() {
                                 val idnotif = h.key.toString()
                                 val teks = "${notifikasimateri.message} ${notifikasimateri.judul}"
                                 val selisih = System.currentTimeMillis() - notifikasimateri.timestamp
-                                listNotif.add(NotifikasiItem(teks, notifikasimateri.jenis.toString(), hitungWaktu(selisih), notifikasimateri.statusbaca, idnotif, notifikasimateri.timestamp))
+                                val submateri = h.child("submateri").getValue(SubMateriKomplit::class.java)
+                                listNotif.add(NotifikasiItem(teks, notifikasimateri.jenis.toString(), hitungWaktu(selisih), notifikasimateri.statusbaca, idnotif, notifikasimateri.timestamp, submateri!!))
                             }
                         } else {
                             val notifikasi = h.getValue(Notifikasi::class.java)
@@ -80,7 +84,8 @@ class NotifikasiIsiFragment : Fragment() {
                                 val idnotif = h.key.toString()
                                 val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
                                 val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                                listNotif.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif, notifikasi.timestamp))
+                                val submateri = SubMateriKomplit("", "", 0, "", 0, "", 0)
+                                listNotif.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif, notifikasi.timestamp, submateri))
                             }
                         }
                     }
@@ -133,10 +138,9 @@ class NotifikasiIsiFragment : Fragment() {
         }
         return hasil
     }
-
 }
 
-class NotifikasiItem(val text: String, val image: String, val waktu: String, val statusbaca: Int, val idnotif: String, val timestamp: Long): Item<GroupieViewHolder>() {
+class NotifikasiItem(val text: String, val image: String, val waktu: String, val statusbaca: Int, val idnotif: String, val timestamp: Long, val submateri: SubMateriKomplit): Item<GroupieViewHolder>() {
     override fun getLayout(): Int {
         return R.layout.list_notifikasi
     }
@@ -162,9 +166,64 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
                 const.applyTo(viewHolder.itemView.constListNotifikasi)
                 viewHolder.itemView.notifImageMateri.setImageResource(R.drawable.ic_notes)
             }
+            val refmateri = FirebaseDatabase.getInstance().getReference("submateri")
+            val daftarSub = arrayListOf<SubMateri>()
+            refmateri.orderByChild("materi_id").equalTo(submateri.materi_id.toDouble()).addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    if (p0.exists()) {
+                        for (h in p0.children) {
+                            val judul = h.child("judul").value.toString()
+                            val gambar = h.child("src_img").value.toString()
+                            val jenis = h.child("jenis").value.toString()
+                            val isi = h.child("isi").value.toString()
+                            val deskripsigambar = h.child("img_desc").value.toString()
+                            val idsub = h.key.toString()
+                            daftarSub.add(SubMateri(judul, gambar, jenis, isi, getBackgroundColor(viewHolder, submateri.materi_id), deskripsigambar, idsub, 1))
+                        }
+                        viewHolder.itemView.constListNotifikasi.setOnClickListener {
+                            val ref = FirebaseDatabase.getInstance().getReference("notifikasi/$idnotif")
+                            ref.child("statusbaca").setValue(1)
+                            val pos = submateri.urutan-1
+                            val intent = Intent(viewHolder.itemView.context, IsiMateri::class.java)
+                            var daftarJudul = arrayListOf<String>()
+                            var daftarGambar = arrayListOf<String>()
+                            var daftarIsi = arrayListOf<String>()
+                            var daftarDesk = arrayListOf<String>()
+                            intent.putExtra("Warna", daftarSub[pos].color)
+                            intent.putExtra("Position", pos.toString())
+                            intent.putExtra("Slider", daftarSub[pos].slider)
+                            for (h in daftarSub) {
+                                daftarJudul.add(h.judul)
+                                daftarGambar.add(h.gambar)
+                                daftarIsi.add(h.isi)
+                                daftarDesk.add(h.desc)
+                            }
+                            intent.putExtra("DaftarJudul", daftarJudul)
+                            intent.putExtra("DaftarGambar", daftarGambar)
+                            intent.putExtra("DaftarIsi", daftarIsi)
+                            intent.putExtra("DaftarDesk", daftarDesk)
+                            viewHolder.itemView.context.startActivity(intent)
+                        }
+                    }
+                }
+            })
         } else {
             if (image != "") {
                 Picasso.get().load(image).resize(56,56).into(viewHolder.itemView.notifImage)
+                viewHolder.itemView.constListNotifikasi.setOnClickListener {
+                    val ref = FirebaseDatabase.getInstance().getReference("notifikasi/$idnotif")
+                    ref.child("statusbaca").setValue(1)
+                    var intent = Intent(viewHolder.itemView.context, Home::class.java)
+                    intent.putExtra("DataTabChat", "9")
+                    intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    viewHolder.itemView.context.startActivity(intent)
+                    (viewHolder.itemView.context as Activity).finish()
+                }
             }
         }
         if (statusbaca == 0) {
@@ -172,15 +231,15 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
         } else {
             viewHolder.itemView.constListNotifikasi.setBackgroundColor(Color.parseColor("#FFFFFF"))
         }
-        viewHolder.itemView.constListNotifikasi.setOnClickListener {
-            val ref = FirebaseDatabase.getInstance().getReference("notifikasi/$idnotif")
-            ref.child("statusbaca").setValue(1)
-            var intent = Intent(viewHolder.itemView.context, Home::class.java)
-            intent.putExtra("DataTabChat", "9")
-            intent = intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent = intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            viewHolder.itemView.context.startActivity(intent)
-            (viewHolder.itemView.context as Activity).finish()
+    }
+
+    private fun getBackgroundColor(viewHolder: GroupieViewHolder, num: Int): String {
+        when (num) {
+            1 -> return viewHolder.itemView.resources.getString(0+R.color.colorBlue)
+            2 -> return viewHolder.itemView.resources.getString(0+R.color.colorPrimary)
+            3 -> return viewHolder.itemView.resources.getString(0+R.color.colorPurple)
+            4 -> return viewHolder.itemView.resources.getString(0+R.color.colorLightGreen)
+            else -> return viewHolder.itemView.resources.getString(0+R.color.colorPink)
         }
     }
 }

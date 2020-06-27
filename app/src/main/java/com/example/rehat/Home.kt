@@ -17,6 +17,7 @@ import androidx.room.Room
 import com.example.rehat.fragmenthome.*
 import com.example.rehat.model.Notifikasi
 import com.example.rehat.model.NotifikasiMateri
+import com.example.rehat.model.SubMateriKomplit
 import com.example.rehat.pageradapter.PagerAdapter
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
@@ -266,6 +267,7 @@ class Home : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkChatKonsul()
+        setupTabIcons()
         val datatitle = getSharedPreferences("DataTitle", Context.MODE_PRIVATE)
         homeTitle.visibility = datatitle.getInt("homeTitleState", 0)
         tombolChat.visibility = datatitle.getInt("tombolChatState", 0)
@@ -312,9 +314,10 @@ class Home : AppCompatActivity() {
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
                 val judul = p0.child("judul").value.toString()
+                val submateri = p0.getValue(SubMateriKomplit::class.java)
                 val notifRef = FirebaseDatabase.getInstance().getReference("notifikasi")
                 val time = System.currentTimeMillis()
-                val notifikasi = NotifikasiMateri(judul, 1, iduser!!, "Terdapat update pada materi", time, 0)
+                val notifikasi = NotifikasiMateri(judul, 1, iduser!!, "Terdapat update pada materi", time, 0, submateri!!)
                 notifRef.push().setValue(notifikasi)
             }
 
@@ -347,9 +350,10 @@ class Home : AppCompatActivity() {
                     first = false
                 } else {
                     val judul = p0.child("judul").value.toString()
+                    val submateri = p0.getValue(SubMateriKomplit::class.java)
                     val notifRef = FirebaseDatabase.getInstance().getReference("notifikasi")
                     val time = System.currentTimeMillis()
-                    val notifikasi = NotifikasiMateri(judul, 2, iduser!!, "Terdapat materi baru berjudul", time, 0)
+                    val notifikasi = NotifikasiMateri(judul, 2, iduser!!, "Terdapat materi baru berjudul", time, 0, submateri!!)
                     notifRef.push().setValue(notifikasi)
                 }
             }
