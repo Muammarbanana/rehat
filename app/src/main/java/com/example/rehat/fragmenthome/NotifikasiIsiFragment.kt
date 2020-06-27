@@ -145,13 +145,23 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
         viewHolder.itemView.notifInfo.text = text
         viewHolder.itemView.notifWaktu.text = waktu
         if (image.length == 1) {
-            viewHolder.itemView.notifImage.visibility = View.GONE
-            viewHolder.itemView.notifImageMateri.visibility = View.VISIBLE
-            val const = ConstraintSet()
-            const.clone(viewHolder.itemView.constListNotifikasi)
-            const.connect(R.id.notifInfo, ConstraintSet.START, R.id.notifImageMateri, ConstraintSet.END, 12)
-            const.applyTo(viewHolder.itemView.constListNotifikasi)
-            viewHolder.itemView.notifImageMateri.setImageResource(R.drawable.ic_reading_1)
+            if (image.toInt() == 1) {
+                viewHolder.itemView.notifImage.visibility = View.GONE
+                viewHolder.itemView.notifImageMateri.visibility = View.VISIBLE
+                val const = ConstraintSet()
+                const.clone(viewHolder.itemView.constListNotifikasi)
+                const.connect(R.id.notifInfo, ConstraintSet.START, R.id.notifImageMateri, ConstraintSet.END, 12)
+                const.applyTo(viewHolder.itemView.constListNotifikasi)
+                viewHolder.itemView.notifImageMateri.setImageResource(R.drawable.ic_reading_1)
+            } else {
+                viewHolder.itemView.notifImage.visibility = View.GONE
+                viewHolder.itemView.notifImageMateri.visibility = View.VISIBLE
+                val const = ConstraintSet()
+                const.clone(viewHolder.itemView.constListNotifikasi)
+                const.connect(R.id.notifInfo, ConstraintSet.START, R.id.notifImageMateri, ConstraintSet.END, 12)
+                const.applyTo(viewHolder.itemView.constListNotifikasi)
+                viewHolder.itemView.notifImageMateri.setImageResource(R.drawable.ic_notes)
+            }
         } else {
             if (image != "") {
                 Picasso.get().load(image).resize(56,56).into(viewHolder.itemView.notifImage)
