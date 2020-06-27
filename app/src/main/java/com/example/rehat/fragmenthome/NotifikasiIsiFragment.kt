@@ -4,14 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet
 import com.example.rehat.Home
 
 import com.example.rehat.R
 import com.example.rehat.model.Notifikasi
+import com.example.rehat.model.NotifikasiMateri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -62,12 +66,22 @@ class NotifikasiIsiFragment : Fragment() {
                 var date = ""
                 if (p0.exists()) {
                     for (h in p0.children) {
-                        val notifikasi = h.getValue(Notifikasi::class.java)
-                        if (notifikasi != null) {
-                            val idnotif = h.key.toString()
-                            val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
-                            val selisih = System.currentTimeMillis() - notifikasi.timestamp
-                            listNotif.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif, notifikasi.timestamp))
+                        if (h.child("jenis").value.toString() != "null") {
+                            val notifikasimateri = h.getValue(NotifikasiMateri::class.java)
+                            if (notifikasimateri != null) {
+                                val idnotif = h.key.toString()
+                                val teks = "${notifikasimateri.message} ${notifikasimateri.judul}"
+                                val selisih = System.currentTimeMillis() - notifikasimateri.timestamp
+                                listNotif.add(NotifikasiItem(teks, notifikasimateri.jenis.toString(), hitungWaktu(selisih), notifikasimateri.statusbaca, idnotif, notifikasimateri.timestamp))
+                            }
+                        } else {
+                            val notifikasi = h.getValue(Notifikasi::class.java)
+                            if (notifikasi != null) {
+                                val idnotif = h.key.toString()
+                                val teks = "${notifikasi.namakonselor} ${notifikasi.message}"
+                                val selisih = System.currentTimeMillis() - notifikasi.timestamp
+                                listNotif.add(NotifikasiItem(teks, notifikasi.photo, hitungWaktu(selisih), notifikasi.statusbaca, idnotif, notifikasi.timestamp))
+                            }
                         }
                     }
                     date = ""
@@ -130,8 +144,18 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.notifInfo.text = text
         viewHolder.itemView.notifWaktu.text = waktu
-        if (image != "") {
-            Picasso.get().load(image).resize(56,56).into(viewHolder.itemView.notifImage)
+        if (image.length == 1) {
+            viewHolder.itemView.notifImage.visibility = View.GONE
+            viewHolder.itemView.notifImageMateri.visibility = View.VISIBLE
+            val const = ConstraintSet()
+            const.clone(viewHolder.itemView.constListNotifikasi)
+            const.connect(R.id.notifInfo, ConstraintSet.START, R.id.notifImageMateri, ConstraintSet.END, 12)
+            const.applyTo(viewHolder.itemView.constListNotifikasi)
+            viewHolder.itemView.notifImageMateri.setImageResource(R.drawable.ic_reading_1)
+        } else {
+            if (image != "") {
+                Picasso.get().load(image).resize(56,56).into(viewHolder.itemView.notifImage)
+            }
         }
         if (statusbaca == 0) {
             viewHolder.itemView.constListNotifikasi.setBackgroundColor(Color.parseColor("#E8FFEB"))
@@ -149,7 +173,6 @@ class NotifikasiItem(val text: String, val image: String, val waktu: String, val
             (viewHolder.itemView.context as Activity).finish()
         }
     }
-
 }
 
 class HeaderNotifikasiItem(val text: String): Item<GroupieViewHolder>() {

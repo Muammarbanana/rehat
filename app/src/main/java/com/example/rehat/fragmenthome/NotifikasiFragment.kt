@@ -39,9 +39,11 @@ class NotifikasiFragment : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-                    val transaction = activity?.supportFragmentManager?.beginTransaction()
-                    transaction?.replace(R.id.frameNotifikasi, NotifikasiIsiFragment())
-                    transaction?.commitAllowingStateLoss()
+                    if (R.id.frameNotifikasi != null) {
+                        val transaction = activity?.supportFragmentManager?.beginTransaction()
+                        transaction?.replace(R.id.frameNotifikasi, NotifikasiIsiFragment())
+                        transaction?.commitAllowingStateLoss()
+                    }
                 }
             }
 

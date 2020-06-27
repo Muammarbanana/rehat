@@ -15,6 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.example.rehat.fragmenthome.*
+import com.example.rehat.model.Notifikasi
+import com.example.rehat.model.NotifikasiMateri
 import com.example.rehat.pageradapter.PagerAdapter
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
@@ -184,6 +186,7 @@ class Home : AppCompatActivity() {
                 )
             tabsMain.setupWithViewPager(viewPager1)
             setupTabIcons()
+            checkMateriUpdate()
         })
     }
 
@@ -290,6 +293,37 @@ class Home : AppCompatActivity() {
                         }
                     }
                 }
+            }
+
+        })
+    }
+
+    private fun checkMateriUpdate() {
+        val iduser = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("submateri")
+        ref.orderByKey().addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val judul = p0.child("judul").value.toString()
+                val notifRef = FirebaseDatabase.getInstance().getReference("notifikasi")
+                val time = System.currentTimeMillis()
+                val notifikasi = NotifikasiMateri(judul, 1, iduser!!, "Terdapat update pada materi", time, 0)
+                notifRef.push().setValue(notifikasi)
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
             }
 
         })
