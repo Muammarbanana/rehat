@@ -8,7 +8,6 @@ import com.example.rehat.roomdb.MateriEntity
 
 class SharedViewModel(private val materiDao: MateriDAO): ViewModel() {
     val selected = MutableLiveData<String>()
-    val datavoice = MutableLiveData<String>()
     private lateinit var materi: LiveData<List<MateriEntity>>
 
     init {

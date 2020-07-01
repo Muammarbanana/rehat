@@ -7,11 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.example.rehat.roomdb.MateriEntity
 import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.rvlistsubmateri.AdapterSub
 import com.example.rehat.rvlistsubmateri.SubMateri
+import com.example.rehat.viewmodel.SharedViewModel
+import com.example.rehat.viewmodel.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import io.reactivex.Observable
@@ -24,6 +28,8 @@ class SubMateri : AppCompatActivity() {
 
     private lateinit var ref: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var viewModel: SharedViewModel
+    private var roomDB: RoomDB? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +42,12 @@ class SubMateri : AppCompatActivity() {
         val background = intent.getStringExtra("Background").toInt()
         val backgroundcolor = getBackgroundColor(background)
         judulMateri.text = intent.getStringExtra("Judul")
+
+        roomDB = Room.databaseBuilder(this, RoomDB::class.java, "materiDB").allowMainThreadQueries().build()
+
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(roomDB!!.materiDao())
+        )[SharedViewModel::class.java]
 
         auth = FirebaseAuth.getInstance()
 
@@ -67,7 +79,7 @@ class SubMateri : AppCompatActivity() {
                         val idsub = h.key.toString()
                         daftarSub.add(SubMateri(judul, gambar, jenis, isi, color, deskripsigambar, idsub, 1))
                     }
-                    val adapter = AdapterSub(daftarSub, this@SubMateri, 1)
+                    val adapter = AdapterSub(daftarSub, this@SubMateri, 1, viewModel)
                     adapter.notifyDataSetChanged()
                     rvSubMateri.adapter = adapter
                 }

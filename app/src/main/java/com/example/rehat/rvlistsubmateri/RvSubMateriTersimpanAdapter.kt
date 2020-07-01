@@ -1,12 +1,14 @@
 package com.example.rehat.rvlistsubmateri
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -20,6 +22,7 @@ import com.example.rehat.roomdb.RoomDB
 import com.example.rehat.viewmodel.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.list_sub_materi.view.*
+import kotlinx.android.synthetic.main.pop_alert.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
@@ -73,14 +76,7 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
         }
         holder.view.imgSimpan.setOnClickListener {
             val iduser = FirebaseAuth.getInstance().uid.toString()
-            deleteData(roomDB, list[position].id, position, iduser)
-            holder.view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi)
-            val toastLayout = LayoutInflater.from(ortu.context).inflate(R.layout.toast_layout, ortu, false)
-            val toast = Toast(holder.view.context)
-            toastLayout.textToast.text = "Materi dihapus dari daftar simpan"
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = toastLayout
-            toast.show()
+            popAlert(roomDB, list[position].id, position, iduser, holder.view, ortu)
         }
         changeIconSimpan(roomDB, list[position].id, holder)
     }
@@ -103,5 +99,32 @@ class AdapterTersimpan(private val list:ArrayList<MateriEntity>,private val frag
             tr.commit()
         }
         viewModel.selectedTab("savedpagedel")
+    }
+
+    private fun popAlert(roomDB: RoomDB, id: String, position: Int, iduser: String, view: View, parent: ViewGroup) {
+        val dialog = AlertDialog.Builder(view.context).create()
+        val inflater = LayoutInflater.from(
+            parent.context
+        )
+        val dialogView = inflater.inflate(R.layout.pop_alert, null)
+        dialog.setView(dialogView)
+        dialog.setCancelable(true)
+        dialogView.cardAlert.radius = 10F
+        dialogView.alertText.text = "Apakah kamu yakin ingin menghapus materi dari daftar simpan?"
+        dialogView.btnAccept.text = "Ya, Yakin"
+        dialogView.btnAccept.setTextColor(Color.parseColor("#DB4437"))
+        dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
+        dialogView.btnAccept.setOnClickListener {
+            deleteData(roomDB, id, position, iduser)
+            view.imgSimpan.setImageResource(R.drawable.ic_simpan_materi)
+            val toastLayout = LayoutInflater.from(ortu.context).inflate(R.layout.toast_layout, ortu, false)
+            val toast = Toast(view.context)
+            toastLayout.textToast.text = "Materi dihapus dari daftar simpan"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

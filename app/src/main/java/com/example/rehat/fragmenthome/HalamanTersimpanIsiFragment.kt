@@ -1,6 +1,7 @@
 package com.example.rehat.fragmenthome
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class HalamanTersimpanIsiFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var root: View
     private lateinit var viewModel: SharedViewModel
+    private lateinit var adapter: AdapterTersimpan
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,7 +88,7 @@ class HalamanTersimpanIsiFragment : Fragment() {
                     tr?.replace(R.id.savedPageConst, HalamanTersimpanFragment())
                     tr?.commit()
                 } else {
-                    val adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
+                    adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
                     adapter.notifyDataSetChanged()
                     root.rvMateriTersimpan.adapter = adapter
                     root.teksTotal.text = "Total: ${adapter.itemCount}"

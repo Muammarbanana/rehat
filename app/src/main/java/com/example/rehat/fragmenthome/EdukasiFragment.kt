@@ -158,7 +158,7 @@ class EdukasiFragment : Fragment() {
                             viewModel.selectedTab("searching")
                         }
                     }
-                    val adapter = AdapterSub(daftarSubMateriFiltered, this@EdukasiFragment.activity!!, 0)
+                    val adapter = AdapterSub(daftarSubMateriFiltered, this@EdukasiFragment.activity!!, 0, viewModel)
                     adapter.notifyDataSetChanged()
                     val tekstotal = "Total ${daftarSubMateriFiltered.size.toString()}"
                     view.teksTotalEdukasi.text = tekstotal
