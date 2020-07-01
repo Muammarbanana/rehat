@@ -190,6 +190,41 @@
                     app:layout_constraintTop_toBottomOf="@+id/regisKataSandi" />
 
             <TextView
+                    android:id="@+id/regisKonfirmasiKataSandi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/konfirmasi_kata_sandi"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/regisNamaLengkap"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextKataSandi1"
+                    app:layout_constraintTop_toTopOf="@+id/guideline84" />
+
+            <EditText
+                    android:id="@+id/editTextKonfirmasiKataSandi"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:autofillHints=""
+                    android:backgroundTint="@color/colorPrimary"
+                    android:contentDescription="@string/masukkan_ulang_kata_sandi"
+                    android:ems="10"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:hint="@string/masukkan_ulang_kata_sandi"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorGray"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline85"
+                    app:layout_constraintEnd_toEndOf="@id/guideline75"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/regisNamaLengkap"
+                    app:layout_constraintTop_toBottomOf="@+id/regisKonfirmasiKataSandi" />
+
+            <TextView
                     android:id="@+id/regisJaminan"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -198,10 +233,10 @@
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline85"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline87"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
                     app:layout_constraintStart_toStartOf="@+id/editTextNamaLengkap"
-                    app:layout_constraintTop_toTopOf="@+id/guideline84" />
+                    app:layout_constraintTop_toBottomOf="@+id/guideline86" />
 
             <Button
                     android:id="@+id/regisButton"
@@ -212,10 +247,10 @@
                     android:text="@string/daftar"
                     android:textAllCaps="false"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline87"
+                    app:layout_constraintBottom_toTopOf="@id/guideline89"
                     app:layout_constraintEnd_toStartOf="@+id/guideline75"
                     app:layout_constraintStart_toStartOf="@+id/guideline74"
-                    app:layout_constraintTop_toTopOf="@+id/guideline86" />
+                    app:layout_constraintTop_toBottomOf="@id/guideline88" />
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline74"
@@ -377,6 +412,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/regisKataSandi"
                     app:srcCompat="@drawable/ic_microphone" />
 
+            <ImageView
+                    android:id="@+id/imgMicrophone7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/masukkan_sandi_ulang_suara"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline85"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline75"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/guideline74"
+                    app:layout_constraintTop_toBottomOf="@+id/regisKonfirmasiKataSandi"
+                    app:srcCompat="@drawable/ic_microphone" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Guideline

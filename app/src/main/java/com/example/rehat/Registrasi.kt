@@ -3,6 +3,7 @@ package com.example.rehat
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.speech.RecognizerIntent
 import android.view.View
 import android.widget.Toast
@@ -49,10 +50,6 @@ class Registrasi : AppCompatActivity() {
             inputIdentificator = 3
             getVoice()
         }
-        imgMicrophone7.setOnClickListener {
-            inputIdentificator = 4
-            getVoice()
-        }
     }
 
     private fun registerUser() {
@@ -60,45 +57,45 @@ class Registrasi : AppCompatActivity() {
         val namapengguna = editTextNamaPengguna.text.toString()
         val email = editTextEmail.text.toString()
         val password = editTextKataSandi1.text.toString()
-        val passwordUlang = editTextKonfirmasiKataSandi.text.toString()
 
-        if (nama.isEmpty() || namapengguna.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-            val toast = Toast(this)
-            toastLayout.textToast.text = "Tidak boleh ada kolom yang kosong"
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = toastLayout
-            toast.show()
-        } else if (passwordUlang!=password) {
-            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-            val toast = Toast(this)
-            toastLayout.textToast.text = "Konfirmasi kata sandi tidak cocok"
-            toast.duration = Toast.LENGTH_SHORT
-            toast.view = toastLayout
-            toast.show()
+        if (namapengguna.isEmpty()) {
+            customToast("Pendaftaran gagal, mohon isi nama pengguna terlebih dahulu")
+        } else if (email.isEmpty()) {
+            customToast("Pendaftaran gagal, mohon isi email terlebih dahulu")
+        } else if (password.isEmpty()){
+            customToast("Pendaftaran gagal, mohon isi kata sandi terlebih dahulu")
         } else {
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user =
-                        User(nama, namapengguna, email)
-                    ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
-                        .setValue(user)
-                    auth.signOut()
-                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                    val toast = Toast(this)
-                    toastLayout.textToast.text = "Pendaftaran berhasil, silakan login"
-                    toast.duration = Toast.LENGTH_SHORT
-                    toast.view = toastLayout
-                    toast.show()
-                    startActivity(Intent(this, Login::class.java))
-                    finish()
-                } else {
-                    val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                    val toast = Toast(this)
-                    toastLayout.textToast.text = "Pendaftaran gagal"
-                    toast.duration = Toast.LENGTH_SHORT
-                    toast.view = toastLayout
-                    toast.show()
+            if (namapengguna.contains(" ")) {
+                customToast("Terjadi kesalahan, nama pengguna yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else if (email.contains(" ")) {
+                customToast("Terjadi kesalahan, email yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else if (password.contains(" ")) {
+                customToast("Terjadi kesalahan, kata sandi yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else {
+                showLoading()
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val user =
+                            User(nama, namapengguna, email)
+                        ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
+                            .setValue(user)
+                        auth.signOut()
+                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                        val toast = Toast(this)
+                        toastLayout.textToast.text = "Pendaftaran berhasil, silakan login"
+                        toast.duration = Toast.LENGTH_SHORT
+                        toast.view = toastLayout
+                        toast.show()
+                        startActivity(Intent(this, Login::class.java))
+                        finish()
+                    } else {
+                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+                        val toast = Toast(this)
+                        toastLayout.textToast.text = "Pendaftaran gagal"
+                        toast.duration = Toast.LENGTH_SHORT
+                        toast.view = toastLayout
+                        toast.show()
+                    }
                 }
             }
         }
@@ -123,7 +120,6 @@ class Registrasi : AppCompatActivity() {
                 1 -> editTextNamaPengguna.setText(spokenText)
                 2 -> editTextEmail.setText(spokenText)
                 3 -> editTextKataSandi1.setText(spokenText)
-                else -> editTextKonfirmasiKataSandi.setText(spokenText)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -132,5 +128,47 @@ class Registrasi : AppCompatActivity() {
     // Fungsi klik
     fun getBack(view: View) {
         finish()
+    }
+
+    private fun showLoading() {
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout_invisible, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = "Sedang memproses untuk registrasi"
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
+        constRegistrasi.isEnabled = false
+        linearMaskingRegis.visibility = View.VISIBLE
+        progressBarRegistrasi.progress = 0
+        progressBarRegistrasi.secondaryProgress = 100
+        progressBarRegistrasi.max = 100
+        progressBarRegistrasi.visibility = View.VISIBLE
+        teksLoadingRegistrasi.visibility = View.VISIBLE
+        val handler = Handler()
+        Thread(Runnable {
+            var pStatus = 0
+            while (pStatus < 100) {
+                pStatus += 1;
+
+                handler.post {
+                    progressBarRegistrasi.progress = pStatus;
+                    teksLoadingRegistrasi.text = "$pStatus %";
+                }
+                try {
+                    Thread.sleep(15)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }).start()
+    }
+
+    private fun customToast(text: String) {
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = text
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
     }
 }

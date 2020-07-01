@@ -38,21 +38,24 @@ class Login : AppCompatActivity() {
         loginButton.setOnClickListener {
             val namaPengguna = editTextNamaPengguna.text.toString()
             val password = editTextKataSandi.text.toString()
-            if (namaPengguna.isEmpty() || password.isEmpty()) {
-                val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                val toast = Toast(this)
-                toastLayout.textToast.text = "Tolong isi nama pengguna dan kata sandi"
-                toast.duration = Toast.LENGTH_SHORT
-                toast.view = toastLayout
-                toast.show()
-                return@setOnClickListener
-            }
-            passUsername(object : MyCallBack {
-                override fun onCallBack(email: String) {
-                    loginUser(email, password)
+            if (namaPengguna.isEmpty()) {
+                customToast("Terjadi kesalahan, mohon isi nama pengguna terlebih dahulu")
+            } else if (password.isEmpty()){
+                customToast("Terjadi kesalahan, mohon isi kata sandi terlebih dahulu")
+            } else {
+                if (namaPengguna.contains(" ")) {
+                    customToast("Terjadi kesalahan, nama pengguna yang kamu masukkan mengandung spasi mohon periksa kembali")
+                } else if (password.contains(" ")) {
+                    customToast("Terjadi kesalahan, kata sandi yang kamu masukkan mengandung spasi mohon periksa kembali")
+                } else {
+                    passUsername(object : MyCallBack {
+                        override fun onCallBack(email: String) {
+                            loginUser(email, password)
+                        }
+                    }, namaPengguna)
+                    showLoading()
                 }
-            }, namaPengguna)
-            showLoading()
+            }
         }
 
         imgMicrophone1.setOnClickListener {
@@ -227,5 +230,14 @@ class Login : AppCompatActivity() {
     // Fungsi klik
     fun getBack(view: View) {
         finish()
+    }
+
+    private fun customToast(text: String) {
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = text
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
     }
 }

@@ -101,7 +101,15 @@ class EditProfil : AppCompatActivity() {
         } else if (katasandi != katasandikon) {
             customToast("Terjadi kesalahan, kata sandi tidak sesuai mohon periksa kembali")
         } else {
-            popAlert(email, katasandi, namapengguna, namalengkap, gender, birthdate)
+            if (namapengguna.contains(" ")) {
+                customToast("Terjadi kesalahan, nama pengguna yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else if (email.contains(" ")) {
+                customToast("Terjadi kesalahan, email yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else if (katasandi.contains(" ")) {
+                customToast("Terjadi kesalahan, kata sandi yang kamu masukkan mengandung spasi mohon periksa kembali")
+            } else {
+                popAlert(email, katasandi, namapengguna, namalengkap, gender, birthdate)
+            }
         }
     }
 
