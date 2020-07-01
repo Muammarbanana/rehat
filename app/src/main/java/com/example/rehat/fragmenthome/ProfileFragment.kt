@@ -120,7 +120,7 @@ class ProfileFragment : Fragment() {
                         val photo = h.child("photo").value.toString()
                         val gender = h.child("gender").value.toString()
                         val birth = h.child("birth").value.toString()
-                        val email = h.child("email").value.toString()
+                        val emaildummy = h.child("emaildummy").value.toString()
                         root.profileName.text = name
                         if (photo == "null" || photo == "") {
                             profilPic.contentDescription = "Belum memasang foto profil"
@@ -128,7 +128,7 @@ class ProfileFragment : Fragment() {
                             Picasso.get().load(photo).resize(90, 90).into(root.profilPic)
                             profilPic.contentDescription = ""
                         }
-                        if (gender == "null" || birth == "null" || gender == "" || email == "null") {
+                        if (gender == "null" || birth == "null" || gender == "" || emaildummy == "1") {
                             val const = ConstraintSet()
                             const.clone(root.constProfil)
                             const.connect(R.id.teksEditProfile, ConstraintSet.TOP, R.id.guideline41, ConstraintSet.TOP)

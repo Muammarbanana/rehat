@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.room.Room
+import com.example.rehat.Home
 import com.example.rehat.IsiMateri
 import com.example.rehat.R
 import com.example.rehat.fragmenthome.HalamanTersimpanIsiFragment
@@ -128,7 +129,6 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
 
     private fun deleteData(roomDB: RoomDB, id: String, position: Int, iduser: String) {
         roomDB?.materiDao()?.deleteDatabyID(id, iduser)
-        viewModel.selectedTab("savepageudel")
     }
 
     private fun popAlert(roomDB: RoomDB, id: String, position: Int, iduser: String, view: View, parent: ViewGroup) {

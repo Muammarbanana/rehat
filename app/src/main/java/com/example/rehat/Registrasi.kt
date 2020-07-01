@@ -42,10 +42,6 @@ class Registrasi : AppCompatActivity() {
             inputIdentificator = 1
             getVoice()
         }
-        imgMicrophone5.setOnClickListener {
-            inputIdentificator = 2
-            getVoice()
-        }
         imgMicrophone6.setOnClickListener {
             inputIdentificator = 3
             getVoice()
@@ -55,7 +51,7 @@ class Registrasi : AppCompatActivity() {
     private fun registerUser() {
         val nama = editTextNamaLengkap.text.toString()
         val namapengguna = editTextNamaPengguna.text.toString()
-        val email = editTextEmail.text.toString()
+        val email = "${namapengguna}@gmail.com"
         val password = editTextKataSandi1.text.toString()
 
         if (namapengguna.isEmpty()) {
@@ -79,6 +75,7 @@ class Registrasi : AppCompatActivity() {
                             User(nama, namapengguna, email)
                         ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
                             .setValue(user)
+                        ref.child(FirebaseAuth.getInstance().currentUser!!.uid).child("emaildummy").setValue(1)
                         auth.signOut()
                         val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
                         val toast = Toast(this)
@@ -118,7 +115,6 @@ class Registrasi : AppCompatActivity() {
             when(inputIdentificator) {
                 0 -> editTextNamaLengkap.setText(spokenText)
                 1 -> editTextNamaPengguna.setText(spokenText)
-                2 -> editTextEmail.setText(spokenText)
                 3 -> editTextKataSandi1.setText(spokenText)
             }
         }
@@ -161,6 +157,13 @@ class Registrasi : AppCompatActivity() {
                 }
             }
         }).start()
+    }
+
+    private fun removeLoading() {
+        constRegistrasi.isEnabled = true
+        linearMaskingRegis.visibility = View.GONE
+        progressBarRegistrasi.visibility = View.GONE
+        teksLoadingRegistrasi.visibility = View.GONE
     }
 
     private fun customToast(text: String) {

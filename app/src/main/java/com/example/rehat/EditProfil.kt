@@ -121,6 +121,7 @@ class EditProfil : AppCompatActivity() {
                         auth.currentUser?.updatePassword(katasandi)?.addOnCompleteListener(this, OnCompleteListener { task2 ->
                             if (task2.isSuccessful) {
                                 ref.child("email").setValue(email)
+                                ref.child("emaildummy").setValue(0)
                                 ref.child("username").setValue(namapengguna)
                                 ref.child("nama").setValue(namalengkap)
                                 ref.child("gender").setValue(gender)
@@ -133,6 +134,7 @@ class EditProfil : AppCompatActivity() {
                         })
                     } else {
                         ref.child("email").setValue(email)
+                        ref.child("emaildummy").setValue(0)
                         ref.child("username").setValue(namapengguna)
                         ref.child("nama").setValue(namalengkap)
                         ref.child("gender").setValue(gender)
@@ -159,7 +161,11 @@ class EditProfil : AppCompatActivity() {
                     for (h in p0.children) {
                         val name = h.child("nama").value.toString()
                         val username = h.child("username").value.toString()
-                        val email = h.child("email").value.toString()
+                        val emaildummy = h.child("emaildummy").value.toString()
+                        var email = ""
+                        if (emaildummy != "1") {
+                            email = h.child("email").value.toString()
+                        }
                         val birth = h.child("birth").value.toString()
                         val arrdate = birth.split("-")
                         val gender = h.child("gender").value.toString()
