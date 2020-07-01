@@ -6,6 +6,8 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -63,14 +65,27 @@ class EdukasiFragment : Fragment() {
         getName()
         getDataMateri(root)
 
-        root.editTextSearch.setOnKeyListener { v, keyCode, event ->
+        /**root.editTextSearch.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 getDataMateriSearch(root, root.editTextSearch.text.toString(), viewModel)
                 hideKeyboard()
                 return@setOnKeyListener true
             }
             false
-        }
+        }**/
+
+        root.editTextSearch.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                getDataMateriSearch(root, s.toString(), viewModel)
+            }
+
+        })
 
         root.btnSearchMic.setOnClickListener {
             getVoice()
