@@ -187,7 +187,6 @@ class Home : AppCompatActivity() {
                 )
             tabsMain.setupWithViewPager(viewPager1)
             setupTabIcons()
-            checkMateriUpdate()
         })
     }
 
@@ -295,71 +294,6 @@ class Home : AppCompatActivity() {
                         }
                     }
                 }
-            }
-
-        })
-    }
-
-    private fun checkMateriUpdate() {
-        val iduser = FirebaseAuth.getInstance().uid
-        val ref = FirebaseDatabase.getInstance().getReference("submateri")
-        ref.orderByKey().addChildEventListener(object: ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                val judul = p0.child("judul").value.toString()
-                val submateri = p0.getValue(SubMateriKomplit::class.java)
-                val notifRef = FirebaseDatabase.getInstance().getReference("notifikasi")
-                val time = System.currentTimeMillis()
-                val notifikasi = NotifikasiMateri(judul, 1, iduser!!, "Terdapat update pada materi", time, 0, submateri!!)
-                notifRef.push().setValue(notifikasi)
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-
-            }
-
-        })
-
-        var first = true
-        ref.limitToLast(1).addChildEventListener(object: ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                if (first) {
-                    first = false
-                } else {
-                    val judul = p0.child("judul").value.toString()
-                    val submateri = p0.getValue(SubMateriKomplit::class.java)
-                    val notifRef = FirebaseDatabase.getInstance().getReference("notifikasi")
-                    val time = System.currentTimeMillis()
-                    val notifikasi = NotifikasiMateri(judul, 2, iduser!!, "Terdapat materi baru berjudul", time, 0, submateri!!)
-                    notifRef.push().setValue(notifikasi)
-                }
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-
             }
 
         })
