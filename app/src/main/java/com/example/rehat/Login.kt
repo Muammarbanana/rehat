@@ -78,6 +78,12 @@ class Login : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        val toastLayout = layoutInflater.inflate(R.layout.toast_layout_invisible, findViewById(R.id.constToast))
+        val toast = Toast(this)
+        toastLayout.textToast.text = "Sedang memproses untuk login"
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastLayout
+        toast.show()
         constLogin.isEnabled = false
         linearMasking.visibility = View.VISIBLE
         progressBarLogin.progress = 0
