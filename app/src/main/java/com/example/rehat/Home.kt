@@ -55,6 +55,12 @@ class Home : AppCompatActivity() {
             }
         })
 
+        viewModel.removed.observe(this, Observer {
+            val tr = supportFragmentManager.beginTransaction()
+            tr.replace(R.id.savedPageConst, HalamanTersimpanIsiFragment())
+            tr.commit()
+        })
+
         getAllData()
 
         if (intent.extras != null) {

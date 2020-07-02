@@ -129,6 +129,7 @@ class AdapterSub(private val list:ArrayList<SubMateri>, private val fragcont: Fr
 
     private fun deleteData(roomDB: RoomDB, id: String, position: Int, iduser: String) {
         roomDB?.materiDao()?.deleteDatabyID(id, iduser)
+        viewModel.removedItem(id)
     }
 
     private fun popAlert(roomDB: RoomDB, id: String, position: Int, iduser: String, view: View, parent: ViewGroup) {

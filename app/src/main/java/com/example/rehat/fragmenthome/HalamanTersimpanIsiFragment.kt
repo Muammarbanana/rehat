@@ -52,12 +52,12 @@ class HalamanTersimpanIsiFragment : Fragment() {
             ViewModelFactory(roomDB!!.materiDao())
         )[SharedViewModel::class.java]
 
-        viewModel.listenMateri().observeForever {
+        viewModel.listenMateri().observe(this, Observer {
             getAllData()
-        }
+        })
 
         // Update Total text when one of the item deleted
-        viewModel.selected.observeForever(androidx.lifecycle.Observer{
+        viewModel.selected.observe (this, Observer{
             if (it == "savedpagedel") {
                 getAllData()
             }
@@ -89,6 +89,7 @@ class HalamanTersimpanIsiFragment : Fragment() {
                     tr?.commit()
                 } else {
                     adapter = AdapterTersimpan(listmateri, this@HalamanTersimpanIsiFragment.activity!!, viewModel)
+                    root.rvMateriTersimpan.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(root.context)
                     adapter.notifyDataSetChanged()
                     root.rvMateriTersimpan.adapter = adapter
                     root.teksTotal.text = "Total: ${adapter.itemCount}"

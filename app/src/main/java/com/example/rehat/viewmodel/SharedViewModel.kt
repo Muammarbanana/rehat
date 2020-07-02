@@ -8,6 +8,7 @@ import com.example.rehat.roomdb.MateriEntity
 
 class SharedViewModel(private val materiDao: MateriDAO): ViewModel() {
     val selected = MutableLiveData<String>()
+    val removed = MutableLiveData<String>()
     private lateinit var materi: LiveData<List<MateriEntity>>
 
     init {
@@ -16,6 +17,10 @@ class SharedViewModel(private val materiDao: MateriDAO): ViewModel() {
 
     fun selectedTab(item: String) {
         selected.value = item
+    }
+
+    fun removedItem(item: String) {
+        removed.value = item
     }
 
     fun listenMateri(): LiveData<List<MateriEntity>> {
