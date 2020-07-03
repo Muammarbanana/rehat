@@ -156,8 +156,9 @@ class PersetujuanIsiFragment : Fragment() {
         dialog.setCancelable(true)
         dialogView.cardAlert.radius = 10F
         dialogView.alertText.text = "Apakah kamu yakin ingin membatalkan janji pertemuan?"
-        dialogView.btnAccept.text = "Ya, Yakin"
+        dialogView.btnAccept.text = "Ya, Ingin Batalkan"
         dialogView.btnAccept.setTextColor(Color.parseColor("#DB4437"))
+        dialogView.btnCancel.text = "Jangan Batalkan"
         dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogView.btnAccept.setOnClickListener {
             deleteJanji(idjanji)
