@@ -108,12 +108,13 @@ class EditProfil : AppCompatActivity() {
             } else if (katasandi.contains(" ")) {
                 customToast("Terjadi kesalahan, kata sandi yang kamu masukkan mengandung spasi mohon periksa kembali")
             } else {
-                popAlert(email, katasandi, namapengguna, namalengkap, gender, birthdate)
+                checkAndPop(email, katasandi, namapengguna, namalengkap, gender, birthdate)
             }
         }
     }
 
     private fun updateProfileData(email: String, katasandi: String, namapengguna: String, namalengkap: String, gender: String, birthdate: String) {
+        ref = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid!!)
         auth.currentUser?.updateEmail(email)
             ?.addOnCompleteListener(this, OnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -146,6 +147,46 @@ class EditProfil : AppCompatActivity() {
                     customToast("Edit profil gagal, silakan keluar dahulu, lalu coba lagi")
                 }
             })
+    }
+
+    private fun checkAndPop(email: String, katasandi: String, namapengguna: String, namalengkap: String, gender: String, birthdate: String) {
+        val listUsername = arrayListOf<String>()
+        ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByChild("username").equalTo(namapengguna).addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                p0.children.forEach {
+                    if (auth.currentUser?.uid!! != it.key) {
+                        listUsername.add(it.child("username").value.toString())
+                    }
+                }
+                if (listUsername.contains(namapengguna)) {
+                    customToast("Maaf nama pengguna yang kamu masukkan sudah ada yang memiliki. Cobalah yang lain")
+                } else {
+                    val listEmail = arrayListOf<String>()
+                    val reff = FirebaseDatabase.getInstance().getReference("Users")
+                    reff.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object: ValueEventListener{
+                        override fun onCancelled(p0: DatabaseError) {
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot) {
+                            p0.children.forEach {
+                                if(auth.currentUser?.uid!! != it.key) {
+                                    listEmail.add(it.child("email").value.toString())
+                                }
+                            }
+                            if (listEmail.contains(email)) {
+                                customToast("Maaf email yang kamu masukkan sudah ada yang memiliki. Mungkin kamu lupa kata sandi?")
+                            } else {
+                                popAlert(email, katasandi, namapengguna, namalengkap, gender, birthdate)
+                            }
+                        }
+                    })
+                }
+            }
+        })
     }
 
     private fun getData() {
