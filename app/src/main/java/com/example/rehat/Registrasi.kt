@@ -9,8 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.rehat.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_registrasi.*
 import kotlinx.android.synthetic.main.activity_registrasi.editTextNamaPengguna
 import kotlinx.android.synthetic.main.toast_layout.view.*
@@ -54,7 +53,9 @@ class Registrasi : AppCompatActivity() {
         val email = "${namapengguna}@gmail.com"
         val password = editTextKataSandi1.text.toString()
 
-        if (namapengguna.isEmpty()) {
+        if (nama.isEmpty()) {
+            customToast("Pendaftaran gagal, mohon isi nama lengkap terlebih dahulu")
+        }else if (namapengguna.isEmpty()) {
             customToast("Pendaftaran gagal, mohon isi nama pengguna terlebih dahulu")
         } else if (email.isEmpty()) {
             customToast("Pendaftaran gagal, mohon isi email terlebih dahulu")
@@ -68,34 +69,42 @@ class Registrasi : AppCompatActivity() {
             } else if (password.contains(" ")) {
                 customToast("Terjadi kesalahan, kata sandi yang kamu masukkan mengandung spasi mohon periksa kembali")
             } else {
-                showLoading()
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user =
-                            User(nama, namapengguna, email)
-                        ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
-                            .setValue(user)
-                        ref.child(FirebaseAuth.getInstance().currentUser!!.uid).child("emaildummy").setValue(1)
-                        auth.signOut()
-                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                        val toast = Toast(this)
-                        toastLayout.textToast.text = "Pendaftaran berhasil, silakan login"
-                        toast.duration = Toast.LENGTH_SHORT
-                        toast.view = toastLayout
-                        toast.show()
-                        startActivity(Intent(this, Login::class.java))
-                        finish()
-                    } else {
-                        val toastLayout = layoutInflater.inflate(R.layout.toast_layout, findViewById(R.id.constToast))
-                        val toast = Toast(this)
-                        toastLayout.textToast.text = "Pendaftaran gagal"
-                        toast.duration = Toast.LENGTH_SHORT
-                        toast.view = toastLayout
-                        toast.show()
+                regAndCheckUsernameExist(nama, namapengguna, email, password)
+            }
+        }
+    }
+
+    private fun regAndCheckUsernameExist(nama: String, namapengguna: String, email: String, password: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.orderByChild("username").equalTo(namapengguna).addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    customToast("Maaf nama pengguna yang kamu masukkan sudah ada yang memiliki. Cobalah yang lain")
+                } else {
+                    showLoading()
+                    auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this@Registrasi) { task ->
+                        if (task.isSuccessful) {
+                            val user =
+                                User(nama, namapengguna, email)
+                            ref.child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                .setValue(user)
+                            ref.child(FirebaseAuth.getInstance().currentUser!!.uid).child("emaildummy").setValue(1)
+                            auth.signOut()
+                            customToast("Pendaftaran berhasil, silakan login")
+                            startActivity(Intent(this@Registrasi, Login::class.java))
+                            finish()
+                        } else {
+                            customToast("Pendaftaran gagal")
+                            removeLoading()
+                        }
                     }
                 }
             }
-        }
+
+        })
     }
 
     private fun getVoice() {
