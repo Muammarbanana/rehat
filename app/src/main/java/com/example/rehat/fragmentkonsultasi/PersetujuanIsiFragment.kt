@@ -17,6 +17,7 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_persetujuan_isi.*
 import kotlinx.android.synthetic.main.fragment_persetujuan_isi.view.*
 import kotlinx.android.synthetic.main.pop_alert.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -162,6 +163,12 @@ class PersetujuanIsiFragment : Fragment() {
         dialogView.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogView.btnAccept.setOnClickListener {
             deleteJanji(idjanji)
+            val toastLayout = layoutInflater.inflate(R.layout.toast_layout, root.findViewById(R.id.constToast))
+            val toast = Toast(root.context)
+            toastLayout.textToast.text = "Permohonan konsultasi berhasil dibatalkan"
+            toast.duration = Toast.LENGTH_SHORT
+            toast.view = toastLayout
+            toast.show()
             dialog.dismiss()
         }
         dialog.show()
