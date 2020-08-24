@@ -47,58 +47,6 @@ class ProfilKonselor : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profil_konselor)
 
-        namaKonselor.text = intent.getStringExtra("Nama")
-        textSpesialisasi.text = intent.getStringExtra("Spesialisasi")
-        textLokasi.text = intent.getStringExtra("Lokasi")
-        Picasso.get().load(intent.getStringExtra("Foto")).resize(180, 200).into(fotoKonselor)
-        textBio.text = intent.getStringExtra("Bio")
-        id = intent.getStringExtra("Id")
-        val address = intent.getStringExtra("Alamat")
-
-        if ( Build.VERSION.SDK_INT >= 23 &&
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED){
-            val loc = getLocFromAdrres(address)
-            val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
-            val kmdistance: Float
-            if (userloc != null) {
-                var distance = FloatArray(1)
-                Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
-                kmdistance = distance[0] / 1000
-                teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
-            } else {
-                teksJarak.text = "Jarak ke lokasi tidak diketahui"
-                kmdistance = 0F
-            }
-
-            auth = FirebaseAuth.getInstance()
-
-            teksLihatMaps.setOnClickListener { openMap(address) }
-
-            btnJanji.setOnClickListener {
-                val intent = Intent(this, BuatJanji::class.java)
-                intent.putExtra("Nama", namaKonselor.text.toString())
-                intent.putExtra("Lokasi", textLokasi.text.toString())
-                intent.putExtra("Id", id)
-                intent.putExtra("Alamat", address)
-                intent.putExtra("Jarak", kmdistance.roundToInt().toString())
-                startActivity(intent)
-            }
-
-            btnKonsul.setOnClickListener {
-                val intent = Intent(this, ChatKonsultasi::class.java)
-                intent.putExtra("Nama", namaKonselor.text.toString())
-                intent.putExtra("Id", id)
-                startActivity(intent)
-            }
-
-            checkPromise(address, kmdistance.roundToInt().toString())
-            checkChatKonsul()
-            getDataHari(id)
-            getName()
-        } else {
-            popAlertLocation("Apakah kamu mengizinkan Aplikasi Rehat untuk mengakses lokasimu?")
-        }
     }
 
     private fun openMap(address: String) {
@@ -213,6 +161,7 @@ class ProfilKonselor : AppCompatActivity() {
                 "package:$packageName"
             ))
             startActivity(intent)
+            dialog.dismiss()
         }
         dialogView.btnCancel.setOnClickListener {
             dialog.dismiss()
@@ -279,6 +228,63 @@ class ProfilKonselor : AppCompatActivity() {
         latlong.add(location.latitude)
         latlong.add(location.longitude)
         return latlong
+    }
+
+    override fun onResume() {
+        super.onResume()
+        namaKonselor.text = intent.getStringExtra("Nama")
+        textSpesialisasi.text = intent.getStringExtra("Spesialisasi")
+        textLokasi.text = intent.getStringExtra("Lokasi")
+        Picasso.get().load(intent.getStringExtra("Foto")).resize(180, 200).into(fotoKonselor)
+        textBio.text = intent.getStringExtra("Bio")
+        id = intent.getStringExtra("Id")
+        val address = intent.getStringExtra("Alamat")
+
+        if ( Build.VERSION.SDK_INT >= 23 &&
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED){
+            val loc = getLocFromAdrres(address)
+            val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            val kmdistance: Float
+            if (userloc != null) {
+                var distance = FloatArray(1)
+                Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
+                kmdistance = distance[0] / 1000
+                teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+            } else {
+                teksJarak.text = "Jarak ke lokasi tidak diketahui"
+                kmdistance = 0F
+            }
+
+            auth = FirebaseAuth.getInstance()
+
+            teksLihatMaps.setOnClickListener { openMap(address) }
+
+            btnJanji.setOnClickListener {
+                val intent = Intent(this, BuatJanji::class.java)
+                intent.putExtra("Nama", namaKonselor.text.toString())
+                intent.putExtra("Lokasi", textLokasi.text.toString())
+                intent.putExtra("Id", id)
+                intent.putExtra("Alamat", address)
+                intent.putExtra("Jarak", kmdistance.roundToInt().toString())
+                startActivity(intent)
+            }
+
+            btnKonsul.setOnClickListener {
+                val intent = Intent(this, ChatKonsultasi::class.java)
+                intent.putExtra("Nama", namaKonselor.text.toString())
+                intent.putExtra("Id", id)
+                startActivity(intent)
+            }
+
+            checkPromise(address, kmdistance.roundToInt().toString())
+            checkChatKonsul()
+            getDataHari(id)
+            getName()
+        } else {
+            popAlertLocation("Apakah kamu mengizinkan Aplikasi Rehat untuk mengakses lokasimu?")
+        }
+
     }
 
     // get route distance, must use Google Maps Distance API (Paid)
