@@ -3,20 +3,27 @@ package com.example.rehat
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profil_konselor.*
+import kotlinx.android.synthetic.main.pop_alert.view.*
 import kotlinx.android.synthetic.main.pop_alert_single.view.*
+import kotlinx.android.synthetic.main.pop_alert_single.view.alertText
+import kotlinx.android.synthetic.main.pop_alert_single.view.btnAccept
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedInputStream
@@ -47,45 +54,51 @@ class ProfilKonselor : AppCompatActivity() {
         textBio.text = intent.getStringExtra("Bio")
         id = intent.getStringExtra("Id")
         val address = intent.getStringExtra("Alamat")
-        val loc = getLocFromAdrres(address)
-        val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
-        val kmdistance: Float
-        if (userloc != null) {
-            var distance = FloatArray(1)
-            Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
-            kmdistance = distance[0] / 1000
-            teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+
+        if ( Build.VERSION.SDK_INT >= 23 &&
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED){
+            val loc = getLocFromAdrres(address)
+            val locmanager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val userloc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            val kmdistance: Float
+            if (userloc != null) {
+                var distance = FloatArray(1)
+                Location.distanceBetween(userloc.latitude, userloc.longitude, loc[0], loc[1], distance)
+                kmdistance = distance[0] / 1000
+                teksJarak.text = kmdistance.roundToInt().toString() + " km dari lokasi kamu"
+            } else {
+                teksJarak.text = "Jarak ke lokasi tidak diketahui"
+                kmdistance = 0F
+            }
+
+            auth = FirebaseAuth.getInstance()
+
+            teksLihatMaps.setOnClickListener { openMap(address) }
+
+            btnJanji.setOnClickListener {
+                val intent = Intent(this, BuatJanji::class.java)
+                intent.putExtra("Nama", namaKonselor.text.toString())
+                intent.putExtra("Lokasi", textLokasi.text.toString())
+                intent.putExtra("Id", id)
+                intent.putExtra("Alamat", address)
+                intent.putExtra("Jarak", kmdistance.roundToInt().toString())
+                startActivity(intent)
+            }
+
+            btnKonsul.setOnClickListener {
+                val intent = Intent(this, ChatKonsultasi::class.java)
+                intent.putExtra("Nama", namaKonselor.text.toString())
+                intent.putExtra("Id", id)
+                startActivity(intent)
+            }
+
+            checkPromise(address, kmdistance.roundToInt().toString())
+            checkChatKonsul()
+            getDataHari(id)
+            getName()
         } else {
-            teksJarak.text = "Jarak ke lokasi tidak diketahui"
-            kmdistance = 0F
+            popAlertLocation("Apakah kamu mengizinkan Aplikasi Rehat untuk mengakses lokasimu?")
         }
-
-        auth = FirebaseAuth.getInstance()
-
-        teksLihatMaps.setOnClickListener { openMap(address) }
-
-        btnJanji.setOnClickListener {
-            val intent = Intent(this, BuatJanji::class.java)
-            intent.putExtra("Nama", namaKonselor.text.toString())
-            intent.putExtra("Lokasi", textLokasi.text.toString())
-            intent.putExtra("Id", id)
-            intent.putExtra("Alamat", address)
-            intent.putExtra("Jarak", kmdistance.roundToInt().toString())
-            startActivity(intent)
-        }
-
-        btnKonsul.setOnClickListener {
-            val intent = Intent(this, ChatKonsultasi::class.java)
-            intent.putExtra("Nama", namaKonselor.text.toString())
-            intent.putExtra("Id", id)
-            startActivity(intent)
-        }
-
-        checkPromise(address, kmdistance.roundToInt().toString())
-        checkChatKonsul()
-        getDataHari(id)
-        getName()
     }
 
     private fun openMap(address: String) {
@@ -183,6 +196,28 @@ class ProfilKonselor : AppCompatActivity() {
         dialog.setCancelable(true)
         dialogView.alertText.text = teks
         dialogView.btnAccept.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun popAlertLocation(teks: String) {
+        val dialog = AlertDialog.Builder(this).create()
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.pop_alert, null)
+        dialog.setView(dialogView)
+        dialog.setCancelable(false)
+        dialogView.btnAccept.text = "Izinkan"
+        dialogView.btnCancel.text = "Tolak"
+        dialogView.alertText.text = teks
+        dialogView.btnAccept.setOnClickListener {
+            val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse(
+                "package:$packageName"
+            ))
+            startActivity(intent)
+        }
+        dialogView.btnCancel.setOnClickListener {
+            dialog.dismiss()
+            finish()
+        }
         dialog.show()
     }
 
